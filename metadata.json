@@ -1,0 +1,6 @@
+{
+  "name": "SmileCare Dental Clinic",
+  "description": "Expert dental care for a healthier, happier you. Comprehensive dentistry, modern technology, and personalized patient care.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
