@@ -30,8 +30,14 @@
         --font-hand: 'Caveat', cursive, sans-serif;
       }
 
-      * {
+      *, *::before, *::after {
         box-sizing: border-box;
+      }
+
+      html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+        position: relative;
         margin: 0;
         padding: 0;
       }
@@ -45,7 +51,6 @@
 
       body {
         line-height: 1.5;
-        overflow-x: hidden;
       }
 
       /* Notice Strip */
@@ -1022,8 +1027,8 @@
       /* Floating Action Widget & Back to Top */
       .floating-hub {
         position: fixed;
-        bottom: 1.5rem;
-        right: 1.5rem;
+        bottom: 20px;
+        right: 20px;
         z-index: 60;
         display: flex;
         flex-direction: column;
@@ -1838,27 +1843,46 @@
         .notice-content span {
           display: none;
         }
+        .handwritten-badge {
+          right: 0.25rem;
+          top: -1rem;
+          font-size: 1.45rem;
+        }
+        .floating-hub {
+          right: 20px;
+          bottom: 20px;
+        }
       }
 
       /* Mobile Navigation Drawer */
       .mobile-drawer {
         position: fixed;
         top: 0;
-        right: -100%;
-        width: 80%;
-        max-width: 320px;
+        right: 0;
+        transform: translateX(100%);
+        width: 100%;
+        max-width: min(85vw, 320px);
         height: 100vh;
+        height: 100dvh;
         background: #ffffff;
         z-index: 90;
         box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
         padding: 2rem 1.5rem;
-        transition: right 0.3s ease;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        box-sizing: border-box;
+        overflow-y: auto;
       }
       .mobile-drawer.open {
-        right: 0;
+        transform: translateX(0);
+      }
+      @media (max-width: 480px) {
+        .mobile-drawer {
+          width: 100%;
+          max-width: 100vw;
+        }
       }
       .mobile-drawer-header {
         display: flex;
@@ -3113,8 +3137,9 @@
       function toggleMobileDrawer() {
         const drawer = document.getElementById('mobileDrawer');
         const overlay = document.getElementById('drawerOverlay');
-        drawer.classList.toggle('open');
+        const isOpen = drawer.classList.toggle('open');
         overlay.classList.toggle('open');
+        document.body.style.overflow = isOpen ? 'hidden' : '';
       }
 
       function scrollToTop() {
