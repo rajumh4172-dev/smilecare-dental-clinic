@@ -12,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Calendly Widget Assets -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <style>
       :root {
         --primary-blue: #0280c7;
@@ -856,12 +859,15 @@
         background: #ffffff;
         border-radius: 24px;
         width: 100%;
-        max-width: 480px;
+        max-width: 500px;
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         overflow: hidden;
         transform: scale(0.95);
-        transition: transform 0.2s ease;
+        transition: transform 0.2s ease, max-width 0.25s ease;
         position: relative;
+      }
+      .modal-box.wide {
+        max-width: 580px;
       }
       .modal-backdrop.open .modal-box {
         transform: scale(1);
@@ -869,7 +875,7 @@
       .modal-header {
         background: linear-gradient(135deg, #0d2745 0%, #0369a1 100%);
         color: #ffffff;
-        padding: 1.5rem 1.75rem;
+        padding: 1.4rem 1.75rem;
         position: relative;
       }
       .modal-header h3 {
@@ -902,10 +908,53 @@
         background: rgba(255, 255, 255, 0.3);
       }
       .modal-body {
-        padding: 1.75rem;
+        padding: 1.5rem 1.75rem 1.75rem;
       }
+
+      /* Booking Method Tabs */
+      .booking-mode-tabs {
+        display: flex;
+        background: #f1f5f9;
+        padding: 4px;
+        border-radius: 14px;
+        gap: 6px;
+        margin-bottom: 1.35rem;
+      }
+      .booking-tab-btn {
+        flex: 1;
+        padding: 0.65rem 0.75rem;
+        font-size: 0.825rem;
+        font-weight: 700;
+        border: none;
+        background: transparent;
+        color: #64748b;
+        border-radius: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.15s ease;
+      }
+      .booking-tab-btn.active {
+        background: #ffffff;
+        color: var(--primary-blue);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+      .booking-tab-btn svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .tab-pane {
+        display: none;
+      }
+      .tab-pane.active {
+        display: block;
+      }
+
       .form-group {
-        margin-bottom: 1.25rem;
+        margin-bottom: 1.15rem;
       }
       .form-label {
         display: block;
@@ -944,7 +993,7 @@
         padding: 0.85rem 1rem;
         font-size: 0.75rem;
         color: #166534;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.25rem;
         display: flex;
         align-items: center;
         gap: 0.65rem;
@@ -968,6 +1017,168 @@
       .whatsapp-submit-btn:hover {
         background: #20bd5a;
         transform: translateY(-1px);
+      }
+
+      /* Calendly Prompt in WhatsApp Tab */
+      .calendly-prompt-card {
+        background: linear-gradient(135deg, #f0f7fd 0%, #e0f2fe 100%);
+        border: 1.5px dashed #7dd3fc;
+        border-radius: 14px;
+        padding: 0.85rem 1rem;
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.85rem;
+      }
+      .calendly-prompt-content {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+      }
+      .calendly-prompt-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: #ffffff;
+        color: var(--primary-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-shadow: 0 2px 6px rgba(2, 128, 199, 0.15);
+      }
+      .calendly-prompt-text {
+        font-size: 0.75rem;
+        color: #0369a1;
+        line-height: 1.35;
+      }
+      .calendly-prompt-text strong {
+        display: block;
+        color: #0c4a6e;
+        font-size: 0.8rem;
+        font-weight: 800;
+      }
+      .calendly-switch-btn {
+        background: var(--primary-blue);
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        padding: 0.45rem 0.85rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.15s ease, transform 0.15s ease;
+      }
+      .calendly-switch-btn:hover {
+        background: var(--primary-blue-hover);
+        transform: translateY(-1px);
+      }
+
+      /* Calendly Tab Elements */
+      .calendly-info-card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 1.1rem 1.25rem;
+        margin-bottom: 1.25rem;
+      }
+      .calendly-info-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin-bottom: 0.85rem;
+      }
+      .calendly-info-title h4 {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 0.2rem;
+      }
+      .calendly-info-title p {
+        font-size: 0.8rem;
+        color: var(--slate-body);
+      }
+      .calendly-duration-badge {
+        background: #e0f2fe;
+        color: var(--primary-blue);
+        font-weight: 800;
+        font-size: 0.75rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 9999px;
+        white-space: nowrap;
+      }
+      .calendly-perks-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 0.85rem;
+      }
+      .calendly-perk-item {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 0.775rem;
+        color: #475569;
+        font-weight: 600;
+      }
+      .calendly-perk-item svg {
+        color: #10b981;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+      .calendly-primary-btn {
+        width: 100%;
+        background: #0280c7;
+        color: #ffffff;
+        border: none;
+        border-radius: 12px;
+        padding: 0.9rem 1.25rem;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.65rem;
+        transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+        box-shadow: 0 4px 14px rgba(2, 128, 199, 0.28);
+      }
+      .calendly-primary-btn:hover {
+        background: #0369a1;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 18px rgba(2, 128, 199, 0.38);
+      }
+      .calendly-alt-bar {
+        text-align: center;
+        margin-top: 0.9rem;
+        font-size: 0.775rem;
+        color: #64748b;
+      }
+      .calendly-alt-bar a {
+        color: var(--primary-blue);
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .calendly-alt-bar a:hover {
+        text-decoration: underline;
+      }
+      .calendly-inline-embed {
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        overflow: hidden;
+        margin-top: 1rem;
+        display: none;
+        height: 480px;
+        background: #ffffff;
+      }
+      .calendly-inline-embed.visible {
+        display: block;
       }
 
       /* Video Modal */
@@ -1647,11 +1858,11 @@
             <ul class="contact-list">
               <li class="contact-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span> Smile Street,<br>Vijayapur, Karnataka.</span>
+                <span>Smile Street,<br>Vijayapur, Karnataka.</span>
               </li>
               <li class="contact-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                <a href="tel:+919876543210">+91 99014 63886</a>
+                <a href="tel:+919901463886">+91 99014 63886</a>
               </li>
               <li class="contact-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -1683,52 +1894,137 @@
       </div>
     </footer>
 
-    <!-- Interactive Quick Appointment Modal (WhatsApp Automation) -->
+    <!-- Interactive Quick Appointment Modal (WhatsApp Automation & Calendly Integration) -->
     <div class="modal-backdrop" id="appointmentModal">
-      <div class="modal-box">
+      <div class="modal-box" id="modalBox">
         <div class="modal-header">
-          <h3>Quick Appointment</h3>
-          <p>Instant confirmation directly via WhatsApp</p>
+          <h3 id="modalHeading">Book an Appointment</h3>
+          <p id="modalSubheading">Instant WhatsApp confirmation or live calendar scheduling</p>
           <button class="modal-close-btn" onclick="closeAppointmentModal()" aria-label="Close modal">&times;</button>
         </div>
         <div class="modal-body">
-          <form id="appointmentForm" onsubmit="handleAppointmentSubmit(event)">
-            <div class="form-group">
-              <label class="form-label" for="patientName">Patient's Full Name *</label>
-              <input type="text" id="patientName" class="form-input" placeholder="e.g. John Doe" required />
-              <div class="form-error" id="nameError">Please enter your full name.</div>
+          <!-- Booking Mode Switcher Tabs -->
+          <div class="booking-mode-tabs">
+            <button type="button" class="booking-tab-btn active" id="tabBtnWhatsapp" onclick="switchBookingTab('whatsapp')">
+              <svg viewBox="0 0 24 24" fill="#25d366"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+              <span>WhatsApp Booking</span>
+            </button>
+            <button type="button" class="booking-tab-btn" id="tabBtnCalendly" onclick="switchBookingTab('calendly')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span>Live Calendly Slot</span>
+            </button>
+          </div>
+
+          <!-- TAB 1: WhatsApp Quick Booking -->
+          <div class="tab-pane active" id="tabPaneWhatsapp">
+            <form id="appointmentForm" onsubmit="handleAppointmentSubmit(event)">
+              <div class="form-group">
+                <label class="form-label" for="patientName">Patient's Full Name *</label>
+                <input type="text" id="patientName" class="form-input" placeholder="e.g. John Doe" required />
+                <div class="form-error" id="nameError">Please enter your full name.</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="patientPhone">Patient Mobile Number *</label>
+                <input type="tel" id="patientPhone" class="form-input" placeholder="e.g. +91 99014 63886" required />
+                <div class="form-error" id="phoneError">Please enter a valid phone number.</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="serviceSelect">Requested Dental Service *</label>
+                <select id="serviceSelect" class="form-select" onchange="syncServiceSelection(this.value)" required>
+                  <option value="General Dentistry">General Dentistry (Checkup &amp; Cleaning)</option>
+                  <option value="Orthodontics">Orthodontics (Braces &amp; Clear Aligners)</option>
+                  <option value="Dental Implants">Dental Implants</option>
+                  <option value="Teeth Whitening">Teeth Whitening</option>
+                  <option value="Kids Dentistry">Kids Dentistry</option>
+                  <option value="Cosmetic Dentistry">Cosmetic Dentistry</option>
+                  <option value="Emergency Care">Emergency Dental Care</option>
+                  <option value="General Consultation">General Consultation</option>
+                </select>
+              </div>
+
+              <div class="whatsapp-preview-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#25d366"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+                <span>Submitting will open your official WhatsApp chat with Dr. SmileCare with your pre-formatted booking details.</span>
+              </div>
+
+              <button type="submit" class="whatsapp-submit-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+                Confirm on WhatsApp &rarr;
+              </button>
+
+              <!-- Calendly Prompt inside WhatsApp Form -->
+              <div class="calendly-prompt-card">
+                <div class="calendly-prompt-content">
+                  <div class="calendly-prompt-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  </div>
+                  <div class="calendly-prompt-text">
+                    <strong>Prefer picking an exact date &amp; time?</strong>
+                    <span>Schedule directly on our live Calendly calendar.</span>
+                  </div>
+                </div>
+                <button type="button" class="calendly-switch-btn" onclick="switchBookingTab('calendly')">
+                  Open Calendly &rarr;
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- TAB 2: Calendly Live Booking -->
+          <div class="tab-pane" id="tabPaneCalendly">
+            <div class="calendly-info-card">
+              <div class="calendly-info-header">
+                <div class="calendly-info-title">
+                  <h4>SmileCare Dental Clinic</h4>
+                  <p>In-Person Consultation &amp; Dental Checkup</p>
+                </div>
+                <span class="calendly-duration-badge">⏱ 30 Mins</span>
+              </div>
+              <ul class="calendly-perks-list">
+                <li class="calendly-perk-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Select any convenient date &amp; available time slot</span>
+                </li>
+                <li class="calendly-perk-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Instant Google/Outlook calendar invite &amp; SMS reminders</span>
+                </li>
+                <li class="calendly-perk-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Reserved appointment slot with zero clinic waiting time</span>
+                </li>
+              </ul>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="patientPhone">Patient Mobile Number *</label>
-              <input type="tel" id="patientPhone" class="form-input" placeholder="e.g. +91 98765 43210" required />
-              <div class="form-error" id="phoneError">Please enter a valid phone number.</div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="serviceSelect">Requested Dental Service *</label>
-              <select id="serviceSelect" class="form-select" required>
-                <option value="General Dentistry">General Dentistry (Checkup &amp; Cleaning)</option>
-                <option value="Orthodontics">Orthodontics (Braces &amp; Clear Aligners)</option>
+            <div class="form-group" style="margin-bottom: 0.9rem;">
+              <label class="form-label" for="calendlyServiceSelect">Selected Dental Service</label>
+              <select id="calendlyServiceSelect" class="form-select" onchange="syncServiceSelection(this.value)">
+                <option value="General Dentistry">General Dentistry</option>
+                <option value="Orthodontics">Orthodontics (Aligners &amp; Braces)</option>
                 <option value="Dental Implants">Dental Implants</option>
                 <option value="Teeth Whitening">Teeth Whitening</option>
                 <option value="Kids Dentistry">Kids Dentistry</option>
                 <option value="Cosmetic Dentistry">Cosmetic Dentistry</option>
-                <option value="Emergency Care">Emergency Dental Care</option>
+                <option value="Emergency Care">Emergency Care</option>
                 <option value="General Consultation">General Consultation</option>
               </select>
             </div>
 
-            <div class="whatsapp-preview-box">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="#25d366"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
-              <span>Submitting will open your official WhatsApp chat with Dr. SmileCare with your pre-formatted booking details.</span>
-            </div>
-
-            <button type="submit" class="whatsapp-submit-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
-              Confirm on WhatsApp &rarr;
+            <button type="button" class="calendly-primary-btn" onclick="launchCalendlyScheduling()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Select Time Slot on Calendly &rarr;
             </button>
-          </form>
+
+            <!-- Inline Embed Container (Optional toggle) -->
+            <div id="calendlyEmbedContainer" class="calendly-inline-embed"></div>
+
+            <div class="calendly-alt-bar">
+              <span>Have an urgent question right now? </span>
+              <a href="javascript:void(0)" onclick="switchBookingTab('whatsapp')">Chat on WhatsApp instead &rarr;</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1748,21 +2044,98 @@
     <!-- Client-Side Vanilla JavaScript -->
     <script>
       /**
-       * SmileCare Dental Clinic - WhatsApp Integration & UI Controller
-       * Doctor's WhatsApp Target Number (Editable Constant)
+       * SmileCare Dental Clinic - WhatsApp & Calendly Integration Controller
+       * Doctor's WhatsApp Target Number & Calendly URL (Configurable Constants)
        */
       const DOCTOR_WHATSAPP_NUMBER = '919901463886';
+      const CALENDLY_URL = 'https://calendly.com/rajumh4172/30min';
+
+      // Switch booking tabs (WhatsApp vs Calendly)
+      function switchBookingTab(tab) {
+        const tabWhatsapp = document.getElementById('tabPaneWhatsapp');
+        const tabCalendly = document.getElementById('tabPaneCalendly');
+        const btnWhatsapp = document.getElementById('tabBtnWhatsapp');
+        const btnCalendly = document.getElementById('tabBtnCalendly');
+        const modalBox = document.getElementById('modalBox');
+        const heading = document.getElementById('modalHeading');
+        const subheading = document.getElementById('modalSubheading');
+
+        if (tab === 'calendly') {
+          tabWhatsapp.classList.remove('active');
+          tabCalendly.classList.add('active');
+          btnWhatsapp.classList.remove('active');
+          btnCalendly.classList.add('active');
+          modalBox.classList.add('wide');
+          heading.textContent = 'Schedule with Calendly';
+          subheading.textContent = 'Pick an exact date & time slot on our live clinic calendar';
+
+          // Sync service selection
+          const serviceSelect = document.getElementById('serviceSelect');
+          const calendlyService = document.getElementById('calendlyServiceSelect');
+          if (serviceSelect && calendlyService) {
+            calendlyService.value = serviceSelect.value;
+          }
+        } else {
+          tabWhatsapp.classList.add('active');
+          tabCalendly.classList.remove('active');
+          btnWhatsapp.classList.add('active');
+          btnCalendly.classList.remove('active');
+          modalBox.classList.remove('wide');
+          heading.textContent = 'Quick Appointment';
+          subheading.textContent = 'Instant WhatsApp confirmation directly with Dr. SmileCare';
+        }
+      }
+
+      function syncServiceSelection(serviceVal) {
+        const serviceSelect = document.getElementById('serviceSelect');
+        const calendlyService = document.getElementById('calendlyServiceSelect');
+        if (serviceSelect && serviceSelect.value !== serviceVal) {
+          serviceSelect.value = serviceVal;
+        }
+        if (calendlyService && calendlyService.value !== serviceVal) {
+          calendlyService.value = serviceVal;
+        }
+      }
+
+      function launchCalendlyScheduling() {
+        const name = (document.getElementById('patientName')?.value || '').trim();
+        const phone = (document.getElementById('patientPhone')?.value || '').trim();
+        const service = document.getElementById('calendlyServiceSelect')?.value || '';
+
+        // Build target URL with prefill parameters if patient entered them
+        const params = new URLSearchParams();
+        if (name) params.append('name', name);
+        if (phone) params.append('a1', phone);
+        if (service) params.append('a2', service);
+
+        const paramString = params.toString();
+        const fullUrl = paramString ? `${CALENDLY_URL}?${paramString}` : CALENDLY_URL;
+
+        // If official Calendly widget library is loaded, trigger its interactive popup
+        if (window.Calendly && typeof window.Calendly.initPopupWidget === 'function') {
+          window.Calendly.initPopupWidget({ url: fullUrl });
+        } else {
+          // Reliable fallback: launch Calendly booking page in new tab
+          window.open(fullUrl, '_blank', 'noopener,noreferrer');
+        }
+      }
 
       // Modal management
-      function openAppointmentModal(serviceName) {
+      function openAppointmentModal(serviceName, defaultTab = 'whatsapp') {
         const modal = document.getElementById('appointmentModal');
         const serviceSelect = document.getElementById('serviceSelect');
-        if (serviceName && serviceSelect) {
-          const matchingOption = Array.from(serviceSelect.options).find(opt => opt.value === serviceName || opt.text.includes(serviceName));
-          if (matchingOption) {
-            serviceSelect.value = matchingOption.value;
+        const calendlyService = document.getElementById('calendlyServiceSelect');
+        if (serviceName) {
+          if (serviceSelect) {
+            const matchingOption = Array.from(serviceSelect.options).find(opt => opt.value === serviceName || opt.text.includes(serviceName));
+            if (matchingOption) serviceSelect.value = matchingOption.value;
+          }
+          if (calendlyService) {
+            const matchingOption = Array.from(calendlyService.options).find(opt => opt.value === serviceName || opt.text.includes(serviceName));
+            if (matchingOption) calendlyService.value = matchingOption.value;
           }
         }
+        switchBookingTab(defaultTab);
         modal.classList.add('open');
         document.body.style.overflow = 'hidden';
       }
