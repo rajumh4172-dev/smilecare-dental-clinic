@@ -12,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Calendly Widget Assets -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <style>
       :root {
         --primary-blue: #0280c7;
@@ -100,10 +103,13 @@
       .navbar {
         position: sticky;
         top: 0;
-        background: #ffffff;
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         border-bottom: 1px solid var(--border-color);
         z-index: 40;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+        transition: background 0.2s ease, box-shadow 0.2s ease;
       }
       .nav-container {
         max-width: 1240px;
@@ -621,6 +627,511 @@
         letter-spacing: 0.08em;
       }
 
+      /* Trust Metrics Strip */
+      .trust-strip {
+        background: #ffffff;
+        border-bottom: 1px solid var(--border-color);
+        padding: 1.75rem 1.5rem;
+      }
+      .trust-strip-container {
+        max-width: 1240px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+      }
+      .trust-stat-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.5rem 0;
+      }
+      .trust-stat-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: #e0f2fe;
+        color: var(--primary-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .trust-stat-number {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.1;
+      }
+      .trust-stat-label {
+        font-size: 0.775rem;
+        color: var(--slate-body);
+        font-weight: 600;
+      }
+
+      /* Our Team Section */
+      .team-section {
+        background: #f8fafc;
+        padding: 5rem 1.5rem;
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+      }
+      .team-header {
+        text-align: center;
+        max-width: 680px;
+        margin: 0 auto 3.5rem;
+      }
+      .team-grid {
+        max-width: 1240px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+      }
+      .team-card {
+        background: #ffffff;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+      }
+      .team-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 32px rgba(2, 128, 199, 0.12);
+        border-color: #bae6fd;
+      }
+      .team-photo-wrap {
+        position: relative;
+        height: 240px;
+        background: #e2e8f0;
+        overflow: hidden;
+      }
+      .team-photo-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.35s ease;
+      }
+      .team-card:hover .team-photo-wrap img {
+        transform: scale(1.04);
+      }
+      .team-badge-exp {
+        position: absolute;
+        bottom: 12px;
+        left: 12px;
+        background: rgba(13, 39, 69, 0.85);
+        backdrop-filter: blur(6px);
+        color: #ffffff;
+        font-size: 0.725rem;
+        font-weight: 700;
+        padding: 0.25rem 0.65rem;
+        border-radius: 9999px;
+      }
+      .team-body {
+        padding: 1.35rem 1.25rem 1.25rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .team-name {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 0.2rem;
+      }
+      .team-role {
+        color: var(--primary-blue);
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin-bottom: 0.65rem;
+      }
+      .team-bio {
+        font-size: 0.775rem;
+        color: var(--slate-body);
+        line-height: 1.5;
+        margin-bottom: 1rem;
+        flex: 1;
+      }
+      .team-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-bottom: 1.25rem;
+      }
+      .team-tag {
+        background: #f1f5f9;
+        color: #475569;
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.2rem 0.55rem;
+        border-radius: 6px;
+      }
+      .team-doctor-btn {
+        width: 100%;
+        background: #ffffff;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 12px;
+        padding: 0.6rem 0.85rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #0f172a;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        transition: all 0.15s ease;
+      }
+      .team-doctor-btn:hover {
+        background: var(--primary-blue);
+        border-color: var(--primary-blue);
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(2, 128, 199, 0.2);
+      }
+
+      /* Blog & Dental Health Section */
+      .blog-section {
+        background: #ffffff;
+        padding: 5rem 1.5rem;
+      }
+      .blog-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+      }
+      .blog-filter-bar {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      .blog-filter-btn {
+        background: #f1f5f9;
+        border: none;
+        border-radius: 9999px;
+        padding: 0.45rem 1rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #475569;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .blog-filter-btn:hover, .blog-filter-btn.active {
+        background: var(--primary-blue);
+        color: #ffffff;
+      }
+      .blog-grid {
+        max-width: 1240px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+      .blog-card {
+        background: #ffffff;
+        border-radius: 20px;
+        border: 1px solid var(--border-color);
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+      }
+      .blog-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 36px rgba(2, 128, 199, 0.12);
+        border-color: #bae6fd;
+      }
+      .blog-media {
+        position: relative;
+        height: 190px;
+        background: #e2e8f0;
+        overflow: hidden;
+      }
+      .blog-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.35s ease;
+      }
+      .blog-card:hover .blog-media img {
+        transform: scale(1.05);
+      }
+      .blog-badge-tag {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(4px);
+        color: var(--primary-blue);
+        font-size: 0.725rem;
+        font-weight: 800;
+        padding: 0.25rem 0.65rem;
+        border-radius: 9999px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .blog-card-body {
+        padding: 1.5rem 1.35rem 1.35rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .blog-meta-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+        color: #64748b;
+        margin-bottom: 0.65rem;
+        font-weight: 600;
+      }
+      .blog-card-title {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.35;
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.01em;
+      }
+      .blog-card-excerpt {
+        font-size: 0.8125rem;
+        color: var(--slate-body);
+        line-height: 1.6;
+        margin-bottom: 1.25rem;
+        flex: 1;
+      }
+      .blog-read-btn {
+        background: transparent;
+        border: none;
+        color: var(--primary-blue);
+        font-size: 0.85rem;
+        font-weight: 800;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0;
+        text-align: left;
+        transition: color 0.15s ease, transform 0.15s ease;
+      }
+      .blog-read-btn:hover {
+        color: var(--primary-blue-hover);
+        transform: translateX(2px);
+      }
+
+      /* Article Reader Modal */
+      .article-modal-box {
+        max-width: 680px;
+        max-height: 88vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .article-modal-scroll {
+        overflow-y: auto;
+        padding: 1.75rem 2rem 2.25rem;
+        max-height: calc(88vh - 80px);
+      }
+      .article-hero-thumb {
+        width: 100%;
+        height: 260px;
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+        background: #e2e8f0;
+      }
+      .article-hero-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .article-tag-strip {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.775rem;
+        color: #64748b;
+        margin-bottom: 0.85rem;
+      }
+      .article-category-badge {
+        background: #e0f2fe;
+        color: var(--primary-blue);
+        font-weight: 800;
+        padding: 0.2rem 0.65rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+      }
+      .article-full-title {
+        font-size: 1.65rem;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.25;
+        margin-bottom: 1.25rem;
+        letter-spacing: -0.02em;
+      }
+      .article-prose {
+        color: #334155;
+        font-size: 0.925rem;
+        line-height: 1.75;
+      }
+      .article-prose p {
+        margin-bottom: 1.15rem;
+      }
+      .article-prose h4 {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 1.5rem 0 0.65rem;
+      }
+      .article-callout-box {
+        background: #f0f7fd;
+        border-left: 4px solid var(--primary-blue);
+        border-radius: 0 12px 12px 0;
+        padding: 1.1rem 1.25rem;
+        margin: 1.35rem 0;
+        font-size: 0.875rem;
+        color: #0369a1;
+        font-weight: 600;
+      }
+      .article-footer-cta {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: linear-gradient(135deg, #0d2745 0%, #0369a1 100%);
+        border-radius: 16px;
+        color: #ffffff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .article-cta-text h4 {
+        font-size: 1.1rem;
+        font-weight: 800;
+        margin-bottom: 0.2rem;
+      }
+      .article-cta-text p {
+        font-size: 0.8rem;
+        color: #bae6fd;
+      }
+
+      /* Floating Action Widget & Back to Top */
+      .floating-hub {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        z-index: 60;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.65rem;
+      }
+      .floating-whatsapp-btn {
+        background: #25d366;
+        color: #ffffff;
+        border: none;
+        border-radius: 9999px;
+        padding: 0.65rem 1.1rem;
+        font-size: 0.825rem;
+        font-weight: 800;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        text-decoration: none;
+      }
+      .floating-whatsapp-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 22px rgba(37, 211, 102, 0.45);
+      }
+      .floating-pulse-dot {
+        width: 8px;
+        height: 8px;
+        background: #ffffff;
+        border-radius: 50%;
+        display: inline-block;
+        animation: pulseAnimation 1.5s infinite;
+      }
+      @keyframes pulseAnimation {
+        0% { transform: scale(0.95); opacity: 0.8; }
+        50% { transform: scale(1.35); opacity: 1; }
+        100% { transform: scale(0.95); opacity: 0.8; }
+      }
+      .back-to-top-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        color: #0f172a;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.15s ease;
+      }
+      .back-to-top-btn.visible {
+        display: flex;
+      }
+      .back-to-top-btn:hover {
+        background: var(--primary-blue);
+        color: #ffffff;
+        border-color: var(--primary-blue);
+      }
+
+      /* Scroll Animation Effects */
+      .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(22px);
+        transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+      }
+      .reveal-on-scroll.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Responsive adjustments for team & blog */
+      @media (max-width: 1080px) {
+        .team-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
+        }
+        .trust-strip-container {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
+        }
+        .blog-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 680px) {
+        .team-grid {
+          grid-template-columns: 1fr;
+        }
+        .trust-strip-container {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+        .blog-grid {
+          grid-template-columns: 1fr;
+        }
+        .article-modal-scroll {
+          padding: 1.25rem 1.25rem 1.75rem;
+        }
+        .article-full-title {
+          font-size: 1.35rem;
+        }
+      }
+
       /* Bottom CTA Banner */
       .cta-section {
         padding: 2.5rem 1.5rem 5rem;
@@ -856,12 +1367,15 @@
         background: #ffffff;
         border-radius: 24px;
         width: 100%;
-        max-width: 480px;
+        max-width: 500px;
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         overflow: hidden;
         transform: scale(0.95);
-        transition: transform 0.2s ease;
+        transition: transform 0.2s ease, max-width 0.25s ease;
         position: relative;
+      }
+      .modal-box.wide {
+        max-width: 580px;
       }
       .modal-backdrop.open .modal-box {
         transform: scale(1);
@@ -869,7 +1383,7 @@
       .modal-header {
         background: linear-gradient(135deg, #0d2745 0%, #0369a1 100%);
         color: #ffffff;
-        padding: 1.5rem 1.75rem;
+        padding: 1.4rem 1.75rem;
         position: relative;
       }
       .modal-header h3 {
@@ -902,10 +1416,53 @@
         background: rgba(255, 255, 255, 0.3);
       }
       .modal-body {
-        padding: 1.75rem;
+        padding: 1.5rem 1.75rem 1.75rem;
       }
+
+      /* Booking Method Tabs */
+      .booking-mode-tabs {
+        display: flex;
+        background: #f1f5f9;
+        padding: 4px;
+        border-radius: 14px;
+        gap: 6px;
+        margin-bottom: 1.35rem;
+      }
+      .booking-tab-btn {
+        flex: 1;
+        padding: 0.65rem 0.75rem;
+        font-size: 0.825rem;
+        font-weight: 700;
+        border: none;
+        background: transparent;
+        color: #64748b;
+        border-radius: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.15s ease;
+      }
+      .booking-tab-btn.active {
+        background: #ffffff;
+        color: var(--primary-blue);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+      .booking-tab-btn svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .tab-pane {
+        display: none;
+      }
+      .tab-pane.active {
+        display: block;
+      }
+
       .form-group {
-        margin-bottom: 1.25rem;
+        margin-bottom: 1.15rem;
       }
       .form-label {
         display: block;
@@ -944,7 +1501,7 @@
         padding: 0.85rem 1rem;
         font-size: 0.75rem;
         color: #166534;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.25rem;
         display: flex;
         align-items: center;
         gap: 0.65rem;
@@ -968,6 +1525,168 @@
       .whatsapp-submit-btn:hover {
         background: #20bd5a;
         transform: translateY(-1px);
+      }
+
+      /* Calendly Prompt in WhatsApp Tab */
+      .calendly-prompt-card {
+        background: linear-gradient(135deg, #f0f7fd 0%, #e0f2fe 100%);
+        border: 1.5px dashed #7dd3fc;
+        border-radius: 14px;
+        padding: 0.85rem 1rem;
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.85rem;
+      }
+      .calendly-prompt-content {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+      }
+      .calendly-prompt-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: #ffffff;
+        color: var(--primary-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-shadow: 0 2px 6px rgba(2, 128, 199, 0.15);
+      }
+      .calendly-prompt-text {
+        font-size: 0.75rem;
+        color: #0369a1;
+        line-height: 1.35;
+      }
+      .calendly-prompt-text strong {
+        display: block;
+        color: #0c4a6e;
+        font-size: 0.8rem;
+        font-weight: 800;
+      }
+      .calendly-switch-btn {
+        background: var(--primary-blue);
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        padding: 0.45rem 0.85rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.15s ease, transform 0.15s ease;
+      }
+      .calendly-switch-btn:hover {
+        background: var(--primary-blue-hover);
+        transform: translateY(-1px);
+      }
+
+      /* Calendly Tab Elements */
+      .calendly-info-card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 1.1rem 1.25rem;
+        margin-bottom: 1.25rem;
+      }
+      .calendly-info-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin-bottom: 0.85rem;
+      }
+      .calendly-info-title h4 {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 0.2rem;
+      }
+      .calendly-info-title p {
+        font-size: 0.8rem;
+        color: var(--slate-body);
+      }
+      .calendly-duration-badge {
+        background: #e0f2fe;
+        color: var(--primary-blue);
+        font-weight: 800;
+        font-size: 0.75rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 9999px;
+        white-space: nowrap;
+      }
+      .calendly-perks-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 0.85rem;
+      }
+      .calendly-perk-item {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 0.775rem;
+        color: #475569;
+        font-weight: 600;
+      }
+      .calendly-perk-item svg {
+        color: #10b981;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+      .calendly-primary-btn {
+        width: 100%;
+        background: #0280c7;
+        color: #ffffff;
+        border: none;
+        border-radius: 12px;
+        padding: 0.9rem 1.25rem;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.65rem;
+        transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+        box-shadow: 0 4px 14px rgba(2, 128, 199, 0.28);
+      }
+      .calendly-primary-btn:hover {
+        background: #0369a1;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 18px rgba(2, 128, 199, 0.38);
+      }
+      .calendly-alt-bar {
+        text-align: center;
+        margin-top: 0.9rem;
+        font-size: 0.775rem;
+        color: #64748b;
+      }
+      .calendly-alt-bar a {
+        color: var(--primary-blue);
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .calendly-alt-bar a:hover {
+        text-decoration: underline;
+      }
+      .calendly-inline-embed {
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        overflow: hidden;
+        margin-top: 1rem;
+        display: none;
+        height: 480px;
+        background: #ffffff;
+      }
+      .calendly-inline-embed.visible {
+        display: block;
       }
 
       /* Video Modal */
@@ -1193,6 +1912,7 @@
           <li><a href="#services" onclick="toggleMobileDrawer()">Services</a></li>
           <li><a href="#team" onclick="toggleMobileDrawer()">Our Team</a></li>
           <li><a href="#testimonials" onclick="toggleMobileDrawer()">Patient Stories</a></li>
+          <li><a href="#blog" onclick="toggleMobileDrawer()">Blog</a></li>
           <li><a href="#contact" onclick="toggleMobileDrawer()">Contact</a></li>
         </ul>
       </div>
@@ -1268,6 +1988,48 @@
         </div>
       </div>
     </section>
+
+    <!-- Trust Metrics Strip -->
+    <div class="trust-strip reveal-on-scroll">
+      <div class="trust-strip-container">
+        <div class="trust-stat-item">
+          <div class="trust-stat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <div class="trust-stat-number">15,000+</div>
+            <div class="trust-stat-label">Happy Patients Treated</div>
+          </div>
+        </div>
+        <div class="trust-stat-item">
+          <div class="trust-stat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+          </div>
+          <div>
+            <div class="trust-stat-number">14+ Years</div>
+            <div class="trust-stat-label">Clinical Excellence</div>
+          </div>
+        </div>
+        <div class="trust-stat-item">
+          <div class="trust-stat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <div class="trust-stat-number">99.4%</div>
+            <div class="trust-stat-label">Treatment Success Rate</div>
+          </div>
+        </div>
+        <div class="trust-stat-item">
+          <div class="trust-stat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div>
+            <div class="trust-stat-number">4.9 / 5.0</div>
+            <div class="trust-stat-label">Google Patient Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- 4. Services Grid Section -->
     <section class="services-section" id="services">
@@ -1485,6 +2247,113 @@
       </div>
     </section>
 
+    <!-- 5B. Our Team Section -->
+    <section class="team-section reveal-on-scroll" id="team">
+      <div class="section-container" style="padding-top: 0; padding-bottom: 0;">
+        <div class="team-header">
+          <span class="section-kicker">OUR SPECIALISTS</span>
+          <h2 class="section-title">Meet Our Expert Dental Team</h2>
+          <p style="color: var(--slate-body); font-size: 0.95rem; margin-top: 0.75rem; line-height: 1.6;">
+            Certified MDS surgeons and gentle clinicians committed to providing painless, world-class dental care for your entire family.
+          </p>
+        </div>
+
+        <div class="team-grid">
+          <!-- Team Member 1 -->
+          <div class="team-card">
+            <div class="team-photo-wrap">
+              <img src="/images/team_dr_rohit.jpg" alt="Dr. Rohit Sharma, Chief Dental Surgeon" />
+              <span class="team-badge-exp">14+ Years Exp</span>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Dr. Rohit Sharma, MDS</h3>
+              <div class="team-role">Chief Dental Surgeon &amp; Implantologist</div>
+              <p class="team-bio">
+                Specializes in immediate dental implants, full-mouth rehabilitation, and painless bone grafting with digital 3D CBCT precision.
+              </p>
+              <div class="team-tags">
+                <span class="team-tag">Dental Implants</span>
+                <span class="team-tag">Full Mouth Rehab</span>
+                <span class="team-tag">Oral Surgery</span>
+              </div>
+              <button class="team-doctor-btn" onclick="bookDoctorConsultation('Dr. Rohit Sharma', 'Dental Implants')">
+                <span>Book with Dr. Rohit</span> &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- Team Member 2 -->
+          <div class="team-card">
+            <div class="team-photo-wrap">
+              <img src="/images/team_dr_ananya.jpg" alt="Dr. Ananya Patil, Senior Orthodontist" />
+              <span class="team-badge-exp">11+ Years Exp</span>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Dr. Ananya Patil, MDS</h3>
+              <div class="team-role">Senior Orthodontist &amp; Clear Aligners</div>
+              <p class="team-bio">
+                Certified invisible braces provider with over 1,200 successful smile alignment transformations for teenagers and working professionals.
+              </p>
+              <div class="team-tags">
+                <span class="team-tag">Clear Aligners</span>
+                <span class="team-tag">Invisible Braces</span>
+                <span class="team-tag">Bite Correction</span>
+              </div>
+              <button class="team-doctor-btn" onclick="bookDoctorConsultation('Dr. Ananya Patil', 'Orthodontics')">
+                <span>Book with Dr. Ananya</span> &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- Team Member 3 -->
+          <div class="team-card">
+            <div class="team-photo-wrap">
+              <img src="/images/team_dr_vikram.jpg" alt="Dr. Vikram Deshmukh, Pediatric Dentist" />
+              <span class="team-badge-exp">8+ Years Exp</span>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Dr. Vikram Deshmukh, MDS</h3>
+              <div class="team-role">Pediatric &amp; Preventive Dentist</div>
+              <p class="team-bio">
+                Known for his friendly, fear-free bedside manner with children, focusing on painless preventive dentistry, sealants, and gentle care.
+              </p>
+              <div class="team-tags">
+                <span class="team-tag">Kids Dentistry</span>
+                <span class="team-tag">Cavity Prevention</span>
+                <span class="team-tag">Fear-Free Care</span>
+              </div>
+              <button class="team-doctor-btn" onclick="bookDoctorConsultation('Dr. Vikram Deshmukh', 'Kids Dentistry')">
+                <span>Book with Dr. Vikram</span> &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- Team Member 4 -->
+          <div class="team-card">
+            <div class="team-photo-wrap">
+              <img src="/images/team_dr_priya.jpg" alt="Dr. Priya Kulkarni, Cosmetic Dentist" />
+              <span class="team-badge-exp">9+ Years Exp</span>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">Dr. Priya Kulkarni, BDS</h3>
+              <div class="team-role">Cosmetic &amp; Aesthetic Dentist</div>
+              <p class="team-bio">
+                Fellow in Aesthetic Dentistry specializing in porcelain dental veneers, laser teeth brightening, and digital custom smile makeovers.
+              </p>
+              <div class="team-tags">
+                <span class="team-tag">Cosmetic Smiles</span>
+                <span class="team-tag">Porcelain Veneers</span>
+                <span class="team-tag">Teeth Whitening</span>
+              </div>
+              <button class="team-doctor-btn" onclick="bookDoctorConsultation('Dr. Priya Kulkarni', 'Cosmetic Dentistry')">
+                <span>Book with Dr. Priya</span> &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- 6. Testimonials Section -->
     <section class="testimonials-section" id="testimonials">
       <div class="section-container" style="padding-top: 0; padding-bottom: 0;">
@@ -1530,6 +2399,95 @@
               <div class="star-rating">★★★★★</div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6B. Blog & Dental Health Section -->
+    <section class="blog-section reveal-on-scroll" id="blog">
+      <div class="section-container" style="padding-top: 0; padding-bottom: 0;">
+        <div class="blog-header-row">
+          <div>
+            <span class="section-kicker">DENTAL HEALTH &amp; INSIGHTS</span>
+            <h2 class="section-title">Expert Advice for Healthy Smiles</h2>
+            <p style="color: var(--slate-body); font-size: 0.95rem; margin-top: 0.5rem;">
+              Doctor-reviewed dental guides, oral hygiene advice, and the latest in painless treatments.
+            </p>
+          </div>
+          <div class="blog-filter-bar">
+            <button class="blog-filter-btn active" onclick="switchBlogCategory('all', this)">All Articles</button>
+            <button class="blog-filter-btn" onclick="switchBlogCategory('hygiene', this)">Oral Hygiene</button>
+            <button class="blog-filter-btn" onclick="switchBlogCategory('ortho', this)">Orthodontics</button>
+            <button class="blog-filter-btn" onclick="switchBlogCategory('kids', this)">Kids Dental</button>
+          </div>
+        </div>
+
+        <div class="blog-grid" id="blogGrid">
+          <!-- Blog Card 1 -->
+          <article class="blog-card" data-category="hygiene">
+            <div class="blog-media">
+              <img src="/images/blog_teeth_whitening.jpg" alt="Teeth Whitening Guide" />
+              <span class="blog-badge-tag">Oral Hygiene</span>
+            </div>
+            <div class="blog-card-body">
+              <div class="blog-meta-info">
+                <span>⏱ 4 Min Read</span>
+                <span>•</span>
+                <span>By Dr. Priya Kulkarni</span>
+              </div>
+              <h3 class="blog-card-title">Professional Teeth Whitening: Safety, Myths &amp; Clinical Results</h3>
+              <p class="blog-card-excerpt">
+                Is teeth bleaching safe for tooth enamel? Understand the clinical distinction between in-clinic laser whitening and over-the-counter home kits.
+              </p>
+              <button class="blog-read-btn" onclick="openArticleModal('whitening')">
+                Read Full Article &rarr;
+              </button>
+            </div>
+          </article>
+
+          <!-- Blog Card 2 -->
+          <article class="blog-card" data-category="ortho">
+            <div class="blog-media">
+              <img src="/images/blog_clear_aligners.jpg" alt="Clear Aligners vs Braces" />
+              <span class="blog-badge-tag">Orthodontics</span>
+            </div>
+            <div class="blog-card-body">
+              <div class="blog-meta-info">
+                <span>⏱ 5 Min Read</span>
+                <span>•</span>
+                <span>By Dr. Ananya Patil</span>
+              </div>
+              <h3 class="blog-card-title">Clear Aligners vs Metal Braces: What Actually Works Best in 2026?</h3>
+              <p class="blog-card-excerpt">
+                Comparing treatment speed, comfort, eating freedom, and daily oral hygiene between invisible clear trays and traditional orthodontic braces.
+              </p>
+              <button class="blog-read-btn" onclick="openArticleModal('aligners')">
+                Read Full Article &rarr;
+              </button>
+            </div>
+          </article>
+
+          <!-- Blog Card 3 -->
+          <article class="blog-card" data-category="kids">
+            <div class="blog-media">
+              <img src="/images/blog_kids_oral_care.jpg" alt="Kids Dental Care" />
+              <span class="blog-badge-tag">Kids Dental</span>
+            </div>
+            <div class="blog-card-body">
+              <div class="blog-meta-info">
+                <span>⏱ 3 Min Read</span>
+                <span>•</span>
+                <span>By Dr. Vikram Deshmukh</span>
+              </div>
+              <h3 class="blog-card-title">5 Fun Habits to Help Children Brush Twice Daily Without Tears</h3>
+              <p class="blog-card-excerpt">
+                Pediatric strategies, timing songs, and fluoride recommendations to keep young growing smiles cavity-free and build healthy lifelong routines.
+              </p>
+              <button class="blog-read-btn" onclick="openArticleModal('kids')">
+                Read Full Article &rarr;
+              </button>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -1647,11 +2605,11 @@
             <ul class="contact-list">
               <li class="contact-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span> Smile Street,<br>Vijayapur, Karnataka.</span>
+                <span>Smile Street,<br>Vijayapur, Karnataka.</span>
               </li>
               <li class="contact-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                <a href="tel:+919876543210">+91 99014 63886</a>
+                <a href="tel:+919901463886">+91 99014 63886</a>
               </li>
               <li class="contact-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -1683,52 +2641,137 @@
       </div>
     </footer>
 
-    <!-- Interactive Quick Appointment Modal (WhatsApp Automation) -->
+    <!-- Interactive Quick Appointment Modal (WhatsApp Automation & Calendly Integration) -->
     <div class="modal-backdrop" id="appointmentModal">
-      <div class="modal-box">
+      <div class="modal-box" id="modalBox">
         <div class="modal-header">
-          <h3>Quick Appointment</h3>
-          <p>Instant confirmation directly via WhatsApp</p>
+          <h3 id="modalHeading">Book an Appointment</h3>
+          <p id="modalSubheading">Instant WhatsApp confirmation or live calendar scheduling</p>
           <button class="modal-close-btn" onclick="closeAppointmentModal()" aria-label="Close modal">&times;</button>
         </div>
         <div class="modal-body">
-          <form id="appointmentForm" onsubmit="handleAppointmentSubmit(event)">
-            <div class="form-group">
-              <label class="form-label" for="patientName">Patient's Full Name *</label>
-              <input type="text" id="patientName" class="form-input" placeholder="e.g. John Doe" required />
-              <div class="form-error" id="nameError">Please enter your full name.</div>
+          <!-- Booking Mode Switcher Tabs -->
+          <div class="booking-mode-tabs">
+            <button type="button" class="booking-tab-btn active" id="tabBtnWhatsapp" onclick="switchBookingTab('whatsapp')">
+              <svg viewBox="0 0 24 24" fill="#25d366"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+              <span>WhatsApp Booking</span>
+            </button>
+            <button type="button" class="booking-tab-btn" id="tabBtnCalendly" onclick="switchBookingTab('calendly')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span>Live Calendly Slot</span>
+            </button>
+          </div>
+
+          <!-- TAB 1: WhatsApp Quick Booking -->
+          <div class="tab-pane active" id="tabPaneWhatsapp">
+            <form id="appointmentForm" onsubmit="handleAppointmentSubmit(event)">
+              <div class="form-group">
+                <label class="form-label" for="patientName">Patient's Full Name *</label>
+                <input type="text" id="patientName" class="form-input" placeholder="e.g. John Doe" required />
+                <div class="form-error" id="nameError">Please enter your full name.</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="patientPhone">Patient Mobile Number *</label>
+                <input type="tel" id="patientPhone" class="form-input" placeholder="e.g. +91 99014 63886" required />
+                <div class="form-error" id="phoneError">Please enter a valid phone number.</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="serviceSelect">Requested Dental Service *</label>
+                <select id="serviceSelect" class="form-select" onchange="syncServiceSelection(this.value)" required>
+                  <option value="General Dentistry">General Dentistry (Checkup &amp; Cleaning)</option>
+                  <option value="Orthodontics">Orthodontics (Braces &amp; Clear Aligners)</option>
+                  <option value="Dental Implants">Dental Implants</option>
+                  <option value="Teeth Whitening">Teeth Whitening</option>
+                  <option value="Kids Dentistry">Kids Dentistry</option>
+                  <option value="Cosmetic Dentistry">Cosmetic Dentistry</option>
+                  <option value="Emergency Care">Emergency Dental Care</option>
+                  <option value="General Consultation">General Consultation</option>
+                </select>
+              </div>
+
+              <div class="whatsapp-preview-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#25d366"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+                <span>Submitting will open your official WhatsApp chat with Dr. SmileCare with your pre-formatted booking details.</span>
+              </div>
+
+              <button type="submit" class="whatsapp-submit-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+                Confirm on WhatsApp &rarr;
+              </button>
+
+              <!-- Calendly Prompt inside WhatsApp Form -->
+              <div class="calendly-prompt-card">
+                <div class="calendly-prompt-content">
+                  <div class="calendly-prompt-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  </div>
+                  <div class="calendly-prompt-text">
+                    <strong>Prefer picking an exact date &amp; time?</strong>
+                    <span>Schedule directly on our live Calendly calendar.</span>
+                  </div>
+                </div>
+                <button type="button" class="calendly-switch-btn" onclick="switchBookingTab('calendly')">
+                  Open Calendly &rarr;
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- TAB 2: Calendly Live Booking -->
+          <div class="tab-pane" id="tabPaneCalendly">
+            <div class="calendly-info-card">
+              <div class="calendly-info-header">
+                <div class="calendly-info-title">
+                  <h4>SmileCare Dental Clinic</h4>
+                  <p>In-Person Consultation &amp; Dental Checkup</p>
+                </div>
+                <span class="calendly-duration-badge">⏱ 30 Mins</span>
+              </div>
+              <ul class="calendly-perks-list">
+                <li class="calendly-perk-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Select any convenient date &amp; available time slot</span>
+                </li>
+                <li class="calendly-perk-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Instant Google/Outlook calendar invite &amp; SMS reminders</span>
+                </li>
+                <li class="calendly-perk-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Reserved appointment slot with zero clinic waiting time</span>
+                </li>
+              </ul>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="patientPhone">Patient Mobile Number *</label>
-              <input type="tel" id="patientPhone" class="form-input" placeholder="e.g. +91 98765 43210" required />
-              <div class="form-error" id="phoneError">Please enter a valid phone number.</div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="serviceSelect">Requested Dental Service *</label>
-              <select id="serviceSelect" class="form-select" required>
-                <option value="General Dentistry">General Dentistry (Checkup &amp; Cleaning)</option>
-                <option value="Orthodontics">Orthodontics (Braces &amp; Clear Aligners)</option>
+            <div class="form-group" style="margin-bottom: 0.9rem;">
+              <label class="form-label" for="calendlyServiceSelect">Selected Dental Service</label>
+              <select id="calendlyServiceSelect" class="form-select" onchange="syncServiceSelection(this.value)">
+                <option value="General Dentistry">General Dentistry</option>
+                <option value="Orthodontics">Orthodontics (Aligners &amp; Braces)</option>
                 <option value="Dental Implants">Dental Implants</option>
                 <option value="Teeth Whitening">Teeth Whitening</option>
                 <option value="Kids Dentistry">Kids Dentistry</option>
                 <option value="Cosmetic Dentistry">Cosmetic Dentistry</option>
-                <option value="Emergency Care">Emergency Dental Care</option>
+                <option value="Emergency Care">Emergency Care</option>
                 <option value="General Consultation">General Consultation</option>
               </select>
             </div>
 
-            <div class="whatsapp-preview-box">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="#25d366"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
-              <span>Submitting will open your official WhatsApp chat with Dr. SmileCare with your pre-formatted booking details.</span>
-            </div>
-
-            <button type="submit" class="whatsapp-submit-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
-              Confirm on WhatsApp &rarr;
+            <button type="button" class="calendly-primary-btn" onclick="launchCalendlyScheduling()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Select Time Slot on Calendly &rarr;
             </button>
-          </form>
+
+            <!-- Inline Embed Container (Optional toggle) -->
+            <div id="calendlyEmbedContainer" class="calendly-inline-embed"></div>
+
+            <div class="calendly-alt-bar">
+              <span>Have an urgent question right now? </span>
+              <a href="javascript:void(0)" onclick="switchBookingTab('whatsapp')">Chat on WhatsApp instead &rarr;</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1745,24 +2788,204 @@
       </div>
     </div>
 
+    <!-- Article Reader Modal -->
+    <div class="modal-backdrop" id="articleModal">
+      <div class="modal-box article-modal-box">
+        <div class="modal-header">
+          <h3 id="articleModalCategory">Dental Article</h3>
+          <p id="articleModalSubtitle">SmileCare Clinical Knowledge Center</p>
+          <button class="modal-close-btn" onclick="closeArticleModal()" aria-label="Close article">&times;</button>
+        </div>
+        <div class="article-modal-scroll">
+          <div class="article-hero-thumb">
+            <img id="articleModalImage" src="/images/blog_teeth_whitening.jpg" alt="Article banner" />
+          </div>
+          <div class="article-tag-strip">
+            <span class="article-category-badge" id="articleModalBadge">Oral Hygiene</span>
+            <span id="articleModalMeta">⏱ 4 Min Read • By Dr. Priya Kulkarni</span>
+          </div>
+          <h2 class="article-full-title" id="articleModalTitle">Article Title</h2>
+          <div class="article-prose" id="articleModalContent">
+            <!-- Article body injected via JS -->
+          </div>
+          <div class="article-footer-cta">
+            <div class="article-cta-text">
+              <h4>Ready to transform your smile?</h4>
+              <p>Consult with our dental specialists today in Vijayapur.</p>
+            </div>
+            <button class="btn-primary" style="background:#ffffff; color:#0d2745; box-shadow:none;" onclick="closeArticleModal(); openAppointmentModal('General Consultation');">
+              Book Appointment &rarr;
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Action Hub -->
+    <div class="floating-hub">
+      <a href="https://wa.me/919901463886?text=Hello%20Doctor%2C%20I%20have%20an%20urgent%20dental%20query." target="_blank" rel="noopener noreferrer" class="floating-whatsapp-btn" title="Chat with SmileCare on WhatsApp">
+        <span class="floating-pulse-dot"></span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+        <span>Instant WhatsApp</span>
+      </a>
+      <button class="back-to-top-btn" id="backToTopBtn" onclick="scrollToTop()" title="Scroll back to top" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+      </button>
+    </div>
+
     <!-- Client-Side Vanilla JavaScript -->
     <script>
       /**
-       * SmileCare Dental Clinic - WhatsApp Integration & UI Controller
-       * Doctor's WhatsApp Target Number (Editable Constant)
+       * SmileCare Dental Clinic - Controller & Modern Interactions
        */
       const DOCTOR_WHATSAPP_NUMBER = '919901463886';
+      const CALENDLY_URL = 'https://calendly.com/rajumh4172/30min';
+
+      // Article database for interactive in-modal reading
+      const ARTICLE_DATABASE = {
+        whitening: {
+          badge: 'Oral Hygiene',
+          category: 'Cosmetic & Hygiene',
+          meta: '⏱ 4 Min Read • Clinical Guide by Dr. Priya Kulkarni, BDS',
+          image: '/images/blog_teeth_whitening.jpg',
+          title: 'Professional Teeth Whitening: Safety, Myths & Clinical Results',
+          content: `
+            <p>A brighter smile is one of the quickest ways to boost your personal and professional confidence. However, with the rise of unregulated online whitening powders, charcoal pastes, and DIY lemon remedies, it is crucial to understand what is safe for your tooth enamel.</p>
+            <h4>How Professional Teeth Whitening Works</h4>
+            <p>At SmileCare, our in-office laser whitening uses safe, clinical-grade hydrogen or carbamide peroxide gels activated by cool LED light. The active oxygen molecules gently break down chromogenic stains deeply embedded in dentin tubules without altering tooth enamel mineral structure.</p>
+            <div class="article-callout-box">
+              "The biggest danger of DIY whitening kits is abrasive enamel thinning and chemical gum burns. Professional dental supervision ensures your gums are shielded with a protective barrier throughout the treatment."
+            </div>
+            <h4>Common Teeth Whitening Myths Debunked</h4>
+            <p><strong>Myth 1: Whitening permanently weakens your teeth.</strong> When performed with regulated pH-neutral formulations and remineralizing fluoride finishes, enamel hardness remains uncompromised.</p>
+            <p><strong>Myth 2: Over-the-counter strips give the same results as clinical lasers.</strong> Commercial strips can only reach external superficial stains and often cause uneven patchy results along tooth margins.</p>
+            <h4>Tips to Maintain Your Radiant Results</h4>
+            <p>Avoid dark staining beverages like espresso, red wine, and turmeric curries for 48 hours post-treatment. Brushing twice daily with non-abrasive remineralizing toothpaste will keep your smile bright for 12 to 24 months.</p>
+          `
+        },
+        aligners: {
+          badge: 'Orthodontics',
+          category: 'Orthodontic Insights',
+          meta: '⏱ 5 Min Read • Clinical Guide by Dr. Ananya Patil, MDS',
+          image: '/images/blog_clear_aligners.jpg',
+          title: 'Clear Aligners vs Metal Braces: What Actually Works Best in 2026?',
+          content: `
+            <p>Orthodontics has evolved dramatically over the last decade. For adults and teens seeking straight teeth without the social discomfort of metallic brackets and wires, transparent aligner trays have become the gold standard.</p>
+            <h4>Key Differences at a Glance</h4>
+            <p><strong>1. Visibility:</strong> Clear aligners are virtually invisible from normal conversational distance, allowing you to smile confidently in workplace meetings and photos.</p>
+            <p><strong>2. Diet & Lifestyle:</strong> Unlike metal brackets that restrict sticky or hard foods, aligners are simply removed before meals. You can eat whatever you love without risk of broken wires.</p>
+            <p><strong>3. Dental Hygiene:</strong> Traditional braces trap food particles and complicate flossing. Aligners pop out easily for your regular brushing and flossing routine, drastically reducing the risk of decalcification spots and plaque.</p>
+            <div class="article-callout-box">
+              "Digital 3D intraoral scans allow our orthodontists to simulate your complete smile transformation timeline on screen before the first tray is even manufactured."
+            </div>
+            <h4>Who is the Ideal Candidate for Aligners?</h4>
+            <p>Aligners are exceptionally effective for mild to severe crowding, spacing, overbites, and relapse from childhood braces. The only requirement is discipline: wearing the trays for 20 to 22 hours per day.</p>
+          `
+        },
+        kids: {
+          badge: 'Kids Dental',
+          category: 'Pediatric Care',
+          meta: '⏱ 3 Min Read • Clinical Guide by Dr. Vikram Deshmukh, MDS',
+          image: '/images/blog_kids_oral_care.jpg',
+          title: '5 Fun Ways to Help Children Brush Twice Daily Without Tears',
+          content: `
+            <p>Instilling healthy oral hygiene habits in young children can sometimes feel like an uphill battle for parents. Yet milk teeth play a vital role in speech development, jaw growth, and guiding permanent teeth into place.</p>
+            <h4>Dr. Vikram's Top 5 Pediatric Brushing Strategies</h4>
+            <p><strong>1. The Two-Minute Dance Party:</strong> Put on your child's favorite lively song or a fun two-minute timer on your phone. When brushing is paired with music and dancing, time flies without resistance.</p>
+            <p><strong>2. Let Them Pick Their Own Gear:</strong> Allow your toddler to select their own colorful toothbrush featuring their favorite cartoon character and child-safe fruit-flavored toothpaste.</p>
+            <p><strong>3. Brush Together as a Family:</strong> Children learn through imitation. When they see parents happily brushing and spitting into the sink, it normalizes dental care as an exciting family ritual rather than a chore.</p>
+            <div class="article-callout-box">
+              "First dental visits should happen by their first birthday or when their first tooth appears. Early checkups normalize the dental clinic environment and prevent dental anxiety later in life."
+            </div>
+            <p><strong>4. Use a Reward Chart:</strong> Sticker charts with weekly small rewards (like an extra bedtime story or park trip) create positive reinforcement for consistency.</p>
+            <p><strong>5. Pit & Fissure Sealants:</strong> Ask your pediatric dentist about painless fluoride varnish and fissure sealants that coat chewing molars, reducing cavity risk by up to 80%.</p>
+          `
+        }
+      };
+
+      // Switch booking tabs (WhatsApp vs Calendly)
+      function switchBookingTab(tab) {
+        const tabWhatsapp = document.getElementById('tabPaneWhatsapp');
+        const tabCalendly = document.getElementById('tabPaneCalendly');
+        const btnWhatsapp = document.getElementById('tabBtnWhatsapp');
+        const btnCalendly = document.getElementById('tabBtnCalendly');
+        const modalBox = document.getElementById('modalBox');
+        const heading = document.getElementById('modalHeading');
+        const subheading = document.getElementById('modalSubheading');
+
+        if (tab === 'calendly') {
+          tabWhatsapp.classList.remove('active');
+          tabCalendly.classList.add('active');
+          btnWhatsapp.classList.remove('active');
+          btnCalendly.classList.add('active');
+          modalBox.classList.add('wide');
+          heading.textContent = 'Schedule with Calendly';
+          subheading.textContent = 'Pick an exact date & time slot on our live clinic calendar';
+
+          // Sync service selection
+          const serviceSelect = document.getElementById('serviceSelect');
+          const calendlyService = document.getElementById('calendlyServiceSelect');
+          if (serviceSelect && calendlyService) {
+            calendlyService.value = serviceSelect.value;
+          }
+        } else {
+          tabWhatsapp.classList.add('active');
+          tabCalendly.classList.remove('active');
+          btnWhatsapp.classList.add('active');
+          btnCalendly.classList.remove('active');
+          modalBox.classList.remove('wide');
+          heading.textContent = 'Quick Appointment';
+          subheading.textContent = 'Instant WhatsApp confirmation directly with Dr. SmileCare';
+        }
+      }
+
+      function syncServiceSelection(serviceVal) {
+        const serviceSelect = document.getElementById('serviceSelect');
+        const calendlyService = document.getElementById('calendlyServiceSelect');
+        if (serviceSelect && serviceSelect.value !== serviceVal) {
+          serviceSelect.value = serviceVal;
+        }
+        if (calendlyService && calendlyService.value !== serviceVal) {
+          calendlyService.value = serviceVal;
+        }
+      }
+
+      function launchCalendlyScheduling() {
+        const name = (document.getElementById('patientName')?.value || '').trim();
+        const phone = (document.getElementById('patientPhone')?.value || '').trim();
+        const service = document.getElementById('calendlyServiceSelect')?.value || '';
+
+        const params = new URLSearchParams();
+        if (name) params.append('name', name);
+        if (phone) params.append('a1', phone);
+        if (service) params.append('a2', service);
+
+        const paramString = params.toString();
+        const fullUrl = paramString ? `${CALENDLY_URL}?${paramString}` : CALENDLY_URL;
+
+        if (window.Calendly && typeof window.Calendly.initPopupWidget === 'function') {
+          window.Calendly.initPopupWidget({ url: fullUrl });
+        } else {
+          window.open(fullUrl, '_blank', 'noopener,noreferrer');
+        }
+      }
 
       // Modal management
-      function openAppointmentModal(serviceName) {
+      function openAppointmentModal(serviceName, defaultTab = 'whatsapp') {
         const modal = document.getElementById('appointmentModal');
         const serviceSelect = document.getElementById('serviceSelect');
-        if (serviceName && serviceSelect) {
-          const matchingOption = Array.from(serviceSelect.options).find(opt => opt.value === serviceName || opt.text.includes(serviceName));
-          if (matchingOption) {
-            serviceSelect.value = matchingOption.value;
+        const calendlyService = document.getElementById('calendlyServiceSelect');
+        if (serviceName) {
+          if (serviceSelect) {
+            const matchingOption = Array.from(serviceSelect.options).find(opt => opt.value === serviceName || opt.text.includes(serviceName));
+            if (matchingOption) serviceSelect.value = matchingOption.value;
+          }
+          if (calendlyService) {
+            const matchingOption = Array.from(calendlyService.options).find(opt => opt.value === serviceName || opt.text.includes(serviceName));
+            if (matchingOption) calendlyService.value = matchingOption.value;
           }
         }
+        switchBookingTab(defaultTab);
         modal.classList.add('open');
         document.body.style.overflow = 'hidden';
       }
@@ -1771,6 +2994,54 @@
         const modal = document.getElementById('appointmentModal');
         modal.classList.remove('open');
         document.body.style.overflow = '';
+      }
+
+      // Direct booking with specific doctor
+      function bookDoctorConsultation(doctorName, specialty) {
+        openAppointmentModal(specialty);
+        const nameInput = document.getElementById('patientName');
+        if (nameInput) {
+          nameInput.focus();
+        }
+      }
+
+      // Blog Article modal
+      function openArticleModal(articleId) {
+        const data = ARTICLE_DATABASE[articleId];
+        if (!data) return;
+
+        document.getElementById('articleModalCategory').textContent = data.category;
+        document.getElementById('articleModalBadge').textContent = data.badge;
+        document.getElementById('articleModalMeta').textContent = data.meta;
+        document.getElementById('articleModalTitle').textContent = data.title;
+        document.getElementById('articleModalImage').src = data.image;
+        document.getElementById('articleModalContent').innerHTML = data.content;
+
+        const modal = document.getElementById('articleModal');
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeArticleModal() {
+        const modal = document.getElementById('articleModal');
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      // Filter blog articles
+      function switchBlogCategory(category, buttonEl) {
+        const buttons = document.querySelectorAll('.blog-filter-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        if (buttonEl) buttonEl.classList.add('active');
+
+        const articles = document.querySelectorAll('#blogGrid .blog-card');
+        articles.forEach(article => {
+          if (category === 'all' || article.getAttribute('data-category') === category) {
+            article.style.display = 'flex';
+          } else {
+            article.style.display = 'none';
+          }
+        });
       }
 
       function openVideoModal() {
@@ -1784,7 +3055,7 @@
         const iframe = document.getElementById('videoPlayer');
         if (iframe) {
           const src = iframe.src;
-          iframe.src = src; // stop playback
+          iframe.src = src;
         }
         modal.classList.remove('open');
         document.body.style.overflow = '';
@@ -1797,12 +3068,18 @@
         overlay.classList.toggle('open');
       }
 
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
       // Backdrop click handler to close modals
       window.addEventListener('click', function(e) {
         const appModal = document.getElementById('appointmentModal');
         const vidModal = document.getElementById('videoModal');
+        const artModal = document.getElementById('articleModal');
         if (e.target === appModal) closeAppointmentModal();
         if (e.target === vidModal) closeVideoModal();
+        if (e.target === artModal) closeArticleModal();
       });
 
       // Escape key handler
@@ -1810,6 +3087,38 @@
         if (e.key === 'Escape') {
           closeAppointmentModal();
           closeVideoModal();
+          closeArticleModal();
+        }
+      });
+
+      // Back to top & scroll spy
+      window.addEventListener('scroll', function() {
+        const backBtn = document.getElementById('backToTopBtn');
+        if (backBtn) {
+          if (window.scrollY > 400) {
+            backBtn.classList.add('visible');
+          } else {
+            backBtn.classList.remove('visible');
+          }
+        }
+      });
+
+      // Scroll Reveal Observer
+      document.addEventListener('DOMContentLoaded', function() {
+        const revealElements = document.querySelectorAll('.reveal-on-scroll');
+        if ('IntersectionObserver' in window) {
+          const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                obs.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.12 });
+
+          revealElements.forEach(el => observer.observe(el));
+        } else {
+          revealElements.forEach(el => el.classList.add('is-visible'));
         }
       });
 
@@ -1852,18 +3161,6 @@
 
         if (!isValid) return;
 
-        /**
-         * Construct the exact WhatsApp message block specified:
-         * ----------------------------------------
-         * *NEW APPOINTMENT REQUEST* %0A
-         * ---------------------------------------- %0A
-         * *Patient Name:* [Patient Name Input] %0A
-         * *Patient Mobile:* [Patient Phone Input] %0A
-         * *Requested Service:* [Selected Dropdown Service] %0A
-         * ---------------------------------------- %0A
-         * Hello Doctor, I found your clinic website online and would like to confirm my booking slot. Please let me know the available time for today. Thank you!
-         * ----------------------------------------
-         */
         const divider = '----------------------------------------';
         const rawMessage = 
           divider + '\n' +
@@ -1879,11 +3176,9 @@
         const encodedMessage = encodeURIComponent(rawMessage);
         const whatsappUrl = `https://wa.me/${DOCTOR_WHATSAPP_NUMBER}?text=${encodedMessage}`;
 
-        // Reset form and close modal
         closeAppointmentModal();
         event.target.reset();
 
-        // Redirect via window.open
         window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
       }
     </script>
