@@ -224,12 +224,23 @@
       }
       .mobile-menu-btn {
         display: none;
-        background: transparent;
-        border: none;
-        font-size: 1.5rem;
-        color: var(--dark-text);
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        color: #0f172a;
         cursor: pointer;
-        padding: 0.25rem;
+        padding: 0;
+        flex-shrink: 0;
+        transition: all 0.15s ease;
+      }
+      .mobile-menu-btn:hover, .mobile-menu-btn:active {
+        background: #f1f5f9;
+        border-color: #cbd5e1;
+        color: var(--primary-blue);
       }
 
       /* Sections General */
@@ -346,6 +357,35 @@
       }
       .hero-right {
         position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      .hero-badge-strip {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 5;
+      }
+      .handwritten-badge {
+        font-family: var(--font-hand);
+        font-size: 1.85rem;
+        font-weight: 700;
+        color: #0369a1;
+        line-height: 1.2;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: #f0f9ff;
+        border: 1.5px solid #bae6fd;
+        padding: 0.45rem 1.25rem;
+        border-radius: 9999px;
+        transform: rotate(-1deg);
+        box-shadow: 0 4px 14px rgba(3, 105, 161, 0.08);
+      }
+      .handwritten-badge .heart {
+        color: var(--primary-blue);
+        display: inline-block;
       }
       .hero-image-wrapper {
         position: relative;
@@ -354,30 +394,15 @@
         box-shadow: 0 20px 45px -10px rgba(13, 39, 69, 0.18);
         border: 6px solid #ffffff;
         background: #e0f2fe;
+        clear: both;
+        z-index: 1;
+        margin-top: 0;
       }
       .hero-image-wrapper img {
         width: 100%;
         height: auto;
         display: block;
         object-fit: cover;
-      }
-      .handwritten-badge {
-        position: absolute;
-        top: -1.75rem;
-        right: -1rem;
-        font-family: var(--font-hand);
-        font-size: 1.85rem;
-        font-weight: 700;
-        color: #0d2745;
-        line-height: 1.1;
-        transform: rotate(5deg);
-        pointer-events: none;
-        z-index: 10;
-        text-align: right;
-      }
-      .handwritten-badge .heart {
-        color: var(--primary-blue);
-        display: inline-block;
       }
 
       /* Services Grid */
@@ -1401,13 +1426,16 @@
       .modal-backdrop {
         position: fixed;
         inset: 0;
-        background: rgba(13, 39, 69, 0.65);
-        backdrop-filter: blur(4px);
-        z-index: 100;
+        background: rgba(13, 39, 69, 0.75);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        z-index: 10000;
         display: none;
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
-        padding: 1rem;
+        padding: 1.5rem 1rem;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         opacity: 0;
         transition: opacity 0.2s ease;
       }
@@ -1419,15 +1447,20 @@
         background: #ffffff;
         border-radius: 24px;
         width: 100%;
-        max-width: 500px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        max-width: 520px;
+        margin: auto;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
         overflow: hidden;
-        transform: scale(0.95);
+        transform: scale(0.96);
         transition: transform 0.2s ease, max-width 0.25s ease;
         position: relative;
+        max-height: calc(100vh - 3rem);
+        max-height: calc(100dvh - 3rem);
+        display: flex;
+        flex-direction: column;
       }
       .modal-box.wide {
-        max-width: 580px;
+        max-width: 600px;
       }
       .modal-backdrop.open .modal-box {
         transform: scale(1);
@@ -1435,40 +1468,166 @@
       .modal-header {
         background: linear-gradient(135deg, #0d2745 0%, #0369a1 100%);
         color: #ffffff;
-        padding: 1.4rem 1.75rem;
-        position: relative;
+        padding: 1.35rem 1.6rem;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        flex-shrink: 0;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
+      .modal-header-text {
+        padding-right: 3.5rem;
       }
       .modal-header h3 {
         font-size: 1.35rem;
         font-weight: 800;
         margin-bottom: 0.25rem;
+        line-height: 1.25;
       }
       .modal-header p {
         font-size: 0.8125rem;
         color: #bae6fd;
+        line-height: 1.35;
       }
       .modal-close-btn {
         position: absolute;
-        top: 1.25rem;
+        top: 1.1rem;
         right: 1.25rem;
-        background: rgba(255, 255, 255, 0.15);
-        border: none;
-        color: #ffffff;
-        width: 32px;
-        height: 32px;
+        background: #ffffff;
+        border: 2px solid #e2e8f0;
+        color: #0f172a;
+        width: 42px;
+        height: 42px;
         border-radius: 50%;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.1rem;
-        transition: background 0.15s ease;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+        transition: all 0.2s ease;
+        z-index: 60;
+        flex-shrink: 0;
       }
       .modal-close-btn:hover {
-        background: rgba(255, 255, 255, 0.3);
+        background: #fee2e2;
+        border-color: #f87171;
+        color: #dc2626;
+        transform: scale(1.08);
+      }
+      .modal-close-btn svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2.5;
       }
       .modal-body {
-        padding: 1.5rem 1.75rem 1.75rem;
+        padding: 1.4rem 1.6rem 1.6rem;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        flex: 1 1 auto;
+      }
+      .modal-footer-close-btn {
+        width: 100%;
+        margin-top: 0.75rem;
+        background: transparent;
+        border: 1px solid #cbd5e1;
+        color: #64748b;
+        border-radius: 12px;
+        padding: 0.65rem 1rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        transition: all 0.15s ease;
+      }
+      .modal-footer-close-btn:hover {
+        background: #f1f5f9;
+        color: #0f172a;
+        border-color: #94a3b8;
+      }
+
+      /* Selected Doctor Callout Card inside Modal */
+      .doctor-badge-callout {
+        background: #f0fdf4;
+        border: 1.5px solid #bbf7d0;
+        border-radius: 14px;
+        padding: 0.85rem 1rem;
+        margin-bottom: 1.15rem;
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        transition: all 0.2s ease;
+      }
+      .doctor-badge-callout.neutral {
+        background: #f8fafc;
+        border-color: #e2e8f0;
+      }
+      .doctor-callout-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2.5px solid #ffffff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+        flex-shrink: 0;
+      }
+      .doctor-callout-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #e0f2fe;
+        color: var(--primary-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .doctor-callout-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .doctor-callout-label {
+        font-size: 0.6875rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #166534;
+        margin-bottom: 0.15rem;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .doctor-badge-callout.neutral .doctor-callout-label {
+        color: #475569;
+      }
+      .doctor-callout-name {
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.25;
+      }
+      .doctor-callout-sub {
+        font-size: 0.775rem;
+        color: #475569;
+        margin-top: 0.15rem;
+        line-height: 1.35;
+      }
+      .doctor-callout-guarantee {
+        font-size: 0.725rem;
+        color: #059669;
+        font-weight: 600;
+        margin-top: 0.3rem;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .doctor-badge-callout.neutral .doctor-callout-guarantee {
+        color: #0284c7;
       }
 
       /* Booking Method Tabs */
@@ -1797,6 +1956,14 @@
         .hero-title {
           font-size: 2.5rem;
         }
+        .hero-badge-strip {
+          justify-content: center;
+          margin-bottom: 1.25rem;
+        }
+        .handwritten-badge {
+          transform: none;
+          font-size: 1.55rem;
+        }
         .about-grid {
           grid-template-columns: 1fr;
           gap: 2rem;
@@ -1818,11 +1985,27 @@
           display: none;
         }
         .mobile-menu-btn {
-          display: block;
+          display: flex;
+        }
+        .nav-actions {
+          gap: 0.65rem;
         }
       }
 
       @media (max-width: 640px) {
+        .nav-container {
+          padding: 0.75rem 1rem;
+        }
+        .nav-actions .btn-primary {
+          display: none;
+        }
+        .brand-name {
+          font-size: 1.2rem;
+        }
+        .logo-icon {
+          width: 32px;
+          height: 32px;
+        }
         .services-grid {
           grid-template-columns: 1fr;
         }
@@ -1843,10 +2026,14 @@
         .notice-content span {
           display: none;
         }
+        .hero-badge-strip {
+          justify-content: center;
+          margin-bottom: 1.25rem;
+        }
         .handwritten-badge {
-          right: 0.25rem;
-          top: -1rem;
-          font-size: 1.45rem;
+          font-size: 1.35rem;
+          transform: none;
+          padding: 0.35rem 1rem;
         }
         .floating-hub {
           right: 20px;
@@ -1855,33 +2042,51 @@
       }
 
       /* Mobile Navigation Drawer */
+      .drawer-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(13, 39, 69, 0.45);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 998;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+      .drawer-overlay.open {
+        display: block;
+        opacity: 1;
+      }
       .mobile-drawer {
         position: fixed;
         top: 0;
         right: 0;
-        transform: translateX(100%);
-        width: 100%;
-        max-width: min(85vw, 320px);
+        width: 85vw;
+        max-width: 320px;
         height: 100vh;
         height: 100dvh;
         background: #ffffff;
-        z-index: 90;
-        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
-        padding: 2rem 1.5rem;
-        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 999;
+        box-shadow: -10px 0 35px rgba(0, 0, 0, 0.25);
+        padding: 1.75rem 1.5rem;
+        transform: translateX(100%);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
+        visibility: hidden;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         box-sizing: border-box;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
       .mobile-drawer.open {
         transform: translateX(0);
+        visibility: visible;
       }
       @media (max-width: 480px) {
         .mobile-drawer {
-          width: 100%;
-          max-width: 100vw;
+          width: 88vw;
+          max-width: 320px;
         }
       }
       .mobile-drawer-header {
@@ -1889,6 +2094,26 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 2rem;
+        padding-bottom: 0.85rem;
+        border-bottom: 1px solid #f1f5f9;
+      }
+      .drawer-close-btn {
+        background: #f1f5f9;
+        border: none;
+        color: #0f172a;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .drawer-close-btn:hover {
+        background: #e2e8f0;
+        color: var(--primary-blue);
       }
       .mobile-drawer-links {
         list-style: none;
@@ -1901,16 +2126,10 @@
         color: #0f172a;
         font-size: 1.05rem;
         font-weight: 700;
+        transition: color 0.15s ease;
       }
-      .drawer-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.4);
-        z-index: 80;
-        display: none;
-      }
-      .drawer-overlay.open {
-        display: block;
+      .mobile-drawer-links a:hover {
+        color: var(--primary-blue);
       }
     </style>
   </head>
@@ -1959,15 +2178,19 @@
           <button class="btn-primary" onclick="openAppointmentModal()">
             Book an Appointment &rarr;
           </button>
-          <button class="mobile-menu-btn" onclick="toggleMobileDrawer()" aria-label="Open navigation menu">
-            &#9776;
+          <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileDrawer()" aria-label="Open navigation menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" y1="6" x2="20" y2="6"></line>
+              <line x1="4" y1="12" x2="20" y2="12"></line>
+              <line x1="4" y1="18" x2="20" y2="18"></line>
+            </svg>
           </button>
         </div>
       </div>
     </header>
 
     <!-- Mobile Navigation Drawer -->
-    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleMobileDrawer()"></div>
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleMobileDrawer(true)"></div>
     <div class="mobile-drawer" id="mobileDrawer">
       <div>
         <div class="mobile-drawer-header">
@@ -1975,20 +2198,24 @@
             <span class="brand-name">SmileCare</span>
             <span class="brand-sub">DENTAL CLINIC</span>
           </div>
-          <button class="notice-close" onclick="toggleMobileDrawer()">&times;</button>
+          <button class="drawer-close-btn" onclick="toggleMobileDrawer(true)" aria-label="Close menu">&times;</button>
         </div>
         <ul class="mobile-drawer-links">
-          <li><a href="#" onclick="toggleMobileDrawer()">Home</a></li>
-          <li><a href="#about" onclick="toggleMobileDrawer()">About</a></li>
-          <li><a href="#services" onclick="toggleMobileDrawer()">Services</a></li>
-          <li><a href="#team" onclick="toggleMobileDrawer()">Our Team</a></li>
-          <li><a href="#testimonials" onclick="toggleMobileDrawer()">Patient Stories</a></li>
-          <li><a href="#blog" onclick="toggleMobileDrawer()">Blog</a></li>
-          <li><a href="#contact" onclick="toggleMobileDrawer()">Contact</a></li>
+          <li><a href="#" onclick="toggleMobileDrawer(true)">Home</a></li>
+          <li><a href="#about" onclick="toggleMobileDrawer(true)">About</a></li>
+          <li><a href="#services" onclick="toggleMobileDrawer(true)">Services</a></li>
+          <li><a href="#team" onclick="toggleMobileDrawer(true)">Our Team</a></li>
+          <li><a href="#testimonials" onclick="toggleMobileDrawer(true)">Patient Stories</a></li>
+          <li><a href="#blog" onclick="toggleMobileDrawer(true)">Blog</a></li>
+          <li><a href="#contact" onclick="toggleMobileDrawer(true)">Contact</a></li>
         </ul>
+        <div style="margin: 1.5rem 0 0.5rem; padding: 0.85rem 1rem; background: #f0f7fd; border-radius: 12px; display: flex; align-items: center; gap: 0.65rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-blue); flex-shrink: 0;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+919901463886" style="color: #0f172a; font-weight: 700; font-size: 0.875rem; text-decoration: none;">+91 99014 63886</a>
+        </div>
       </div>
       <div>
-        <button class="btn-primary" style="width: 100%; justify-content: center;" onclick="toggleMobileDrawer(); openAppointmentModal();">
+        <button class="btn-primary" style="width: 100%; justify-content: center; box-shadow: none;" onclick="toggleMobileDrawer(true); openAppointmentModal();">
           Book an Appointment &rarr;
         </button>
       </div>
@@ -2050,8 +2277,8 @@
         </div>
 
         <div class="hero-right">
-          <div class="handwritten-badge">
-            A<br>Healthier<br>Smile<br>A Brighter<br>You <span class="heart">♡</span>
+          <div class="hero-badge-strip">
+            <span class="handwritten-badge">A Healthier Smile, A Brighter You <span class="heart">♡</span></span>
           </div>
           <div class="hero-image-wrapper">
             <img src="/images/hero_dental_care.jpg" alt="Smiling patient in dental clinic chair receiving gentle dental checkup" />
@@ -2347,7 +2574,7 @@
                 <span class="team-tag">Full Mouth Rehab</span>
                 <span class="team-tag">Oral Surgery</span>
               </div>
-              <button class="team-doctor-btn" onclick="bookDoctorConsultation('Dr. Rohit Sharma', 'Dental Implants')">
+              <button class="team-doctor-btn" onclick="bookDoctorConsultation('Dr. Rohit Sharma, MDS', 'Dental Implants')">
                 <span>Book with Dr. Rohit</span> &rarr;
               </button>
             </div>
@@ -2370,7 +2597,7 @@
                 <span class="team-tag">Invisible Braces</span>
                 <span class="team-tag">Bite Correction</span>
               </div>
-              <button class="team-doctor-btn" onclick="bookDoctorConsultation('Dr. Ananya Patil', 'Orthodontics')">
+              <button class="team-doctor-btn" onclick="bookDoctorConsultation('Dr. Ananya Patil, MDS', 'Orthodontics')">
                 <span>Book with Dr. Ananya</span> &rarr;
               </button>
             </div>
@@ -2393,7 +2620,7 @@
                 <span class="team-tag">Cavity Prevention</span>
                 <span class="team-tag">Fear-Free Care</span>
               </div>
-              <button class="team-doctor-btn" onclick="bookDoctorConsultation('Dr. Vikram Deshmukh', 'Kids Dentistry')">
+              <button class="team-doctor-btn" onclick="bookDoctorConsultation('Dr. Vikram Deshmukh, MDS', 'Kids Dentistry')">
                 <span>Book with Dr. Vikram</span> &rarr;
               </button>
             </div>
@@ -2416,7 +2643,7 @@
                 <span class="team-tag">Porcelain Veneers</span>
                 <span class="team-tag">Teeth Whitening</span>
               </div>
-              <button class="team-doctor-btn" onclick="bookDoctorConsultation('Dr. Priya Kulkarni', 'Cosmetic Dentistry')">
+              <button class="team-doctor-btn" onclick="bookDoctorConsultation('Dr. Priya Kulkarni, BDS', 'Cosmetic Dentistry')">
                 <span>Book with Dr. Priya</span> &rarr;
               </button>
             </div>
@@ -2716,15 +2943,43 @@
     <div class="modal-backdrop" id="appointmentModal">
       <div class="modal-box" id="modalBox">
         <div class="modal-header">
-          <h3 id="modalHeading">Book an Appointment</h3>
-          <p id="modalSubheading">Instant WhatsApp confirmation or live calendar scheduling</p>
-          <button class="modal-close-btn" onclick="closeAppointmentModal()" aria-label="Close modal">&times;</button>
+          <div class="modal-header-text">
+            <h3 id="modalHeading">Book an Appointment</h3>
+            <p id="modalSubheading">Instant WhatsApp confirmation or live calendar scheduling</p>
+          </div>
+          <button class="modal-close-btn" onclick="closeAppointmentModal()" aria-label="Close modal" title="Close modal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
         </div>
         <div class="modal-body">
+          <!-- Prominent Selected Doctor Callout Banner -->
+          <div class="doctor-badge-callout neutral" id="doctorCallout">
+            <img class="doctor-callout-avatar" id="doctorCalloutImg" src="/images/team_dr_rohit.jpg" alt="Doctor photo" style="display: none;" />
+            <div class="doctor-callout-icon" id="doctorCalloutIcon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 2C7 2 4 5 4 10C4 16 6 21 8 22C9.5 22.5 10.5 20 12 20C13.5 20 14.5 22.5 16 22C18 21 20 16 20 10C20 5 17 2 12 2Z"/>
+              </svg>
+            </div>
+            <div class="doctor-callout-info">
+              <div class="doctor-callout-label" id="doctorCalloutLabel">
+                <span id="doctorCalloutTag">Doctor Assignment</span>
+              </div>
+              <div class="doctor-callout-name" id="doctorCalloutName">Any Available Specialist</div>
+              <div class="doctor-callout-sub" id="doctorCalloutSub">First available clinic slot based on reception schedule</div>
+              <div class="doctor-callout-guarantee" id="doctorCalloutGuarantee">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span id="doctorCalloutGuaranteeText">Receptionist will check schedule &amp; prevent conflicting bookings</span>
+              </div>
+            </div>
+          </div>
+
           <!-- Booking Mode Switcher Tabs -->
           <div class="booking-mode-tabs">
             <button type="button" class="booking-tab-btn active" id="tabBtnWhatsapp" onclick="switchBookingTab('whatsapp')">
-              <svg viewBox="0 0 24 24" fill="#25d366"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.04 20.15C10.56 20.15 9.11 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.07 16.3C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.68 12.04 3.68C14.24 3.68 16.31 4.54 17.86 6.09C19.42 7.65 20.27 9.71 20.27 11.91C20.27 16.46 16.58 20.15 12.04 20.15ZM16.57 14.39C16.32 14.27 15.1 13.67 14.87 13.58C14.64 13.5 14.48 13.46 14.31 13.71C14.15 13.96 13.67 14.52 13.53 14.69C13.38 14.85 13.24 14.87 12.99 14.75C12.74 14.62 11.94 14.36 10.99 13.51C10.25 12.85 9.75 12.04 9.61 11.79C9.46 11.54 9.59 11.41 9.72 11.28C9.83 11.17 9.97 10.99 10.09 10.84C10.22 10.7 10.26 10.59 10.34 10.43C10.43 10.26 10.39 10.12 10.32 9.99C10.26 9.87 9.77 8.66 9.57 8.16C9.37 7.68 9.17 7.74 9.02 7.73C8.88 7.73 8.71 7.73 8.55 7.73C8.38 7.73 8.12 7.79 7.89 8.04C7.66 8.29 7.02 8.89 7.02 10.11C7.02 11.33 7.91 12.51 8.03 12.67C8.16 12.84 9.78 15.34 12.27 16.41C12.86 16.67 13.32 16.82 13.68 16.94C14.27 17.13 14.81 17.1 15.24 17.04C15.72 16.97 16.71 16.44 16.92 15.86C17.12 15.28 17.12 14.79 17.06 14.69C17 14.58 16.83 14.52 16.57 14.39Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="#25d366"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.04 20.15C10.56 20.15 9.11 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.07 16.3C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.68 12.04 3.68C14.24 3.68 16.31 4.54 17.86 6.09C19.42 7.65 20.27 9.71 20.27 11.91C20.27 16.46 16.58 20.15 12.04 20.15ZM16.57 14.39C16.32 14.27 15.1 13.67 14.87 13.58C14.64 13.5 14.48 13.46 14.31 13.71C14.15 13.96 13.67 14.52 13.53 14.69C13.38 14.85 13.24 14.87 12.99 14.75C12.74 14.62 11.94 14.36 10.99 13.51C10.25 12.85 9.75 12.04 9.61 11.79C9.46 11.54 9.59 11.41 9.72 11.28C9.83 11.17 9.97 10.99 10.09 10.84C10.22 10.7 10.26 10.59 10.34 10.43C10.43 10.26 10.39 10.12 10.32 9.99C10.26 9.87 9.77 8.66 9.57 8.16C9.37 7.68 9.17 7.74 9.02 7.73C8.88 7.73 8.71 7.73 8.55 7.73C8.38 7.79 7.89 8.04C7.66 8.29 7.02 8.89 7.02 10.11C7.02 11.33 7.91 12.51 8.03 12.67C8.16 12.84 9.78 15.34 12.27 16.41C12.86 16.67 13.32 16.82 13.68 16.94C14.27 17.13 14.81 17.1 15.24 17.04C15.72 16.97 16.71 16.44 16.92 15.86C17.12 15.28 17.12 14.79 17.06 14.69C17 14.58 16.83 14.52 16.57 14.39Z"/></svg>
               <span>WhatsApp Booking</span>
             </button>
             <button type="button" class="booking-tab-btn" id="tabBtnCalendly" onclick="switchBookingTab('calendly')">
@@ -2762,9 +3017,23 @@
                 </select>
               </div>
 
+              <div class="form-group">
+                <label class="form-label" for="doctorSelect">Preferred Doctor / Specialist *</label>
+                <select id="doctorSelect" class="form-select" onchange="syncDoctorSelection(this.value)">
+                  <option value="Any Available Specialist">Any Available Specialist (Receptionist Match - Fastest Slot)</option>
+                  <option value="Dr. Rohit Sharma, MDS">Dr. Rohit Sharma, MDS (Chief Surgeon &amp; Implants)</option>
+                  <option value="Dr. Ananya Patil, MDS">Dr. Ananya Patil, MDS (Senior Orthodontist &amp; Aligners)</option>
+                  <option value="Dr. Vikram Deshmukh, MDS">Dr. Vikram Deshmukh, MDS (Pediatric &amp; Kids Specialist)</option>
+                  <option value="Dr. Priya Kulkarni, BDS">Dr. Priya Kulkarni, BDS (Cosmetic &amp; Aesthetic Specialist)</option>
+                </select>
+                <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.35rem; line-height: 1.4;">
+                  ✨ <strong>Schedule Conflict Protection:</strong> Reception will verify doctor availability and confirm the slot without common schedule conflicts.
+                </div>
+              </div>
+
               <div class="whatsapp-preview-box">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#25d366"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.04 20.15C10.56 20.15 9.11 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.07 16.3C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.68 12.04 3.68C14.24 3.68 16.31 4.54 17.86 6.09C19.42 7.65 20.27 9.71 20.27 11.91C20.27 16.46 16.58 20.15 12.04 20.15ZM16.57 14.39C16.32 14.27 15.1 13.67 14.87 13.58C14.64 13.5 14.48 13.46 14.31 13.71C14.15 13.96 13.67 14.52 13.53 14.69C13.38 14.85 13.24 14.87 12.99 14.75C12.74 14.62 11.94 14.36 10.99 13.51C10.25 12.85 9.75 12.04 9.61 11.79C9.46 11.54 9.59 11.41 9.72 11.28C9.83 11.17 9.97 10.99 10.09 10.84C10.22 10.7 10.26 10.59 10.34 10.43C10.43 10.26 10.39 10.12 10.32 9.99C10.26 9.87 9.77 8.66 9.57 8.16C9.37 7.68 9.17 7.74 9.02 7.73C8.88 7.73 8.71 7.73 8.55 7.73C8.38 7.73 8.12 7.79 7.89 8.04C7.66 8.29 7.02 8.89 7.02 10.11C7.02 11.33 7.91 12.51 8.03 12.67C8.16 12.84 9.78 15.34 12.27 16.41C12.86 16.67 13.32 16.82 13.68 16.94C14.27 17.13 14.81 17.1 15.24 17.04C15.72 16.97 16.71 16.44 16.92 15.86C17.12 15.28 17.12 14.79 17.06 14.69C17 14.58 16.83 14.52 16.57 14.39Z"/></svg>
-                <span>Submitting will open your official WhatsApp chat with Dr. SmileCare with your pre-formatted booking details.</span>
+                <span>Submitting will open your official WhatsApp chat with doctor name and receptionist scheduling instructions.</span>
               </div>
 
               <button type="submit" class="whatsapp-submit-btn">
@@ -2787,6 +3056,15 @@
                   Open Calendly &rarr;
                 </button>
               </div>
+
+              <!-- Extra Close Button for Seamless Mobile UX -->
+              <button type="button" class="modal-footer-close-btn" onclick="closeAppointmentModal()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+                <span>Close Window</span>
+              </button>
             </form>
           </div>
 
@@ -2830,6 +3108,17 @@
               </select>
             </div>
 
+            <div class="form-group" style="margin-bottom: 1.1rem;">
+              <label class="form-label" for="calendlyDoctorSelect">Preferred Doctor / Specialist *</label>
+              <select id="calendlyDoctorSelect" class="form-select" onchange="syncDoctorSelection(this.value)">
+                <option value="Any Available Specialist">Any Available Specialist (Receptionist Match - Fastest Slot)</option>
+                <option value="Dr. Rohit Sharma, MDS">Dr. Rohit Sharma, MDS (Chief Surgeon &amp; Implants)</option>
+                <option value="Dr. Ananya Patil, MDS">Dr. Ananya Patil, MDS (Senior Orthodontist &amp; Aligners)</option>
+                <option value="Dr. Vikram Deshmukh, MDS">Dr. Vikram Deshmukh, MDS (Pediatric &amp; Kids Specialist)</option>
+                <option value="Dr. Priya Kulkarni, BDS">Dr. Priya Kulkarni, BDS (Cosmetic &amp; Aesthetic Specialist)</option>
+              </select>
+            </div>
+
             <button type="button" class="calendly-primary-btn" onclick="launchCalendlyScheduling()">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
               Select Time Slot on Calendly &rarr;
@@ -2842,6 +3131,15 @@
               <span>Have an urgent question right now? </span>
               <a href="javascript:void(0)" onclick="switchBookingTab('whatsapp')">Chat on WhatsApp instead &rarr;</a>
             </div>
+
+            <!-- Extra Close Button for Seamless UX -->
+            <button type="button" class="modal-footer-close-btn" onclick="closeAppointmentModal()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+              <span>Close Window</span>
+            </button>
           </div>
         </div>
       </div>
@@ -2851,7 +3149,12 @@
     <div class="modal-backdrop" id="videoModal">
       <div class="modal-box video-modal-box">
         <div style="display: flex; justify-content: flex-end; padding: 0.75rem 1rem; background: #0f172a;">
-          <button class="modal-close-btn" style="position: static;" onclick="closeVideoModal()">&times;</button>
+          <button class="modal-close-btn" style="position: static;" onclick="closeVideoModal()" aria-label="Close video" title="Close video">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
         </div>
         <div class="video-wrapper">
           <iframe id="videoPlayer" src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?enablejsapi=1" title="SmileCare Dental Clinic Tour" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -2863,9 +3166,16 @@
     <div class="modal-backdrop" id="articleModal">
       <div class="modal-box article-modal-box">
         <div class="modal-header">
-          <h3 id="articleModalCategory">Dental Article</h3>
-          <p id="articleModalSubtitle">SmileCare Clinical Knowledge Center</p>
-          <button class="modal-close-btn" onclick="closeArticleModal()" aria-label="Close article">&times;</button>
+          <div class="modal-header-text">
+            <h3 id="articleModalCategory">Dental Article</h3>
+            <p id="articleModalSubtitle">SmileCare Clinical Knowledge Center</p>
+          </div>
+          <button class="modal-close-btn" onclick="closeArticleModal()" aria-label="Close article" title="Close article">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
         </div>
         <div class="article-modal-scroll">
           <div class="article-hero-thumb">
@@ -2976,6 +3286,82 @@
         }
       };
 
+      // Clinic Doctors database with profiles, specialties, and photos
+      const DOCTORS_DATA = {
+        'Dr. Rohit Sharma, MDS': {
+          name: 'Dr. Rohit Sharma, MDS',
+          shortName: 'Dr. Rohit Sharma',
+          role: 'Chief Dental Surgeon & Implantologist',
+          image: '/images/team_dr_rohit.jpg',
+          specialty: 'Dental Implants',
+          experience: '14+ Years'
+        },
+        'Dr. Ananya Patil, MDS': {
+          name: 'Dr. Ananya Patil, MDS',
+          shortName: 'Dr. Ananya Patil',
+          role: 'Senior Orthodontist & Clear Aligners',
+          image: '/images/team_dr_ananya.jpg',
+          specialty: 'Orthodontics',
+          experience: '11+ Years'
+        },
+        'Dr. Vikram Deshmukh, MDS': {
+          name: 'Dr. Vikram Deshmukh, MDS',
+          shortName: 'Dr. Vikram Deshmukh',
+          role: 'Pediatric & Preventive Dentist',
+          image: '/images/team_dr_vikram.jpg',
+          specialty: 'Kids Dentistry',
+          experience: '8+ Years'
+        },
+        'Dr. Priya Kulkarni, BDS': {
+          name: 'Dr. Priya Kulkarni, BDS',
+          shortName: 'Dr. Priya Kulkarni',
+          role: 'Cosmetic & Aesthetic Dentist',
+          image: '/images/team_dr_priya.jpg',
+          specialty: 'Cosmetic Dentistry',
+          experience: '9+ Years'
+        }
+      };
+
+      // Updates prominent doctor profile card inside booking modal
+      function updateDoctorCallout(selectedDoctorValue) {
+        const callout = document.getElementById('doctorCallout');
+        const img = document.getElementById('doctorCalloutImg');
+        const icon = document.getElementById('doctorCalloutIcon');
+        const tag = document.getElementById('doctorCalloutTag');
+        const name = document.getElementById('doctorCalloutName');
+        const sub = document.getElementById('doctorCalloutSub');
+        const guaranteeText = document.getElementById('doctorCalloutGuaranteeText');
+
+        if (!callout) return;
+
+        const doc = DOCTORS_DATA[selectedDoctorValue];
+        if (doc) {
+          callout.classList.remove('neutral');
+          if (img) {
+            img.src = doc.image;
+            img.alt = doc.name;
+            img.style.display = 'block';
+          }
+          if (icon) icon.style.display = 'none';
+          if (tag) tag.innerHTML = `👨‍⚕️ Requested Specialist &bull; ${doc.experience} Experience`;
+          if (name) name.textContent = doc.name;
+          if (sub) sub.textContent = `${doc.role} &bull; ${doc.specialty}`;
+          if (guaranteeText) {
+            guaranteeText.textContent = `Reception will check ${doc.shortName}'s schedule availability & confirm conflict-free slot`;
+          }
+        } else {
+          callout.classList.add('neutral');
+          if (img) img.style.display = 'none';
+          if (icon) icon.style.display = 'flex';
+          if (tag) tag.textContent = 'Clinic Assignment &bull; Fast Track';
+          if (name) name.textContent = 'Any Available Specialist';
+          if (sub) sub.textContent = 'Our receptionist assigns the best suitable doctor matching your service';
+          if (guaranteeText) {
+            guaranteeText.textContent = 'Receptionist will check schedule & prevent conflicting bookings';
+          }
+        }
+      }
+
       // Switch booking tabs (WhatsApp vs Calendly)
       function switchBookingTab(tab) {
         const tabWhatsapp = document.getElementById('tabPaneWhatsapp');
@@ -2985,6 +3371,9 @@
         const modalBox = document.getElementById('modalBox');
         const heading = document.getElementById('modalHeading');
         const subheading = document.getElementById('modalSubheading');
+        const doctorSelect = document.getElementById('doctorSelect');
+        const currentDoc = doctorSelect ? doctorSelect.value : '';
+        const doc = DOCTORS_DATA[currentDoc];
 
         if (tab === 'calendly') {
           tabWhatsapp.classList.remove('active');
@@ -2992,8 +3381,14 @@
           btnWhatsapp.classList.remove('active');
           btnCalendly.classList.add('active');
           modalBox.classList.add('wide');
-          heading.textContent = 'Schedule with Calendly';
-          subheading.textContent = 'Pick an exact date & time slot on our live clinic calendar';
+
+          if (doc) {
+            heading.textContent = `Schedule with ${doc.shortName}`;
+            subheading.textContent = `Reserve a 30-min time slot on our live calendar for ${doc.specialty}`;
+          } else {
+            heading.textContent = 'Schedule with Calendly';
+            subheading.textContent = 'Pick an exact date & time slot on our live clinic calendar';
+          }
 
           // Sync service selection
           const serviceSelect = document.getElementById('serviceSelect');
@@ -3001,14 +3396,26 @@
           if (serviceSelect && calendlyService) {
             calendlyService.value = serviceSelect.value;
           }
+
+          // Sync doctor selection
+          const calendlyDoctor = document.getElementById('calendlyDoctorSelect');
+          if (doctorSelect && calendlyDoctor) {
+            calendlyDoctor.value = doctorSelect.value;
+          }
         } else {
           tabWhatsapp.classList.add('active');
           tabCalendly.classList.remove('active');
           btnWhatsapp.classList.add('active');
           btnCalendly.classList.remove('active');
           modalBox.classList.remove('wide');
-          heading.textContent = 'Quick Appointment';
-          subheading.textContent = 'Instant WhatsApp confirmation directly with Dr. SmileCare';
+
+          if (doc) {
+            heading.textContent = `Consultation with ${doc.shortName}`;
+            subheading.textContent = `Receptionist will check ${doc.shortName}'s schedule availability without conflicts`;
+          } else {
+            heading.textContent = 'Book an Appointment';
+            subheading.textContent = 'Instant WhatsApp confirmation directly with SmileCare reception';
+          }
         }
       }
 
@@ -3023,15 +3430,44 @@
         }
       }
 
+      function syncDoctorSelection(doctorVal) {
+        const doctorSelect = document.getElementById('doctorSelect');
+        const calendlyDoctor = document.getElementById('calendlyDoctorSelect');
+        if (doctorSelect && doctorSelect.value !== doctorVal) {
+          doctorSelect.value = doctorVal;
+        }
+        if (calendlyDoctor && calendlyDoctor.value !== doctorVal) {
+          calendlyDoctor.value = doctorVal;
+        }
+        updateDoctorCallout(doctorVal);
+
+        const heading = document.getElementById('modalHeading');
+        const subheading = document.getElementById('modalSubheading');
+        const doc = DOCTORS_DATA[doctorVal];
+        if (doc) {
+          if (heading) heading.textContent = `Consultation with ${doc.shortName}`;
+          if (subheading) subheading.textContent = `Receptionist will check ${doc.shortName}'s availability without schedule conflicts`;
+        } else {
+          if (heading) heading.textContent = 'Book an Appointment';
+          if (subheading) subheading.textContent = 'Instant WhatsApp confirmation or live calendar scheduling';
+        }
+      }
+
       function launchCalendlyScheduling() {
         const name = (document.getElementById('patientName')?.value || '').trim();
         const phone = (document.getElementById('patientPhone')?.value || '').trim();
         const service = document.getElementById('calendlyServiceSelect')?.value || '';
+        const doctor = document.getElementById('calendlyDoctorSelect')?.value || '';
 
         const params = new URLSearchParams();
         if (name) params.append('name', name);
         if (phone) params.append('a1', phone);
-        if (service) params.append('a2', service);
+        if (service) {
+          const detail = (doctor && doctor !== 'Any Available Specialist') 
+            ? `${service} (Preferred Doctor: ${doctor} - Receptionist confirmation based on schedule availability)` 
+            : service;
+          params.append('a2', detail);
+        }
 
         const paramString = params.toString();
         const fullUrl = paramString ? `${CALENDLY_URL}?${paramString}` : CALENDLY_URL;
@@ -3044,10 +3480,15 @@
       }
 
       // Modal management
-      function openAppointmentModal(serviceName, defaultTab = 'whatsapp') {
+      function openAppointmentModal(serviceName, defaultTab = 'whatsapp', doctorName = null) {
         const modal = document.getElementById('appointmentModal');
         const serviceSelect = document.getElementById('serviceSelect');
         const calendlyService = document.getElementById('calendlyServiceSelect');
+        const doctorSelect = document.getElementById('doctorSelect');
+        const calendlyDoctor = document.getElementById('calendlyDoctorSelect');
+        const heading = document.getElementById('modalHeading');
+        const subheading = document.getElementById('modalSubheading');
+
         if (serviceName) {
           if (serviceSelect) {
             const matchingOption = Array.from(serviceSelect.options).find(opt => opt.value === serviceName || opt.text.includes(serviceName));
@@ -3058,7 +3499,33 @@
             if (matchingOption) calendlyService.value = matchingOption.value;
           }
         }
+
+        let selectedDocKey = null;
+        if (doctorName && doctorSelect) {
+          const matchingDoc = Array.from(doctorSelect.options).find(opt => 
+            opt.value.toLowerCase().includes(doctorName.toLowerCase()) || 
+            opt.text.toLowerCase().includes(doctorName.toLowerCase())
+          );
+          if (matchingDoc) {
+            selectedDocKey = matchingDoc.value;
+            doctorSelect.value = matchingDoc.value;
+            if (calendlyDoctor) calendlyDoctor.value = matchingDoc.value;
+          }
+        } else if (doctorSelect && !doctorName) {
+          // If no specific doctor passed, keep or reset
+          selectedDocKey = doctorSelect.value;
+        }
+
+        updateDoctorCallout(selectedDocKey || (doctorSelect ? doctorSelect.value : ''));
+
         switchBookingTab(defaultTab);
+
+        if (selectedDocKey && DOCTORS_DATA[selectedDocKey]) {
+          const docObj = DOCTORS_DATA[selectedDocKey];
+          if (heading) heading.textContent = `Consultation with ${docObj.shortName}`;
+          if (subheading) subheading.textContent = `Receptionist will check ${docObj.shortName}'s availability without schedule conflicts`;
+        }
+
         modal.classList.add('open');
         document.body.style.overflow = 'hidden';
       }
@@ -3071,10 +3538,10 @@
 
       // Direct booking with specific doctor
       function bookDoctorConsultation(doctorName, specialty) {
-        openAppointmentModal(specialty);
+        openAppointmentModal(specialty, 'whatsapp', doctorName);
         const nameInput = document.getElementById('patientName');
         if (nameInput) {
-          nameInput.focus();
+          setTimeout(() => nameInput.focus(), 150);
         }
       }
 
@@ -3134,12 +3601,20 @@
         document.body.style.overflow = '';
       }
 
-      function toggleMobileDrawer() {
+      function toggleMobileDrawer(forceClose = false) {
         const drawer = document.getElementById('mobileDrawer');
         const overlay = document.getElementById('drawerOverlay');
-        const isOpen = drawer.classList.toggle('open');
-        overlay.classList.toggle('open');
-        document.body.style.overflow = isOpen ? 'hidden' : '';
+        if (!drawer) return;
+        const willOpen = forceClose ? false : !drawer.classList.contains('open');
+        if (willOpen) {
+          drawer.classList.add('open');
+          if (overlay) overlay.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        } else {
+          drawer.classList.remove('open');
+          if (overlay) overlay.classList.remove('open');
+          document.body.style.overflow = '';
+        }
       }
 
       function scrollToTop() {
@@ -3212,7 +3687,9 @@
 
         const patientName = nameInput.value.trim();
         const patientPhone = phoneInput.value.trim();
-        const requestedService = serviceSelect.value;
+        const requestedService = serviceSelect ? serviceSelect.value : 'General Dentistry';
+        const doctorSelect = document.getElementById('doctorSelect');
+        const selectedDoctorVal = doctorSelect ? doctorSelect.value : 'Any Available Specialist';
 
         if (!patientName || patientName.length < 2) {
           nameError.style.display = 'block';
@@ -3235,17 +3712,48 @@
 
         if (!isValid) return;
 
-        const divider = '----------------------------------------';
-        const rawMessage = 
-          divider + '\n' +
-          '*NEW APPOINTMENT REQUEST*' + '\n' +
-          divider + '\n' +
-          '*Patient Name:* ' + patientName + '\n' +
-          '*Patient Mobile:* ' + patientPhone + '\n' +
-          '*Requested Service:* ' + requestedService + '\n' +
-          divider + '\n' +
-          'Hello Doctor, I found your clinic website online and would like to confirm my booking slot. Please let me know the available time for today. Thank you!\n' +
-          divider;
+        const docObj = DOCTORS_DATA[selectedDoctorVal];
+        const isSpecificDoctor = !!docObj;
+        const doctorDisplayName = docObj ? docObj.name : selectedDoctorVal;
+        const doctorShortName = docObj ? docObj.shortName : selectedDoctorVal;
+
+        const divider = '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━';
+        let rawMessage = '';
+
+        if (isSpecificDoctor) {
+          rawMessage = 
+            divider + '\n' +
+            '🦷 *SMILECARE CLINIC - APPOINTMENT BOOKING*' + '\n' +
+            divider + '\n' +
+            '👤 *Patient Name:* ' + patientName + '\n' +
+            '📱 *Patient Mobile:* ' + patientPhone + '\n' +
+            '🩺 *Requested Service:* ' + requestedService + '\n' +
+            '👨‍⚕️ *Book with Doctor:* ' + doctorDisplayName + '\n' +
+            divider + '\n' +
+            '📋 *RECEPTIONIST CONFIRMATION INSTRUCTIONS:*\n' +
+            '• Patient explicitly requested an appointment with *' + doctorShortName + '*.\n' +
+            '• Receptionist: Please confirm booking based on *' + doctorShortName + '\'s availability* in the common schedule.\n' +
+            '• If there is any schedule conflict with ' + doctorShortName + ', please inform the patient and suggest the best suitable alternate time slot or specialist to avoid any conflict.\n' +
+            divider + '\n' +
+            'Hello SmileCare Team, I submitted my appointment request from your website for ' + doctorShortName + '. Please verify doctor availability and confirm the best suitable slot. Thank you!\n' +
+            divider;
+        } else {
+          rawMessage = 
+            divider + '\n' +
+            '🦷 *SMILECARE CLINIC - APPOINTMENT BOOKING*' + '\n' +
+            divider + '\n' +
+            '👤 *Patient Name:* ' + patientName + '\n' +
+            '📱 *Patient Mobile:* ' + patientPhone + '\n' +
+            '🩺 *Requested Service:* ' + requestedService + '\n' +
+            '👨‍⚕️ *Doctor Preference:* Any Available Specialist (Receptionist Match)\n' +
+            divider + '\n' +
+            '📋 *RECEPTIONIST CONFIRMATION INSTRUCTIONS:*\n' +
+            '• Receptionist: Please check clinic schedule availability and assign the *best suitable doctor* for ' + requestedService + ' without common schedule conflicts.\n' +
+            '• Confirm the earliest available appointment slot with the patient.\n' +
+            divider + '\n' +
+            'Hello SmileCare Team, I submitted my appointment request from your website. Please check doctor availability and confirm the best suitable slot for today. Thank you!\n' +
+            divider;
+        }
 
         const encodedMessage = encodeURIComponent(rawMessage);
         const whatsappUrl = `https://wa.me/${DOCTOR_WHATSAPP_NUMBER}?text=${encodedMessage}`;
