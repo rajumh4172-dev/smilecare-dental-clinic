@@ -442,12 +442,39 @@
         box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
         display: flex;
         flex-direction: column;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        position: relative;
+        cursor: pointer;
+        transform: translate3d(0, 0, 0) scale(1);
+        transform-origin: center center;
+        transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), 
+                    box-shadow 0.38s cubic-bezier(0.22, 1, 0.36, 1), 
+                    border-color 0.32s ease;
+        will-change: transform, box-shadow;
+        backface-visibility: hidden;
+        -webkit-font-smoothing: subpixel-antialiased;
+      }
+      .service-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #0280c7, #38bdf8);
+        opacity: 0;
+        transform: scaleX(0.25);
+        transform-origin: center;
+        transition: opacity 0.35s ease, transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+        z-index: 5;
       }
       .service-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 28px rgba(2, 128, 199, 0.12);
-        border-color: #bae6fd;
+        transform: translate3d(0, -7px, 0) scale(1.025);
+        box-shadow: 0 20px 34px -8px rgba(2, 128, 199, 0.16), 0 8px 16px -4px rgba(15, 23, 42, 0.05);
+        border-color: #7dd3fc;
+      }
+      .service-card:hover::before {
+        opacity: 1;
+        transform: scaleX(1);
       }
       .service-thumb {
         position: relative;
@@ -459,10 +486,13 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.3s ease;
+        transform: scale(1);
+        transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease;
+        will-change: transform;
       }
       .service-card:hover .service-thumb img {
-        transform: scale(1.05);
+        transform: scale(1.08);
+        filter: brightness(1.02);
       }
       .service-icon-badge {
         position: absolute;
@@ -478,6 +508,19 @@
         box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
         color: var(--primary-blue);
         border: 1px solid #e2e8f0;
+        transform: translate3d(0, 0, 0) scale(1);
+        transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), 
+                    background-color 0.3s ease, 
+                    border-color 0.3s ease, 
+                    box-shadow 0.3s ease, 
+                    color 0.3s ease;
+      }
+      .service-card:hover .service-icon-badge {
+        transform: translate3d(0, -3px, 0) scale(1.08);
+        background: #f0f9ff;
+        color: var(--primary-blue-dark);
+        border-color: #93c5fd;
+        box-shadow: 0 6px 16px rgba(2, 128, 199, 0.22);
       }
       .service-body {
         padding: 1.75rem 1.25rem 1.25rem;
@@ -491,6 +534,10 @@
         color: #0f172a;
         margin-bottom: 0.5rem;
         letter-spacing: -0.01em;
+        transition: color 0.28s ease;
+      }
+      .service-card:hover .service-title {
+        color: var(--primary-blue);
       }
       .service-desc {
         font-size: 0.775rem;
@@ -511,10 +558,13 @@
         gap: 0.3rem;
         padding: 0;
         text-align: left;
+        transition: color 0.25s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
       }
+      .service-card:hover .service-action,
       .service-action:hover {
         color: var(--primary-blue-hover);
-        text-decoration: underline;
+        transform: translateX(4px);
+        text-decoration: none;
       }
 
       /* About Us Section */
@@ -655,6 +705,300 @@
         color: var(--star-yellow);
         font-size: 0.85rem;
         letter-spacing: 0.08em;
+      }
+
+      /* Submit Your Story Button & Modal Styles */
+      .submit-story-btn {
+        margin-top: 1.15rem;
+        background: linear-gradient(135deg, var(--primary-blue) 0%, #0284c7 100%);
+        color: #ffffff;
+        border: none;
+        border-radius: 9999px;
+        padding: 0.7rem 1.35rem;
+        font-size: 0.875rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        box-shadow: 0 4px 14px rgba(2, 128, 199, 0.25);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      }
+      .submit-story-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 22px rgba(2, 128, 199, 0.38);
+        background: linear-gradient(135deg, var(--primary-blue-hover) 0%, #0369a1 100%);
+      }
+      .submit-story-btn:active {
+        transform: translateY(0);
+      }
+      .submit-story-btn svg {
+        transition: transform 0.2s ease;
+      }
+      .submit-story-btn:hover svg {
+        transform: rotate(-8deg) scale(1.1);
+      }
+
+      /* Submit Story Modal Container */
+      .story-modal-box {
+        max-width: 540px;
+        max-height: 90vh;
+        max-height: 90dvh;
+      }
+      .story-modal-scroll {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 1.4rem 1.6rem 1.8rem;
+        max-height: calc(90vh - 80px);
+        max-height: calc(90dvh - 80px);
+      }
+
+      /* Interactive Star Rating Picker */
+      .star-picker-container {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        flex-wrap: wrap;
+        padding: 0.35rem 0;
+      }
+      .star-picker-stars {
+        display: inline-flex;
+        gap: 0.3rem;
+      }
+      .star-btn {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 1.85rem;
+        color: #cbd5e1;
+        line-height: 1;
+        padding: 0 2px;
+        transition: transform 0.15s ease, color 0.15s ease;
+      }
+      .star-btn.active,
+      .star-btn.hovered {
+        color: #f59e0b;
+      }
+      .star-btn:hover {
+        transform: scale(1.22);
+      }
+      .star-rating-label {
+        font-size: 0.8125rem;
+        font-weight: 700;
+        color: #0369a1;
+        background: #f0f9ff;
+        border: 1px solid #bae6fd;
+        padding: 0.3rem 0.75rem;
+        border-radius: 9999px;
+      }
+
+      /* Profile Photo Area & Camera Viewfinder */
+      .photo-selection-area {
+        background: #f8fafc;
+        border: 1.5px dashed #cbd5e1;
+        border-radius: 16px;
+        padding: 1.25rem;
+        text-align: center;
+        transition: border-color 0.2s ease, background 0.2s ease;
+      }
+      .photo-selection-area.has-photo {
+        border-style: solid;
+        border-color: #93c5fd;
+        background: #f0f9ff;
+      }
+      .camera-action-buttons {
+        display: flex;
+        gap: 0.65rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 0.75rem;
+      }
+      .camera-action-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.6rem 1rem;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        border: 1.5px solid #cbd5e1;
+        background: #ffffff;
+        color: #1e293b;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+      .camera-action-btn:hover {
+        background: #f1f5f9;
+        border-color: #94a3b8;
+      }
+      .camera-action-btn.primary-cam {
+        background: var(--primary-blue);
+        color: #ffffff;
+        border-color: var(--primary-blue);
+        box-shadow: 0 2px 8px rgba(2, 128, 199, 0.25);
+      }
+      .camera-action-btn.primary-cam:hover {
+        background: var(--primary-blue-hover);
+        border-color: var(--primary-blue-hover);
+      }
+
+      /* Live Camera Viewfinder Overlay */
+      .camera-viewfinder-wrap {
+        display: none;
+        margin-top: 0.85rem;
+        background: #0f172a;
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      }
+      .camera-viewfinder-wrap.active {
+        display: block;
+      }
+      .camera-video-feed {
+        width: 100%;
+        max-height: 270px;
+        object-fit: cover;
+        display: block;
+        transform: scaleX(-1);
+      }
+      .camera-overlay-frame {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 3.5rem;
+      }
+      .camera-guide-circle {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 2.5px dashed rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.4);
+      }
+      .camera-guide-text {
+        color: #ffffff;
+        font-size: 0.75rem;
+        margin-top: 0.5rem;
+        font-weight: 700;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
+      }
+      .camera-controls-bar {
+        position: absolute;
+        bottom: 0.75rem;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        z-index: 10;
+      }
+      .camera-shutter-btn {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 4px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.15s ease;
+      }
+      .camera-shutter-btn:hover {
+        transform: scale(1.1);
+      }
+      .camera-shutter-inner {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #ef4444;
+      }
+      .camera-cancel-btn {
+        background: rgba(15, 23, 42, 0.75);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        padding: 0.45rem 0.85rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        backdrop-filter: blur(4px);
+        transition: background 0.15s ease;
+      }
+      .camera-cancel-btn:hover {
+        background: rgba(15, 23, 42, 0.95);
+      }
+
+      /* Photo Preview Display */
+      .photo-preview-display {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 0.65rem;
+      }
+      .photo-preview-display.visible {
+        display: flex;
+      }
+      .photo-avatar-ring {
+        position: relative;
+        width: 86px;
+        height: 86px;
+        border-radius: 50%;
+        padding: 3px;
+        background: linear-gradient(135deg, var(--primary-blue) 0%, #10b981 100%);
+        box-shadow: 0 4px 16px rgba(2, 128, 199, 0.25);
+      }
+      .photo-avatar-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        background: #e2e8f0;
+      }
+      .photo-source-tag {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #059669;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: #ecfdf5;
+        padding: 0.2rem 0.65rem;
+        border-radius: 9999px;
+        border: 1px solid #a7f3d0;
+      }
+
+      /* New Verified Review Tag & Entrance Animation */
+      .new-story-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: #f0fdf4;
+        color: #166534;
+        border: 1px solid #bbf7d0;
+        font-size: 0.6875rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 0.2rem 0.55rem;
+        border-radius: 9999px;
+      }
+      .review-card.just-added {
+        animation: highlightStoryCard 2.2s ease forwards;
+        border-color: #38bdf8;
+      }
+      @keyframes highlightStoryCard {
+        0% { transform: scale(0.96); box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.4); }
+        40% { transform: scale(1.02); box-shadow: 0 0 0 6px rgba(56, 189, 248, 0.25); }
+        100% { transform: scale(1); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03); }
       }
 
       /* Trust Metrics Strip */
@@ -870,12 +1214,39 @@
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
         display: flex;
         flex-direction: column;
-        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+        position: relative;
+        cursor: pointer;
+        transform: translate3d(0, 0, 0) scale(1);
+        transform-origin: center center;
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), 
+                    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1), 
+                    border-color 0.32s ease;
+        will-change: transform, box-shadow;
+        backface-visibility: hidden;
+        -webkit-font-smoothing: subpixel-antialiased;
+      }
+      .blog-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #0280c7, #38bdf8);
+        opacity: 0;
+        transform: scaleX(0.25);
+        transform-origin: center;
+        transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        z-index: 5;
       }
       .blog-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 16px 36px rgba(2, 128, 199, 0.12);
-        border-color: #bae6fd;
+        transform: translate3d(0, -8px, 0) scale(1.022);
+        box-shadow: 0 24px 42px -10px rgba(2, 128, 199, 0.18), 0 10px 20px -5px rgba(15, 23, 42, 0.06);
+        border-color: #7dd3fc;
+      }
+      .blog-card:hover::before {
+        opacity: 1;
+        transform: scaleX(1);
       }
       .blog-media {
         position: relative;
@@ -887,10 +1258,13 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.35s ease;
+        transform: scale(1);
+        transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), filter 0.55s ease;
+        will-change: transform;
       }
       .blog-card:hover .blog-media img {
-        transform: scale(1.05);
+        transform: scale(1.08);
+        filter: brightness(1.02);
       }
       .blog-badge-tag {
         position: absolute;
@@ -904,6 +1278,15 @@
         padding: 0.25rem 0.65rem;
         border-radius: 9999px;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        transform: translate3d(0, 0, 0) scale(1);
+        transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), 
+                    box-shadow 0.3s ease, 
+                    background-color 0.3s ease;
+      }
+      .blog-card:hover .blog-badge-tag {
+        transform: translate3d(0, -2px, 0) scale(1.05);
+        box-shadow: 0 4px 14px rgba(2, 128, 199, 0.18);
+        background: #ffffff;
       }
       .blog-card-body {
         padding: 1.5rem 1.35rem 1.35rem;
@@ -927,6 +1310,10 @@
         line-height: 1.35;
         margin-bottom: 0.75rem;
         letter-spacing: -0.01em;
+        transition: color 0.28s ease;
+      }
+      .blog-card:hover .blog-card-title {
+        color: var(--primary-blue);
       }
       .blog-card-excerpt {
         font-size: 0.8125rem;
@@ -947,11 +1334,12 @@
         gap: 0.35rem;
         padding: 0;
         text-align: left;
-        transition: color 0.15s ease, transform 0.15s ease;
+        transition: color 0.25s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
       }
+      .blog-card:hover .blog-read-btn,
       .blog-read-btn:hover {
         color: var(--primary-blue-hover);
-        transform: translateX(2px);
+        transform: translateX(5px);
       }
 
       /* Article Reader Modal */
@@ -1207,6 +1595,790 @@
         .article-full-title {
           font-size: 1.35rem;
         }
+      }
+
+      /* 7. Frequently Asked Questions (FAQ) Accordion Section */
+      .faq-section {
+        padding: 5.5rem 1.5rem;
+        background: linear-gradient(180deg, #f8fafc 0%, #ffffff 50%, #f0f7fd 100%);
+        border-top: 1px solid var(--border-color);
+        position: relative;
+      }
+      .faq-container {
+        max-width: 1240px;
+        margin: 0 auto;
+      }
+      .faq-header {
+        text-align: center;
+        max-width: 720px;
+        margin: 0 auto 2.5rem;
+      }
+      .faq-header .section-title {
+        margin-top: 0.35rem;
+        margin-bottom: 0.75rem;
+      }
+      .faq-header-desc {
+        color: var(--slate-body);
+        font-size: 1rem;
+        line-height: 1.6;
+        margin: 0 auto;
+      }
+
+      /* Controls: Filter Pills & Search */
+      .faq-controls-bar {
+        max-width: 860px;
+        margin: 0 auto 2.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        align-items: center;
+      }
+      .faq-search-box {
+        position: relative;
+        width: 100%;
+        max-width: 520px;
+      }
+      .faq-search-input {
+        width: 100%;
+        padding: 0.85rem 1.25rem 0.85rem 3rem;
+        font-family: var(--font-main);
+        font-size: 0.95rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 9999px;
+        background: #ffffff;
+        color: var(--dark-text);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .faq-search-input:focus {
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(2, 128, 199, 0.15);
+      }
+      .faq-search-icon {
+        position: absolute;
+        left: 1.15rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #94a3b8;
+        pointer-events: none;
+      }
+      .faq-filter-tabs {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .faq-filter-btn {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        color: #475569;
+        font-size: 0.825rem;
+        font-weight: 600;
+        padding: 0.45rem 1rem;
+        border-radius: 9999px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .faq-filter-btn:hover {
+        background: #f0f9ff;
+        border-color: #bae6fd;
+        color: var(--primary-blue);
+      }
+      .faq-filter-btn.active {
+        background: var(--primary-blue);
+        border-color: var(--primary-blue);
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(2, 128, 199, 0.25);
+      }
+
+      /* Bar for quick actions: Expand all / Collapse all */
+      .faq-actions-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.25rem;
+        padding: 0 0.5rem;
+      }
+      .faq-count-label {
+        font-size: 0.85rem;
+        color: #64748b;
+        font-weight: 600;
+      }
+      .faq-toggle-all-btn {
+        background: transparent;
+        border: 1px solid #e2e8f0;
+        color: var(--primary-blue);
+        font-size: 0.825rem;
+        font-weight: 700;
+        padding: 0.4rem 0.85rem;
+        border-radius: 8px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        transition: all 0.15s ease;
+      }
+      .faq-toggle-all-btn:hover {
+        background: #f0f9ff;
+        border-color: #bae6fd;
+      }
+
+      /* Layout: 2-column on desktop (Main Accordion Stack + Sidebar Help Card) */
+      .faq-layout {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 2.25rem;
+        align-items: start;
+      }
+      .faq-accordion-group {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      /* Semantic Details & Summary Accordion Card */
+      .faq-item {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+        transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .faq-item:hover {
+        border-color: #cbd5e1;
+        box-shadow: 0 6px 18px rgba(2, 128, 199, 0.06);
+        transform: translateY(-2px);
+      }
+      .faq-item[open] {
+        border-color: var(--primary-blue);
+        box-shadow: 0 8px 24px rgba(2, 128, 199, 0.1);
+        background: #ffffff;
+      }
+      .faq-item[open]::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 4px;
+        background: var(--primary-blue);
+        border-top-left-radius: 16px;
+        border-bottom-left-radius: 16px;
+      }
+
+      /* Summary Trigger */
+      .faq-question {
+        padding: 1.35rem 1.5rem;
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.25rem;
+        user-select: none;
+        outline: none;
+        background: transparent;
+        transition: background-color 0.15s ease;
+      }
+      .faq-question::-webkit-details-marker {
+        display: none;
+      }
+      .faq-question:hover {
+        background: #fafcff;
+      }
+      .faq-question:focus-visible {
+        outline: 2px solid var(--primary-blue);
+        outline-offset: -2px;
+        border-radius: 16px;
+      }
+
+      .faq-question-body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        flex: 1;
+        text-align: left;
+      }
+      .faq-badge-kicker {
+        font-size: 0.725rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--primary-blue);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .faq-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #0f172a;
+        line-height: 1.4;
+        transition: color 0.2s ease;
+      }
+      .faq-item[open] .faq-title {
+        color: var(--primary-blue);
+      }
+
+      /* Toggle Icon Disc with animated rotation */
+      .faq-toggle-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #64748b;
+        flex-shrink: 0;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, color 0.25s ease;
+      }
+      .faq-question:hover .faq-toggle-icon {
+        background: #e2e8f0;
+        color: #0f172a;
+      }
+      .faq-item[open] .faq-toggle-icon {
+        transform: rotate(180deg);
+        background: var(--primary-blue);
+        color: #ffffff;
+      }
+
+      /* Smooth Answer Panel */
+      .faq-answer {
+        padding: 0 1.5rem 1.5rem 1.5rem;
+        color: var(--slate-body);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        border-top: 1px solid #f1f5f9;
+        padding-top: 1.15rem;
+        animation: faqSlideDown 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      .faq-answer p {
+        margin: 0 0 0.85rem;
+      }
+      .faq-answer p:last-child {
+        margin-bottom: 0;
+      }
+      @keyframes faqSlideDown {
+        0% {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Highlight Tags in Answer */
+      .faq-badges-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        padding-top: 0.85rem;
+        border-top: 1px dashed #e2e8f0;
+      }
+      .faq-pill {
+        font-size: 0.775rem;
+        font-weight: 700;
+        padding: 0.3rem 0.65rem;
+        border-radius: 8px;
+        background: #f0f9ff;
+        color: var(--primary-blue);
+        border: 1px solid #bae6fd;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .faq-pill.green {
+        background: #ecfdf5;
+        color: #059669;
+        border-color: #a7f3d0;
+      }
+      .faq-pill.amber {
+        background: #fffbeb;
+        color: #d97706;
+        border-color: #fde68a;
+      }
+
+      /* Sidebar Assistance Box */
+      .faq-sidebar {
+        position: sticky;
+        top: 6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .faq-help-card {
+        background: linear-gradient(135deg, #0d2745 0%, #1e3a8a 100%);
+        border-radius: 20px;
+        padding: 2rem 1.75rem;
+        color: #ffffff;
+        box-shadow: 0 12px 30px rgba(13, 39, 69, 0.16);
+        position: relative;
+        overflow: hidden;
+      }
+      .faq-help-card::after {
+        content: '';
+        position: absolute;
+        top: -30px;
+        right: -30px;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(2, 128, 199, 0.35) 0%, transparent 70%);
+        pointer-events: none;
+      }
+      .faq-help-icon-wrap {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #38bdf8;
+        margin-bottom: 1.25rem;
+      }
+      .faq-help-title {
+        font-size: 1.3rem;
+        font-weight: 800;
+        margin: 0 0 0.5rem;
+        line-height: 1.25;
+        color: #ffffff;
+      }
+      .faq-help-desc {
+        font-size: 0.88rem;
+        color: #cbd5e1;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+      .faq-help-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .faq-help-btn-primary {
+        background: var(--primary-blue);
+        color: #ffffff;
+        border: none;
+        border-radius: 12px;
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        box-shadow: 0 4px 12px rgba(2, 128, 199, 0.3);
+      }
+      .faq-help-btn-primary:hover {
+        background: #026aa5;
+        transform: translateY(-2px);
+      }
+      .faq-help-btn-outline {
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 12px;
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.2s ease;
+        text-decoration: none;
+      }
+      .faq-help-btn-outline:hover {
+        background: rgba(255, 255, 255, 0.16);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+      .faq-trust-mini-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+      }
+      .faq-trust-mini-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: #ecfdf5;
+        color: #059669;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .faq-trust-mini-title {
+        font-size: 0.875rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 0.15rem;
+      }
+      .faq-trust-mini-sub {
+        font-size: 0.78rem;
+        color: #64748b;
+      }
+
+      /* No Results Search State */
+      .faq-empty-state {
+        display: none;
+        text-align: center;
+        padding: 3rem 1.5rem;
+        background: #ffffff;
+        border: 1px dashed #cbd5e1;
+        border-radius: 16px;
+      }
+      .faq-empty-state svg {
+        color: #94a3b8;
+        margin-bottom: 1rem;
+      }
+      .faq-empty-state h4 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 0.4rem;
+      }
+      .faq-empty-state p {
+        font-size: 0.9rem;
+        color: #64748b;
+        margin-bottom: 1.25rem;
+      }
+
+      /* Responsive FAQ queries */
+      @media (max-width: 960px) {
+        .faq-layout {
+          grid-template-columns: 1fr;
+        }
+        .faq-sidebar {
+          position: static;
+          margin-top: 1rem;
+        }
+      }
+      @media (max-width: 640px) {
+        .faq-section {
+          padding: 4rem 1.25rem;
+        }
+        .faq-question {
+          padding: 1.15rem 1.15rem;
+          gap: 0.75rem;
+        }
+        .faq-title {
+          font-size: 0.975rem;
+        }
+        .faq-answer {
+          padding: 0 1.15rem 1.25rem;
+          font-size: 0.9rem;
+        }
+        .faq-toggle-icon {
+          width: 30px;
+          height: 30px;
+        }
+        .faq-filter-btn {
+          font-size: 0.78rem;
+          padding: 0.35rem 0.75rem;
+        }
+      }
+
+      /* 8. Clinic Location & Map Section */
+      .location-section {
+        padding: 5.5rem 1.5rem;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+        border-top: 1px solid var(--border-color);
+        position: relative;
+      }
+      .location-container {
+        max-width: 1240px;
+        margin: 0 auto;
+      }
+      .location-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: 2.25rem;
+        align-items: stretch;
+        margin-top: 2.75rem;
+      }
+      .location-info-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 2.25rem;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .clinic-brand-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: #ecfdf5;
+        border: 1px solid #a7f3d0;
+        color: #065f46;
+        font-size: 0.78rem;
+        font-weight: 700;
+        padding: 0.35rem 0.85rem;
+        border-radius: 999px;
+        margin-bottom: 1rem;
+        width: fit-content;
+      }
+      .pulse-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        animation: pulseDot 2s infinite ease-in-out;
+      }
+      @keyframes pulseDot {
+        0%, 100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.3);
+          opacity: 0.6;
+        }
+      }
+      .location-card-title {
+        font-size: 1.45rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 0.25rem;
+        letter-spacing: -0.01em;
+      }
+      .location-card-subtitle {
+        font-size: 0.875rem;
+        color: #64748b;
+        font-weight: 500;
+        margin-bottom: 1.75rem;
+      }
+      .location-details-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.35rem;
+        margin-bottom: 1.75rem;
+      }
+      .location-detail-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .location-detail-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: #e0f2fe;
+        color: var(--primary-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .location-detail-icon svg {
+        width: 20px;
+        height: 20px;
+      }
+      .location-detail-text strong {
+        display: block;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #64748b;
+        margin-bottom: 0.2rem;
+      }
+      .location-detail-text span,
+      .location-detail-text a {
+        font-size: 0.9375rem;
+        color: #1e293b;
+        font-weight: 600;
+        line-height: 1.45;
+        text-decoration: none;
+      }
+      .location-detail-text a:hover {
+        color: var(--primary-blue);
+      }
+      .location-detail-text .text-sub {
+        display: block;
+        font-size: 0.8125rem;
+        color: #64748b;
+        font-weight: 500;
+        margin-top: 0.15rem;
+      }
+      .clinic-amenities-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.75rem;
+        padding-top: 1.25rem;
+        border-top: 1px dashed #e2e8f0;
+      }
+      .amenity-chip {
+        font-size: 0.775rem;
+        font-weight: 600;
+        color: #475569;
+        background: #f1f5f9;
+        padding: 0.35rem 0.75rem;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+      }
+      .location-actions {
+        display: flex;
+        gap: 0.85rem;
+        flex-wrap: wrap;
+      }
+      .btn-location-directions {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background: var(--primary-blue);
+        color: #ffffff;
+        padding: 0.8rem 1.35rem;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 0.875rem;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 12px rgba(2, 128, 199, 0.25);
+      }
+      .btn-location-directions:hover {
+        background: var(--primary-blue-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(2, 128, 199, 0.35);
+      }
+      .btn-location-book {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background: #f8fafc;
+        border: 1.5px solid #cbd5e1;
+        color: #1e293b;
+        padding: 0.8rem 1.35rem;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .btn-location-book:hover {
+        border-color: var(--primary-blue);
+        color: var(--primary-blue);
+        background: #ffffff;
+      }
+      .location-map-wrapper {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+        min-height: 480px;
+        background: #e2e8f0;
+        display: flex;
+        flex-direction: column;
+      }
+      .google-map-iframe {
+        width: 100%;
+        height: 100%;
+        min-height: 480px;
+        border: 0;
+        display: block;
+        flex: 1;
+      }
+      .map-badge-overlay {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        right: 1rem;
+        max-width: 440px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        padding: 0.75rem 1rem;
+        border-radius: 14px;
+        border: 1px solid rgba(226, 232, 240, 0.9);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        z-index: 5;
+      }
+      .map-badge-left {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+      }
+      .map-badge-icon {
+        font-size: 1.35rem;
+      }
+      .map-badge-content strong {
+        display: block;
+        font-size: 0.875rem;
+        color: #0f172a;
+        font-weight: 800;
+      }
+      .map-badge-content span {
+        font-size: 0.775rem;
+        color: #64748b;
+        font-weight: 500;
+      }
+      .map-open-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        background: #f0f9ff;
+        border: 1px solid #bae6fd;
+        padding: 0.35rem 0.75rem;
+        border-radius: 8px;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: all 0.15s ease;
+      }
+      .map-open-btn:hover {
+        background: var(--primary-blue);
+        color: #ffffff;
+        border-color: var(--primary-blue);
+      }
+      .map-footer-strip {
+        background: #ffffff;
+        border-top: 1px solid #e2e8f0;
+        padding: 0.75rem 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        color: #64748b;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .map-footer-strip span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
       }
 
       /* Bottom CTA Banner */
@@ -1990,6 +3162,16 @@
         .nav-actions {
           gap: 0.65rem;
         }
+        .location-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+        .location-map-wrapper {
+          min-height: 400px;
+        }
+        .google-map-iframe {
+          min-height: 400px;
+        }
       }
 
       @media (max-width: 640px) {
@@ -2038,6 +3220,31 @@
         .floating-hub {
           right: 20px;
           bottom: 20px;
+        }
+        .location-section {
+          padding: 3.5rem 1rem;
+        }
+        .location-info-card {
+          padding: 1.5rem 1.15rem;
+        }
+        .location-actions {
+          flex-direction: column;
+        }
+        .btn-location-directions,
+        .btn-location-book {
+          width: 100%;
+        }
+        .location-map-wrapper {
+          min-height: 320px;
+        }
+        .google-map-iframe {
+          min-height: 320px;
+        }
+        .map-badge-overlay {
+          top: 0.65rem;
+          left: 0.65rem;
+          right: 0.65rem;
+          padding: 0.5rem 0.75rem;
         }
       }
 
@@ -2131,7 +3338,115 @@
       .mobile-drawer-links a:hover {
         color: var(--primary-blue);
       }
+
+      /* Active press micro-feedback */
+      .service-card:active,
+      .blog-card:active {
+        transform: translate3d(0, -2px, 0) scale(0.995);
+        transition-duration: 0.15s;
+      }
+
+      /* Accessibility: Reduced Motion */
+      @media (prefers-reduced-motion: reduce) {
+        .service-card,
+        .service-card:hover,
+        .service-card:active,
+        .blog-card,
+        .blog-card:hover,
+        .blog-card:active,
+        .service-thumb img,
+        .blog-media img,
+        .service-icon-badge,
+        .blog-badge-tag,
+        .service-action,
+        .blog-read-btn,
+        .faq-item,
+        .faq-toggle-icon,
+        .faq-answer,
+        .faq-filter-btn,
+        .submit-story-btn,
+        .star-btn,
+        .camera-action-btn,
+        .review-card.just-added {
+          transition: none !important;
+          transform: none !important;
+          animation: none !important;
+        }
+      }
     </style>
+    <!-- Structured Data: Dental Clinic & FAQPage Schema for Search Optimization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How often should I visit the dentist for a routine check-up and cleaning?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We recommend visiting SmileCare every 6 months for a comprehensive oral examination and professional ultrasonic cleaning. Regular visits prevent decay, gum disease, and plaque buildup before they require root canals or emergency intervention."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is dental treatment painful? What if I suffer from dental anxiety?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your comfort is our top priority. We use gentle computerized local anesthesia, surface-numbing topical gels, and ultra-fine micro-needles so you barely feel a pinch. For anxious patients, we offer comforting ambient music, gentle sedation options, and clear hand signals to pause treatment whenever you need a breather."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do Dental Implants work, and how long do they last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A dental implant is a biocompatible titanium post surgically anchored into the jawbone that acts as an artificial root, topped with a custom porcelain crown. Implants look, bite, and feel 100% natural. With regular brushing, flossing, and check-ups, dental implants have a 98%+ success rate and can easily last a lifetime."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should I do during a dental emergency, and do you offer same-day emergency visits?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we reserve daily slots specifically for dental emergencies. For a knocked-out tooth, preserve it in cold milk or saliva and call us immediately (within 60 minutes). For severe unmanageable pain or facial swelling, call our direct emergency line at +91 99014 63886 for priority same-day care."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does dental treatment cost, and do you accept insurance or EMI plans?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We provide 100% transparent itemized estimates before starting any procedure. We assist with cashless insurance claims for eligible treatments, and provide 0% interest EMI installment plans (3 to 12 months) for restorative and orthodontic procedures."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between In-Clinic Professional Whitening and home kits?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In-clinic professional whitening delivers 5 to 8 shades whiter teeth safely in a single 45-minute appointment under cool LED activation, with enamel-safe desensitizing agents. Over-the-counter kits are weaker, take weeks, and may trigger gum irritation or uneven results."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "At what age should my child have their first visit to the pediatric dentist?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The American Academy of Pediatric Dentistry recommends bringing your child by age 1 or within 6 months of their first baby tooth erupting. Early visits prevent nursing caries, ensure healthy jaw development, and foster positive dental habits without fear."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are dental X-rays safe? How much radiation do they emit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, dental X-rays are extremely safe. SmileCare uses modern digital sensors emitting up to 90% less radiation than traditional film, equivalent to just 1-2 hours of natural background sunlight, coupled with protective lead aprons."
+          }
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <!-- 1. Notice Strip -->
@@ -2167,6 +3482,7 @@
           <li><a href="#team" class="nav-link">Our Team</a></li>
           <li><a href="#testimonials" class="nav-link">Patient Stories</a></li>
           <li><a href="#blog" class="nav-link">Blog</a></li>
+          <li><a href="#faq" class="nav-link">FAQ</a></li>
           <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
 
@@ -2207,6 +3523,7 @@
           <li><a href="#team" onclick="toggleMobileDrawer(true)">Our Team</a></li>
           <li><a href="#testimonials" onclick="toggleMobileDrawer(true)">Patient Stories</a></li>
           <li><a href="#blog" onclick="toggleMobileDrawer(true)">Blog</a></li>
+          <li><a href="#faq" onclick="toggleMobileDrawer(true)">FAQ</a></li>
           <li><a href="#contact" onclick="toggleMobileDrawer(true)">Contact</a></li>
         </ul>
         <div style="margin: 1.5rem 0 0.5rem; padding: 0.85rem 1rem; background: #f0f7fd; border-radius: 12px; display: flex; align-items: center; gap: 0.65rem;">
@@ -2344,7 +3661,7 @@
 
         <div class="services-grid">
           <!-- Card 1 -->
-          <div class="service-card">
+          <div class="service-card" onclick="openAppointmentModal('General Dentistry')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){openAppointmentModal('General Dentistry');event.preventDefault();}">
             <div class="service-thumb">
               <img src="/images/service_general_dentistry.jpg" alt="General Dentistry" />
               <div class="service-icon-badge">
@@ -2356,14 +3673,14 @@
             <div class="service-body">
               <h3 class="service-title">General Dentistry</h3>
               <p class="service-desc">Routine checkups, cleanings and preventive care.</p>
-              <button class="service-action" onclick="openAppointmentModal('General Dentistry')">
+              <button class="service-action" onclick="event.stopPropagation(); openAppointmentModal('General Dentistry')">
                 Learn More &rarr;
               </button>
             </div>
           </div>
 
           <!-- Card 2 -->
-          <div class="service-card">
+          <div class="service-card" onclick="openAppointmentModal('Orthodontics')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){openAppointmentModal('Orthodontics');event.preventDefault();}">
             <div class="service-thumb">
               <img src="/images/service_clear_aligners.jpg" alt="Orthodontics Clear Aligners" />
               <div class="service-icon-badge">
@@ -2376,14 +3693,14 @@
             <div class="service-body">
               <h3 class="service-title">Orthodontics</h3>
               <p class="service-desc">Braces &amp; clear aligners for a straighter smile.</p>
-              <button class="service-action" onclick="openAppointmentModal('Orthodontics')">
+              <button class="service-action" onclick="event.stopPropagation(); openAppointmentModal('Orthodontics')">
                 Learn More &rarr;
               </button>
             </div>
           </div>
 
           <!-- Card 3 -->
-          <div class="service-card">
+          <div class="service-card" onclick="openAppointmentModal('Dental Implants')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){openAppointmentModal('Dental Implants');event.preventDefault();}">
             <div class="service-thumb">
               <img src="/images/service_dental_implants.jpg" alt="Dental Implants" />
               <div class="service-icon-badge">
@@ -2396,14 +3713,14 @@
             <div class="service-body">
               <h3 class="service-title">Dental Implants</h3>
               <p class="service-desc">A permanent solution for missing teeth.</p>
-              <button class="service-action" onclick="openAppointmentModal('Dental Implants')">
+              <button class="service-action" onclick="event.stopPropagation(); openAppointmentModal('Dental Implants')">
                 Learn More &rarr;
               </button>
             </div>
           </div>
 
           <!-- Card 4 -->
-          <div class="service-card">
+          <div class="service-card" onclick="openAppointmentModal('Teeth Whitening')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){openAppointmentModal('Teeth Whitening');event.preventDefault();}">
             <div class="service-thumb">
               <img src="/images/service_teeth_whitening.jpg" alt="Teeth Whitening" />
               <div class="service-icon-badge">
@@ -2415,14 +3732,14 @@
             <div class="service-body">
               <h3 class="service-title">Teeth Whitening</h3>
               <p class="service-desc">Brighter, whiter smile in just one visit.</p>
-              <button class="service-action" onclick="openAppointmentModal('Teeth Whitening')">
+              <button class="service-action" onclick="event.stopPropagation(); openAppointmentModal('Teeth Whitening')">
                 Learn More &rarr;
               </button>
             </div>
           </div>
 
           <!-- Card 5 -->
-          <div class="service-card">
+          <div class="service-card" onclick="openAppointmentModal('Kids Dentistry')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){openAppointmentModal('Kids Dentistry');event.preventDefault();}">
             <div class="service-thumb">
               <img src="/images/service_kids_dentistry.jpg" alt="Kids Dentistry" />
               <div class="service-icon-badge">
@@ -2437,14 +3754,14 @@
             <div class="service-body">
               <h3 class="service-title">Kids Dentistry</h3>
               <p class="service-desc">Gentle, friendly care for growing smiles.</p>
-              <button class="service-action" onclick="openAppointmentModal('Kids Dentistry')">
+              <button class="service-action" onclick="event.stopPropagation(); openAppointmentModal('Kids Dentistry')">
                 Learn More &rarr;
               </button>
             </div>
           </div>
 
           <!-- Card 6 -->
-          <div class="service-card">
+          <div class="service-card" onclick="openAppointmentModal('Cosmetic Dentistry')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){openAppointmentModal('Cosmetic Dentistry');event.preventDefault();}">
             <div class="service-thumb">
               <img src="/images/service_cosmetic_dentistry.jpg" alt="Cosmetic Dentistry" />
               <div class="service-icon-badge">
@@ -2456,7 +3773,7 @@
             <div class="service-body">
               <h3 class="service-title">Cosmetic Dentistry</h3>
               <p class="service-desc">Enhance your smile with modern solutions.</p>
-              <button class="service-action" onclick="openAppointmentModal('Cosmetic Dentistry')">
+              <button class="service-action" onclick="event.stopPropagation(); openAppointmentModal('Cosmetic Dentistry')">
                 Learn More &rarr;
               </button>
             </div>
@@ -2655,11 +3972,21 @@
     <!-- 6. Testimonials Section -->
     <section class="testimonials-section" id="testimonials">
       <div class="section-container" style="padding-top: 0; padding-bottom: 0;">
-        <div class="testimonials-grid">
+        <div class="testimonials-grid" id="testimonialsGrid">
           <!-- Intro -->
           <div class="testimonials-intro">
             <span class="section-kicker">WHAT OUR PATIENTS SAY</span>
             <h2 class="section-title">Real Smiles.<br>Real Stories.</h2>
+            <p style="color: var(--slate-body); font-size: 0.9rem; line-height: 1.5; margin-top: 0.5rem; margin-bottom: 1.15rem;">
+              Over 2,500+ happy smiles treated with gentle care and modern technology.
+            </p>
+            <button type="button" class="submit-story-btn" onclick="openStoryModal()" id="submitStoryTriggerBtn" aria-label="Submit Your Story" title="Submit Your Story">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+              <span>Submit Your Story</span>
+            </button>
           </div>
 
           <!-- Review 1 -->
@@ -2722,7 +4049,7 @@
 
         <div class="blog-grid" id="blogGrid">
           <!-- Blog Card 1 -->
-          <article class="blog-card" data-category="hygiene">
+          <article class="blog-card" data-category="hygiene" onclick="openArticleModal('whitening')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){openArticleModal('whitening');event.preventDefault();}">
             <div class="blog-media">
               <img src="/images/blog_teeth_whitening.jpg" alt="Teeth Whitening Guide" />
               <span class="blog-badge-tag">Oral Hygiene</span>
@@ -2737,14 +4064,14 @@
               <p class="blog-card-excerpt">
                 Is teeth bleaching safe for tooth enamel? Understand the clinical distinction between in-clinic laser whitening and over-the-counter home kits.
               </p>
-              <button class="blog-read-btn" onclick="openArticleModal('whitening')">
+              <button class="blog-read-btn" onclick="event.stopPropagation(); openArticleModal('whitening')">
                 Read Full Article &rarr;
               </button>
             </div>
           </article>
 
           <!-- Blog Card 2 -->
-          <article class="blog-card" data-category="ortho">
+          <article class="blog-card" data-category="ortho" onclick="openArticleModal('aligners')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){openArticleModal('aligners');event.preventDefault();}">
             <div class="blog-media">
               <img src="/images/blog_clear_aligners.jpg" alt="Clear Aligners vs Braces" />
               <span class="blog-badge-tag">Orthodontics</span>
@@ -2759,14 +4086,14 @@
               <p class="blog-card-excerpt">
                 Comparing treatment speed, comfort, eating freedom, and daily oral hygiene between invisible clear trays and traditional orthodontic braces.
               </p>
-              <button class="blog-read-btn" onclick="openArticleModal('aligners')">
+              <button class="blog-read-btn" onclick="event.stopPropagation(); openArticleModal('aligners')">
                 Read Full Article &rarr;
               </button>
             </div>
           </article>
 
           <!-- Blog Card 3 -->
-          <article class="blog-card" data-category="kids">
+          <article class="blog-card" data-category="kids" onclick="openArticleModal('kids')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){openArticleModal('kids');event.preventDefault();}">
             <div class="blog-media">
               <img src="/images/blog_kids_oral_care.jpg" alt="Kids Dental Care" />
               <span class="blog-badge-tag">Kids Dental</span>
@@ -2781,7 +4108,7 @@
               <p class="blog-card-excerpt">
                 Pediatric strategies, timing songs, and fluoride recommendations to keep young growing smiles cavity-free and build healthy lifelong routines.
               </p>
-              <button class="blog-read-btn" onclick="openArticleModal('kids')">
+              <button class="blog-read-btn" onclick="event.stopPropagation(); openArticleModal('kids')">
                 Read Full Article &rarr;
               </button>
             </div>
@@ -2790,7 +4117,575 @@
       </div>
     </section>
 
-    <!-- 7. Bottom CTA Banner -->
+    <!-- 7. Frequently Asked Questions (FAQ) Accordion Section -->
+    <section class="faq-section reveal-on-scroll" id="faq">
+      <div class="faq-container">
+        <!-- Section Header -->
+        <div class="faq-header">
+          <span class="section-kicker">PATIENT INFORMATION &amp; CLARITY</span>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <p class="faq-header-desc">
+            Find answers to common dental patient inquiries regarding procedures, pain-free techniques, transparent pricing, and appointments.
+          </p>
+        </div>
+
+        <!-- Controls: Search & Category Filter Pills -->
+        <div class="faq-controls-bar">
+          <div class="faq-search-box">
+            <svg class="faq-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="text"
+              id="faqSearchInput"
+              class="faq-search-input"
+              placeholder="Search dental questions (e.g., implants, pain, cost, emergency)..."
+              oninput="handleFaqSearch(this.value)"
+              aria-label="Search frequently asked questions"
+            />
+          </div>
+
+          <div class="faq-filter-tabs" role="tablist" aria-label="FAQ Categories">
+            <button class="faq-filter-btn active" onclick="filterFaqCategory('all', this)" role="tab" aria-selected="true">
+              All Questions (10)
+            </button>
+            <button class="faq-filter-btn" onclick="filterFaqCategory('general', this)" role="tab" aria-selected="false">
+              General &amp; Hygiene
+            </button>
+            <button class="faq-filter-btn" onclick="filterFaqCategory('comfort', this)" role="tab" aria-selected="false">
+              Pain-Free Comfort
+            </button>
+            <button class="faq-filter-btn" onclick="filterFaqCategory('treatments', this)" role="tab" aria-selected="false">
+              Implants &amp; Whitening
+            </button>
+            <button class="faq-filter-btn" onclick="filterFaqCategory('pricing', this)" role="tab" aria-selected="false">
+              Insurance &amp; Pricing
+            </button>
+            <button class="faq-filter-btn" onclick="filterFaqCategory('emergency', this)" role="tab" aria-selected="false">
+              Emergency Care
+            </button>
+            <button class="faq-filter-btn" onclick="filterFaqCategory('pediatric', this)" role="tab" aria-selected="false">
+              Pediatric
+            </button>
+          </div>
+        </div>
+
+        <!-- Layout Grid: Main Accordion Stack + Sidebar Assistance Box -->
+        <div class="faq-layout">
+          <div>
+            <!-- Quick Expand/Collapse Actions -->
+            <div class="faq-actions-bar">
+              <span class="faq-count-label" id="faqCounterText">Showing all 10 patient questions</span>
+              <button class="faq-toggle-all-btn" id="faqToggleAllBtn" onclick="toggleAllFaq()" aria-label="Toggle all questions open or closed">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="7 13 12 18 17 13"></polyline>
+                  <polyline points="7 6 12 11 17 6"></polyline>
+                </svg>
+                <span id="faqToggleAllText">Expand All</span>
+              </button>
+            </div>
+
+            <!-- Accordion Items Group -->
+            <div class="faq-accordion-group" id="faqAccordionGroup">
+              <!-- Question 1 -->
+              <details class="faq-item" data-category="general" open>
+                <summary class="faq-question">
+                  <div class="faq-question-body">
+                    <span class="faq-badge-kicker">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C7 2 4 5 4 10C4 16 6 21 8 22C9.5 22.5 10.5 20 12 20C13.5 20 14.5 22.5 16 22C18 21 20 16 20 10C20 5 17 2 12 2Z"/></svg>
+                      General Dentistry &bull; Preventative Care
+                    </span>
+                    <span class="faq-title">How often should I visit the dentist for a routine check-up &amp; cleaning?</span>
+                  </div>
+                  <div class="faq-toggle-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </div>
+                </summary>
+                <div class="faq-answer">
+                  <p>
+                    We recommend visiting SmileCare every <strong>6 months</strong> for a comprehensive oral examination and professional ultrasonic cleaning. Routine visits remove hardened tartar (calculus) that normal brushing cannot eliminate and catch micro-cavities before they reach the tooth pulp.
+                  </p>
+                  <p>
+                    Patients with active gum disease, orthodontic braces, or diabetes benefit from 3-to-4 month visits to safeguard enamel and bone health.
+                  </p>
+                  <div class="faq-badges-row">
+                    <span class="faq-pill green">✓ 6-Month Routine Recalls</span>
+                    <span class="faq-pill">✓ Ultrasonic Gentle Cleaning</span>
+                    <span class="faq-pill">✓ Comprehensive Oral Cancer Screen</span>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Question 2 -->
+              <details class="faq-item" data-category="comfort">
+                <summary class="faq-question">
+                  <div class="faq-question-body">
+                    <span class="faq-badge-kicker">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                      Patient Comfort &bull; Anxiety Relief
+                    </span>
+                    <span class="faq-title">Is dental treatment painful? What if I suffer from dental anxiety?</span>
+                  </div>
+                  <div class="faq-toggle-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </div>
+                </summary>
+                <div class="faq-answer">
+                  <p>
+                    Dental care should never be painful. At SmileCare, we employ <strong>micro-gauge painless needles</strong> and topical pre-numbing gels that freeze the gum before any injection. For anxious patients, our team explains each step beforehand with zero rush.
+                  </p>
+                  <p>
+                    You retain complete control during your appointment: raise your left hand anytime to pause treatment for a break or a sip of water. We also provide ambient headphones, stress-relief squeeze balls, and gentle calming techniques.
+                  </p>
+                  <div class="faq-badges-row">
+                    <span class="faq-pill green">✓ Painless Computerized Anesthesia</span>
+                    <span class="faq-pill">✓ Hand-Signal Pause Guarantee</span>
+                    <span class="faq-pill">✓ Zero-Rushing Gentle Environment</span>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Question 3 -->
+              <details class="faq-item" data-category="treatments">
+                <summary class="faq-question">
+                  <div class="faq-question-body">
+                    <span class="faq-badge-kicker">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="8" width="18" height="8" rx="2"/></svg>
+                      Restorative Care &bull; Implants
+                    </span>
+                    <span class="faq-title">How do Dental Implants work, and how long do they last?</span>
+                  </div>
+                  <div class="faq-toggle-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </div>
+                </summary>
+                <div class="faq-answer">
+                  <p>
+                    A dental implant is a biocompatible titanium root surgically secured into the jawbone, fusing with the bone over 8–12 weeks (osseointegration). Once fused, an abutment and custom porcelain crown are affixed to recreate a permanent, life-like tooth.
+                  </p>
+                  <p>
+                    Unlike traditional bridges, implants do not require shaving down adjacent healthy teeth, and they stimulate natural bone density to preserve facial structure. With regular brushing and dental check-ups, dental implants have a <strong>98%+ clinical success rate and can last a lifetime</strong>.
+                  </p>
+                  <div class="faq-badges-row">
+                    <span class="faq-pill green">✓ Lifetime Durability</span>
+                    <span class="faq-pill">✓ 98%+ Clinical Success Rate</span>
+                    <span class="faq-pill">✓ Protects Adjacent Teeth</span>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Question 4 -->
+              <details class="faq-item" data-category="emergency">
+                <summary class="faq-question">
+                  <div class="faq-question-body">
+                    <span class="faq-badge-kicker">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                      Emergency Dentistry &bull; Immediate Help
+                    </span>
+                    <span class="faq-title">What counts as a dental emergency, and do you offer same-day appointments?</span>
+                  </div>
+                  <div class="faq-toggle-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </div>
+                </summary>
+                <div class="faq-answer">
+                  <p>
+                    Yes! We maintain dedicated emergency triage slots every day. Emergencies include excruciating unremitting toothaches, knocked-out or fractured teeth from trauma, visible facial or gum swelling (abscess), and lost dental crowns exposing sensitive nerves.
+                  </p>
+                  <p>
+                    <strong>Knocked-Out Tooth First-Aid:</strong> Handle only by the crown (never the root), gently rinse in clean water, and immerse in cold milk or saliva. Bring it immediately to our clinic within 60 minutes for the highest chance of saving the tooth. Call our hotline at <strong>+91 99014 63886</strong>.
+                  </p>
+                  <div class="faq-badges-row">
+                    <span class="faq-pill amber">⚡ Same-Day Emergency Priority</span>
+                    <span class="faq-pill">✓ 60-Min Tooth Rescue Window</span>
+                    <span class="faq-pill">✓ Direct Doctor Phone Line</span>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Question 5 -->
+              <details class="faq-item" data-category="pricing">
+                <summary class="faq-question">
+                  <div class="faq-question-body">
+                    <span class="faq-badge-kicker">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                      Transparent Costs &bull; Financial Flexibility
+                    </span>
+                    <span class="faq-title">How much does dental treatment cost, and do you accept insurance or EMI plans?</span>
+                  </div>
+                  <div class="faq-toggle-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </div>
+                </summary>
+                <div class="faq-answer">
+                  <p>
+                    We operate with complete financial transparency. After your diagnosis, you receive a detailed, printed breakdown of treatment fees with <strong>zero hidden charges or surprise extras</strong>.
+                  </p>
+                  <p>
+                    We support major health insurance networks for eligible accidental and surgical dental claims. For extensive care (such as multiple implants, clear aligners, or crowns), we offer <strong>0% Interest EMI installment options</strong> spread over 3, 6, or 12 monthly payments so finances never compromise your health.
+                  </p>
+                  <div class="faq-badges-row">
+                    <span class="faq-pill green">✓ 0% Interest EMI Installments</span>
+                    <span class="faq-pill">✓ Cashless Insurance Paperwork</span>
+                    <span class="faq-pill">✓ Upfront Written Estimates</span>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Question 6 -->
+              <details class="faq-item" data-category="treatments">
+                <summary class="faq-question">
+                  <div class="faq-question-body">
+                    <span class="faq-badge-kicker">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                      Cosmetic Dentistry &bull; Smile Aesthetics
+                    </span>
+                    <span class="faq-title">What is the difference between In-Clinic Teeth Whitening and home kits?</span>
+                  </div>
+                  <div class="faq-toggle-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </div>
+                </summary>
+                <div class="faq-answer">
+                  <p>
+                    In-clinic professional whitening uses dental-grade hydrogen peroxide formulation activated by a cool LED accelerator light, brightening teeth by <strong>5 to 8 shades in just 45 minutes</strong>. Your gums are carefully shielded with a rubber barrier so no chemicals touch soft tissue.
+                  </p>
+                  <p>
+                    Drugstore strips and DIY charcoal kits are abrasive to tooth enamel, take weeks to show minor change, and often lead to severe hypersensitivity or uneven blotches. Professional treatment includes a protective potassium fluoride glaze that seals enamel immediately.
+                  </p>
+                  <div class="faq-badges-row">
+                    <span class="faq-pill green">✓ 5–8 Shades Whiter</span>
+                    <span class="faq-pill">✓ 45-Minute Single Visit</span>
+                    <span class="faq-pill">✓ Enamel-Safe Desensitizing Glaze</span>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Question 7 -->
+              <details class="faq-item" data-category="pediatric">
+                <summary class="faq-question">
+                  <div class="faq-question-body">
+                    <span class="faq-badge-kicker">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="7" r="4"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg>
+                      Kids Care &bull; Pediatric Dentistry
+                    </span>
+                    <span class="faq-title">At what age should my child have their first visit to the pediatric dentist?</span>
+                  </div>
+                  <div class="faq-toggle-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </div>
+                </summary>
+                <div class="faq-answer">
+                  <p>
+                    The American Academy of Pediatric Dentistry recommends children visit the dental clinic by their <strong>1st birthday or within 6 months of their first baby tooth erupting</strong>. Baby teeth hold space for permanent adult teeth and are prone to nursing bottle decay.
+                  </p>
+                  <p>
+                    Our first visits are playful "Happy Visits"—featuring gentle chair rides, cartoon stickers, and zero needles. We check tooth eruption, evaluate bite alignment, apply protective fluoride varnish, and coach parents on gentle teething care.
+                  </p>
+                  <div class="faq-badges-row">
+                    <span class="faq-pill green">✓ By Age 1 or First Tooth</span>
+                    <span class="faq-pill">✓ Kid-Friendly Playful Experience</span>
+                    <span class="faq-pill">✓ Cavity Shielding Fluoride Varnishes</span>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Question 8 -->
+              <details class="faq-item" data-category="general">
+                <summary class="faq-question">
+                  <div class="faq-question-body">
+                    <span class="faq-badge-kicker">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                      Clinical Safety &bull; Modern Technology
+                    </span>
+                    <span class="faq-title">Are dental X-rays safe? How much radiation do they emit?</span>
+                  </div>
+                  <div class="faq-toggle-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </div>
+                </summary>
+                <div class="faq-answer">
+                  <p>
+                    Dental X-rays at SmileCare are exceptionally safe. We use cutting-edge <strong>digital intraoral sensors and OPG scanners</strong> that emit up to <strong>90% less radiation</strong> than traditional dental film radiography.
+                  </p>
+                  <p>
+                    A full digital dental X-ray exposes you to roughly 0.005 millisieverts—equivalent to less than half a day of natural atmospheric background radiation or a short flight. We also supply lead aprons with thyroid collars to ensure zero unnecessary exposure.
+                  </p>
+                  <div class="faq-badges-row">
+                    <span class="faq-pill green">✓ 90% Reduced Digital Radiation</span>
+                    <span class="faq-pill">✓ Lead Thyroid Protection</span>
+                    <span class="faq-pill">✓ Instant High-Def Chairside Imaging</span>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Question 9 -->
+              <details class="faq-item" data-category="general">
+                <summary class="faq-question">
+                  <div class="faq-question-body">
+                    <span class="faq-badge-kicker">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                      Gum Health &bull; Periodontal Care
+                    </span>
+                    <span class="faq-title">How do I stop bleeding gums and persistent bad breath (halitosis)?</span>
+                  </div>
+                  <div class="faq-toggle-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </div>
+                </summary>
+                <div class="faq-answer">
+                  <p>
+                    Bleeding when brushing or flossing is a telltale sign of gingivitis (inflammation caused by bacterial plaque buildup). When tartar hardens along the gumline, bacteria emit volatile sulfur compounds that cause persistent bad breath.
+                  </p>
+                  <p>
+                    Bleeding is reversed with a gentle professional scaling session to dislodge bacterial deposits, followed by twice-daily 2-minute brushing, daily flossing or water picking, and antibacterial mouth rinses. Leaving gingivitis untreated risks permanent gum recession and bone loss.
+                  </p>
+                  <div class="faq-badges-row">
+                    <span class="faq-pill green">✓ Reverses Gingivitis Early</span>
+                    <span class="faq-pill">✓ Deep Ultrasonic Scaling</span>
+                    <span class="faq-pill">✓ Eliminates Odor-Causing Bacteria</span>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Question 10 -->
+              <details class="faq-item" data-category="general">
+                <summary class="faq-question">
+                  <div class="faq-question-body">
+                    <span class="faq-badge-kicker">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      Appointments &bull; Clinic Access
+                    </span>
+                    <span class="faq-title">Do you accept walk-in patients or do I need to book an appointment in advance?</span>
+                  </div>
+                  <div class="faq-toggle-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </div>
+                </summary>
+                <div class="faq-answer">
+                  <p>
+                    We welcome walk-ins during open clinic hours (Monday to Saturday, 9:00 AM – 8:00 PM; Sunday, 10:00 AM – 2:00 PM), but we <strong>strongly recommend booking in advance</strong>.
+                  </p>
+                  <p>
+                    Pre-scheduled appointments are given first priority with guaranteed zero waiting time in our lobby. You can reserve your preferred time slot and doctor online in under 30 seconds, or send us a quick WhatsApp text at <strong>+91 99014 63886</strong>.
+                  </p>
+                  <div class="faq-badges-row">
+                    <span class="faq-pill green">✓ Guaranteed Zero Wait Time</span>
+                    <span class="faq-pill">✓ 30-Second Online Booking</span>
+                    <span class="faq-pill">✓ Walk-Ins Welcomed</span>
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            <!-- Empty Search Fallback State -->
+            <div class="faq-empty-state" id="faqEmptyState">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <line x1="8" y1="11" x2="14" y2="11"></line>
+              </svg>
+              <h4>No matching questions found</h4>
+              <p>Try searching with another keyword or reach out directly to our dental care coordinators.</p>
+              <button class="faq-filter-btn active" onclick="resetFaqSearch()">
+                Show All Questions &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- Sticky Sidebar Help & Contact Card -->
+          <aside class="faq-sidebar">
+            <div class="faq-help-card">
+              <div class="faq-help-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </div>
+              <h3 class="faq-help-title">Still have questions?</h3>
+              <p class="faq-help-desc">
+                Can't find the answer you need? Our clinical reception team is available 7 days a week for personalized consultations.
+              </p>
+              <div class="faq-help-actions">
+                <button class="faq-help-btn-primary" onclick="openAppointmentModal('General Consultation')">
+                  Book Free Consultation &rarr;
+                </button>
+                <a href="tel:+919901463886" class="faq-help-btn-outline">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  Call +91 99014 63886
+                </a>
+              </div>
+            </div>
+
+            <!-- Mini Trust Badges -->
+            <div class="faq-trust-mini-card">
+              <div class="faq-trust-mini-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <div>
+                <div class="faq-trust-mini-title">Sterilization Protocols</div>
+                <div class="faq-trust-mini-sub">Class-B autoclave sterilized instruments</div>
+              </div>
+            </div>
+
+            <div class="faq-trust-mini-card">
+              <div class="faq-trust-mini-icon" style="background: #eff6ff; color: var(--primary-blue);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 14 14"></polyline>
+                </svg>
+              </div>
+              <div>
+                <div class="faq-trust-mini-title">Minimal Wait Time</div>
+                <div class="faq-trust-mini-sub">Under 5 minutes with pre-booking</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Clinic Location & Interactive Map Section -->
+    <section class="location-section reveal-on-scroll" id="contact">
+      <div class="location-container">
+        <div class="location-header text-center" style="text-align: center; max-width: 680px; margin: 0 auto;">
+          <span class="section-kicker">CLINIC LOCATION &amp; HOURS</span>
+          <h2 class="section-title">Visit SmileCare in Vijayapur</h2>
+          <p style="color: var(--slate-body); font-size: 0.95rem; margin-top: 0.5rem; line-height: 1.6;">
+            Centrally located on Smile Street, Vijayapur. Easily accessible with on-site patient parking, wheelchair ramp access, and high standard sterilization protocols.
+          </p>
+        </div>
+
+        <div class="location-grid">
+          <!-- Left Column: Clinic Contact Details & Facilities -->
+          <div class="location-info-card">
+            <div class="location-info-header">
+              <div class="clinic-brand-pill">
+                <span class="pulse-dot"></span> Open for Walk-ins &amp; Appointments
+              </div>
+              <h3 class="location-card-title">SmileCare Dental Clinic</h3>
+              <p class="location-card-subtitle">Comprehensive Oral Care &amp; Advanced Dental Center</p>
+            </div>
+
+            <div class="location-details-list">
+              <div class="location-detail-item">
+                <div class="location-detail-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                </div>
+                <div class="location-detail-text">
+                  <strong>Clinic Address</strong>
+                  <span>Smile Street, Near Station Road,<br>Vijayapur (Bijapur), Karnataka 586101</span>
+                  <span class="text-sub">Landmark: 5 mins from City Central Bus Stand</span>
+                </div>
+              </div>
+
+              <div class="location-detail-item">
+                <div class="location-detail-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </div>
+                <div class="location-detail-text">
+                  <strong>Consultation Timings</strong>
+                  <span>Monday – Saturday: 9:00 AM – 7:00 PM</span>
+                  <span class="text-sub">Sunday: By Prior Appointment &amp; Dental Emergencies</span>
+                </div>
+              </div>
+
+              <div class="location-detail-item">
+                <div class="location-detail-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                </div>
+                <div class="location-detail-text">
+                  <strong>Phone &amp; WhatsApp Helpline</strong>
+                  <a href="tel:+919901463886">+91 99014 63886</a>
+                  <span class="text-sub">Email: <a href="mailto:hello@smilecare.in" style="color:var(--primary-blue);font-weight:600;">hello@smilecare.in</a></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Clinic Amenities Chips -->
+            <div class="clinic-amenities-row">
+              <span class="amenity-chip">🅿️ Free Patient Parking</span>
+              <span class="amenity-chip">♿ Ramp &amp; Wheelchair Access</span>
+              <span class="amenity-chip">❄️ Central Air Conditioning</span>
+              <span class="amenity-chip">⚡ In-House Digital X-Ray</span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="location-actions">
+              <a href="https://maps.google.com/maps?q=Vijayapur,+Karnataka" target="_blank" rel="noopener noreferrer" class="btn-location-directions">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                  <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+                </svg>
+                Get Driving Directions
+              </a>
+              <button class="btn-location-book" onclick="openAppointmentModal()">
+                Book Consultation &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Column: Standard Google Share Link (Iframe) Map -->
+          <div class="location-map-wrapper">
+            <div class="map-badge-overlay">
+              <div class="map-badge-left">
+                <div class="map-badge-icon">📍</div>
+                <div class="map-badge-content">
+                  <strong>SmileCare Dental Clinic</strong>
+                  <span>Smile Street, Vijayapur, Karnataka</span>
+                </div>
+              </div>
+              <a href="https://maps.google.com/maps?q=Vijayapur,+Karnataka" target="_blank" rel="noopener noreferrer" class="map-open-btn" title="Open in Google Maps">
+                Open Full Map ↗
+              </a>
+            </div>
+            <iframe
+              class="google-map-iframe"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61081.79633851509!2d75.67389146522369!3d16.830170889262104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc6557d983fa72d%3A0x15493334546592c2!2sVijayapura%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1715000000000!5m2!1sen!2sin"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="SmileCare Dental Clinic Google Maps Location - Vijayapur, Karnataka">
+            </iframe>
+            <div class="map-footer-strip">
+              <span>📍 Coordinates: 16.8302° N, 75.7100° E</span>
+              <span>🚗 10 mins from Gol Gumbaz • 5 mins from Bus Station</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Bottom CTA Banner -->
     <section class="cta-section">
       <div class="cta-banner">
         <div class="cta-image-col">
@@ -2836,8 +4731,8 @@
       </div>
     </section>
 
-    <!-- 8. Footer -->
-    <footer class="footer-main" id="contact">
+    <!-- 9. Footer -->
+    <footer class="footer-main">
       <div class="footer-container">
         <div class="footer-grid">
           <!-- Col 1: Branding -->
@@ -2879,7 +4774,8 @@
               <li><a href="#team">Our Team</a></li>
               <li><a href="#testimonials">Patient Stories</a></li>
               <li><a href="#blog">Blog</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="#faq">FAQ</a></li>
+              <li><a href="#contact">Contact &amp; Location</a></li>
             </ul>
           </div>
 
@@ -3198,6 +5094,230 @@
               Book Appointment &rarr;
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6C. Patient Review / Submit Your Story Modal with Live Camera & Star Rating -->
+    <div class="modal-backdrop" id="storyModal" role="dialog" aria-modal="true" aria-labelledby="storyModalTitle">
+      <div class="modal-box story-modal-box">
+        <div class="modal-header">
+          <div class="modal-header-text">
+            <h3 id="storyModalTitle">Submit Your Story</h3>
+            <p>Share your smile journey &amp; review with the SmileCare community</p>
+          </div>
+          <button type="button" class="modal-close-btn" onclick="closeStoryModal()" aria-label="Close story modal" title="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="story-modal-scroll">
+          <form id="storyForm" onsubmit="handleStorySubmit(event)">
+            <!-- 1. Patient Name -->
+            <div class="form-group">
+              <label for="storyPatientName" class="form-label">
+                Your Full Name <span style="color:#ef4444;">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="storyPatientName" 
+                class="form-input" 
+                placeholder="e.g. Ananya Deshmukh" 
+                required 
+                maxlength="60"
+              />
+              <div class="form-error" id="storyNameError">Please enter your name (minimum 2 characters).</div>
+            </div>
+
+            <!-- 2. Treatment & Location Grid -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+              <div class="form-group">
+                <label for="storyTreatment" class="form-label">Dental Procedure</label>
+                <select id="storyTreatment" class="form-select">
+                  <option value="General Dental Care">General Dental Care</option>
+                  <option value="Teeth Whitening">Teeth Whitening</option>
+                  <option value="Clear Aligners / Braces">Clear Aligners / Braces</option>
+                  <option value="Dental Implants">Dental Implants</option>
+                  <option value="Root Canal Treatment">Root Canal Treatment</option>
+                  <option value="Smile Makeover">Smile Makeover</option>
+                  <option value="Kids &amp; Pediatric Dental">Kids &amp; Pediatric Dental</option>
+                  <option value="Wisdom Tooth Extraction">Wisdom Tooth Extraction</option>
+                  <option value="Preventive Cleaning">Preventive Cleaning</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="storyCity" class="form-label">City / Area (Optional)</label>
+                <input 
+                  type="text" 
+                  id="storyCity" 
+                  class="form-input" 
+                  placeholder="e.g. Vijayapur" 
+                  maxlength="40"
+                />
+              </div>
+            </div>
+
+            <!-- 3. Star Rating (Interactive 1-5 Stars) -->
+            <div class="form-group">
+              <label class="form-label">
+                Your Star Rating <span style="color:#ef4444;">*</span>
+              </label>
+              <div class="star-picker-container">
+                <div class="star-picker-stars" id="starPickerGroup" role="radiogroup" aria-label="Star rating out of 5">
+                  <button type="button" class="star-btn active" data-rating="1" onclick="setStoryRating(1)" onmouseenter="previewStoryRating(1)" onmouseleave="resetPreviewRating()" aria-label="1 star">★</button>
+                  <button type="button" class="star-btn active" data-rating="2" onclick="setStoryRating(2)" onmouseenter="previewStoryRating(2)" onmouseleave="resetPreviewRating()" aria-label="2 stars">★</button>
+                  <button type="button" class="star-btn active" data-rating="3" onclick="setStoryRating(3)" onmouseenter="previewStoryRating(3)" onmouseleave="resetPreviewRating()" aria-label="3 stars">★</button>
+                  <button type="button" class="star-btn active" data-rating="4" onclick="setStoryRating(4)" onmouseenter="previewStoryRating(4)" onmouseleave="resetPreviewRating()" aria-label="4 stars">★</button>
+                  <button type="button" class="star-btn active" data-rating="5" onclick="setStoryRating(5)" onmouseenter="previewStoryRating(5)" onmouseleave="resetPreviewRating()" aria-label="5 stars">★</button>
+                </div>
+                <span class="star-rating-label" id="starRatingLabel">★★★★★ 5.0 - Exceptional Experience</span>
+                <input type="hidden" id="storyRatingValue" value="5" />
+              </div>
+            </div>
+
+            <!-- 4. Review Quote / Testimonial Story -->
+            <div class="form-group">
+              <label for="storyReviewText" class="form-label">
+                Your Review &amp; Experience <span style="color:#ef4444;">*</span>
+              </label>
+              <textarea 
+                id="storyReviewText" 
+                class="form-input" 
+                rows="3" 
+                placeholder="Tell us about your dental visit, painless treatment, doctor care, or your smile results..." 
+                required 
+                minlength="10"
+                maxlength="500"
+                style="resize: vertical; min-height: 85px;"
+              ></textarea>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.25rem;">
+                <span class="form-error" id="storyReviewError" style="margin-top:0;">Please share a brief review (at least 10 characters).</span>
+                <span style="font-size: 0.72rem; color: #94a3b8;" id="storyCharCount">0 / 500</span>
+              </div>
+            </div>
+
+            <!-- 5. Profile Photo with Live Camera Upload -->
+            <div class="form-group">
+              <label class="form-label" style="display: flex; justify-content: space-between; align-items: center;">
+                <span>Profile Photo (Camera / Upload)</span>
+                <span style="font-size: 0.72rem; color: #64748b; font-weight: normal;">Optional but recommended</span>
+              </label>
+
+              <div class="photo-selection-area" id="photoSelectionArea">
+                <!-- Idle State: Camera / Upload Buttons -->
+                <div id="photoDefaultControls">
+                  <div style="font-size: 0.85rem; color: #475569; font-weight: 600; margin-bottom: 0.35rem;">
+                    Upload a profile photo using your camera
+                  </div>
+                  <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 0.65rem;">
+                    Snap a live selfie with your camera or select an existing photo
+                  </p>
+
+                  <div class="camera-action-buttons">
+                    <button type="button" class="camera-action-btn primary-cam" onclick="startLiveCamera()" id="openCameraBtn" title="Take a selfie using camera">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                      </svg>
+                      <span>Take Photo with Camera</span>
+                    </button>
+
+                    <button type="button" class="camera-action-btn" onclick="triggerPhotoFileInput()" title="Choose photo or take camera photo">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                      </svg>
+                      <span>Upload Photo File</span>
+                    </button>
+
+                    <!-- Hidden file input with camera capture support -->
+                    <input 
+                      type="file" 
+                      id="storyPhotoFileInput" 
+                      accept="image/*" 
+                      capture="user" 
+                      style="display: none;" 
+                      onchange="handlePhotoFileSelected(event)" 
+                    />
+                  </div>
+
+                  <div id="cameraStatusMsg" style="display:none; margin-top: 0.6rem; font-size: 0.75rem; color: #e11d48; font-weight: 600;"></div>
+                </div>
+
+                <!-- Live Camera Viewfinder (Active when camera started) -->
+                <div class="camera-viewfinder-wrap" id="cameraViewfinder">
+                  <video id="cameraVideo" class="camera-video-feed" playsinline autoplay muted></video>
+                  <div class="camera-overlay-frame">
+                    <div class="camera-guide-circle"></div>
+                    <span class="camera-guide-text">Center your smile in the circle</span>
+                  </div>
+                  <div class="camera-controls-bar">
+                    <button type="button" class="camera-cancel-btn" onclick="stopLiveCamera()">Cancel</button>
+                    <button type="button" class="camera-shutter-btn" onclick="captureLiveSnapshot()" title="Snap Photo with Camera" aria-label="Snap Photo">
+                      <div class="camera-shutter-inner"></div>
+                    </button>
+                    <button type="button" class="camera-cancel-btn" onclick="switchLiveCameraFacing()" id="switchCamBtn" title="Flip camera">Flip 🔄</button>
+                  </div>
+                </div>
+
+                <!-- Offscreen Canvas for Snap Capture -->
+                <canvas id="cameraCanvas" style="display: none;"></canvas>
+
+                <!-- Captured / Chosen Photo Preview -->
+                <div class="photo-preview-display" id="photoPreviewDisplay">
+                  <div class="photo-avatar-ring">
+                    <img id="photoPreviewImg" src="" alt="Captured patient photo" class="photo-avatar-img" />
+                  </div>
+                  <div class="photo-source-tag" id="photoSourceTag">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Photo Ready</span>
+                  </div>
+                  <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem;">
+                    <button type="button" class="camera-action-btn" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;" onclick="startLiveCamera()">
+                      📷 Retake Camera
+                    </button>
+                    <button type="button" class="camera-action-btn" style="padding: 0.35rem 0.75rem; font-size: 0.75rem; color: #dc2626; border-color: #fecaca;" onclick="removeCapturedPhoto()">
+                      🗑️ Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. Verification Consent Checkbox -->
+            <div style="margin: 1.25rem 0; display: flex; align-items: flex-start; gap: 0.55rem;">
+              <input type="checkbox" id="storyConsent" required checked style="margin-top: 0.2rem; cursor: pointer;" />
+              <label for="storyConsent" style="font-size: 0.785rem; color: #475569; cursor: pointer; line-height: 1.4;">
+                I verify that this review represents my honest dental treatment experience at SmileCare Clinic.
+              </label>
+            </div>
+
+            <!-- 7. Submit Buttons -->
+            <div style="display: flex; gap: 0.75rem; margin-top: 1.25rem;">
+              <button 
+                type="submit" 
+                class="btn-primary" 
+                style="flex: 2; padding: 0.8rem 1.25rem; font-size: 0.95rem; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 0.5rem;"
+                id="submitStoryFinalBtn"
+              >
+                <span>Publish My Story</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+              <button 
+                type="button" 
+                class="modal-footer-close-btn" 
+                style="flex: 1; margin-top: 0;" 
+                onclick="closeStoryModal()"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -3584,6 +5704,105 @@
         });
       }
 
+      // FAQ Accordion Interactivity & Filter Functions
+      let currentFaqCategory = 'all';
+
+      function filterFaqCategory(category, buttonEl) {
+        currentFaqCategory = category;
+        const buttons = document.querySelectorAll('.faq-filter-btn');
+        buttons.forEach(btn => {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-selected', 'false');
+        });
+        if (buttonEl) {
+          buttonEl.classList.add('active');
+          buttonEl.setAttribute('aria-selected', 'true');
+        }
+
+        const searchInput = document.getElementById('faqSearchInput');
+        if (searchInput && searchInput.value.trim().length > 0) {
+          searchInput.value = '';
+        }
+
+        applyFaqFilters('', category);
+      }
+
+      function handleFaqSearch(keyword) {
+        applyFaqFilters(keyword.trim().toLowerCase(), currentFaqCategory);
+      }
+
+      function resetFaqSearch() {
+        const searchInput = document.getElementById('faqSearchInput');
+        if (searchInput) searchInput.value = '';
+        const allBtn = document.querySelector('.faq-filter-btn');
+        filterFaqCategory('all', allBtn);
+      }
+
+      function applyFaqFilters(keyword, category) {
+        const items = document.querySelectorAll('#faqAccordionGroup .faq-item');
+        const emptyState = document.getElementById('faqEmptyState');
+        const counterText = document.getElementById('faqCounterText');
+        let visibleCount = 0;
+
+        items.forEach(item => {
+          const itemCat = item.getAttribute('data-category') || '';
+          const titleText = item.querySelector('.faq-title')?.textContent.toLowerCase() || '';
+          const kickerText = item.querySelector('.faq-badge-kicker')?.textContent.toLowerCase() || '';
+          const answerText = item.querySelector('.faq-answer')?.textContent.toLowerCase() || '';
+
+          const matchesCat = (category === 'all' || itemCat === category);
+          const matchesKeyword = !keyword || (
+            titleText.includes(keyword) || 
+            kickerText.includes(keyword) || 
+            answerText.includes(keyword)
+          );
+
+          if (matchesCat && matchesKeyword) {
+            item.style.display = 'block';
+            visibleCount++;
+            if (keyword) {
+              item.open = true; // Auto-expand when searching
+            }
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        if (emptyState) {
+          emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        if (counterText) {
+          if (visibleCount === 0) {
+            counterText.textContent = 'No matching questions';
+          } else if (visibleCount === items.length) {
+            counterText.textContent = `Showing all ${visibleCount} patient questions`;
+          } else {
+            counterText.textContent = `Showing ${visibleCount} of ${items.length} questions`;
+          }
+        }
+      }
+
+      function toggleAllFaq() {
+        const items = Array.from(document.querySelectorAll('#faqAccordionGroup .faq-item')).filter(
+          item => item.style.display !== 'none'
+        );
+        const toggleBtn = document.getElementById('faqToggleAllBtn');
+        const toggleText = document.getElementById('faqToggleAllText');
+        if (!items.length) return;
+
+        const allOpen = items.every(item => item.open);
+        const newState = !allOpen;
+
+        items.forEach(item => {
+          item.open = newState;
+        });
+
+        if (toggleText) {
+          toggleText.textContent = newState ? 'Collapse All' : 'Expand All';
+        }
+      }
+
       function openVideoModal() {
         const modal = document.getElementById('videoModal');
         modal.classList.add('open');
@@ -3626,9 +5845,11 @@
         const appModal = document.getElementById('appointmentModal');
         const vidModal = document.getElementById('videoModal');
         const artModal = document.getElementById('articleModal');
+        const storyModal = document.getElementById('storyModal');
         if (e.target === appModal) closeAppointmentModal();
         if (e.target === vidModal) closeVideoModal();
         if (e.target === artModal) closeArticleModal();
+        if (e.target === storyModal) closeStoryModal();
       });
 
       // Escape key handler
@@ -3637,6 +5858,7 @@
           closeAppointmentModal();
           closeVideoModal();
           closeArticleModal();
+          closeStoryModal();
         }
       });
 
@@ -3652,7 +5874,7 @@
         }
       });
 
-      // Scroll Reveal Observer
+      // Scroll Reveal Observer & Story Form Initialization
       document.addEventListener('DOMContentLoaded', function() {
         const revealElements = document.querySelectorAll('.reveal-on-scroll');
         if ('IntersectionObserver' in window) {
@@ -3669,7 +5891,506 @@
         } else {
           revealElements.forEach(el => el.classList.add('is-visible'));
         }
+
+        // Initialize stored stories and listeners
+        loadSavedStories();
+        initStoryFormListeners();
       });
+
+      /**
+       * Patient Story Modal Controller, Star Rating & Live Camera Integration
+       */
+      let cameraStream = null;
+      let currentFacingMode = 'user';
+      let currentStoryPhotoDataUrl = null;
+      let selectedStoryRating = 5;
+
+      const RATING_DESCRIPTIONS = {
+        5: '★★★★★ 5.0 - Exceptional Experience',
+        4: '★★★★☆ 4.0 - Very Good Care',
+        3: '★★★☆☆ 3.0 - Good Treatment',
+        2: '★★☆☆☆ 2.0 - Fair / Average',
+        1: '★☆☆☆☆ 1.0 - Needs Improvement'
+      };
+
+      function openStoryModal() {
+        const modal = document.getElementById('storyModal');
+        if (!modal) return;
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        setStoryRating(5);
+        const nameInput = document.getElementById('storyPatientName');
+        if (nameInput) {
+          setTimeout(() => nameInput.focus(), 150);
+        }
+      }
+
+      function closeStoryModal() {
+        stopLiveCamera();
+        const modal = document.getElementById('storyModal');
+        if (modal) {
+          modal.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+
+      function updateStarButtonsVisual(val) {
+        const stars = document.querySelectorAll('#starPickerGroup .star-btn');
+        stars.forEach(btn => {
+          const r = parseInt(btn.getAttribute('data-rating'), 10);
+          if (r <= val) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+        const label = document.getElementById('starRatingLabel');
+        if (label) {
+          label.textContent = RATING_DESCRIPTIONS[val] || `${val}.0 Rating`;
+        }
+      }
+
+      function setStoryRating(val) {
+        selectedStoryRating = val;
+        const input = document.getElementById('storyRatingValue');
+        if (input) input.value = val;
+        updateStarButtonsVisual(val);
+      }
+
+      function previewStoryRating(val) {
+        const stars = document.querySelectorAll('#starPickerGroup .star-btn');
+        stars.forEach(btn => {
+          const r = parseInt(btn.getAttribute('data-rating'), 10);
+          if (r <= val) {
+            btn.classList.add('hovered');
+          } else {
+            btn.classList.remove('hovered');
+          }
+        });
+        const label = document.getElementById('starRatingLabel');
+        if (label) {
+          label.textContent = RATING_DESCRIPTIONS[val] || `${val}.0 Rating`;
+        }
+      }
+
+      function resetPreviewRating() {
+        const stars = document.querySelectorAll('#starPickerGroup .star-btn');
+        stars.forEach(btn => btn.classList.remove('hovered'));
+        updateStarButtonsVisual(selectedStoryRating);
+      }
+
+      /**
+       * Live Camera & Photo Handling
+       */
+      async function startLiveCamera() {
+        const statusMsg = document.getElementById('cameraStatusMsg');
+        const viewfinder = document.getElementById('cameraViewfinder');
+        const defaultControls = document.getElementById('photoDefaultControls');
+        const previewDisplay = document.getElementById('photoPreviewDisplay');
+        const photoArea = document.getElementById('photoSelectionArea');
+        const video = document.getElementById('cameraVideo');
+
+        if (statusMsg) {
+          statusMsg.style.display = 'none';
+          statusMsg.textContent = '';
+        }
+
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          if (statusMsg) {
+            statusMsg.textContent = 'Camera API is not supported in this browser. Please use the upload button to choose or snap a photo.';
+            statusMsg.style.display = 'block';
+          }
+          triggerPhotoFileInput();
+          return;
+        }
+
+        stopLiveCamera();
+
+        try {
+          const constraints = {
+            video: {
+              facingMode: currentFacingMode,
+              width: { ideal: 640 },
+              height: { ideal: 640 }
+            },
+            audio: false
+          };
+
+          cameraStream = await navigator.mediaDevices.getUserMedia(constraints);
+          if (video) {
+            video.srcObject = cameraStream;
+            await video.play();
+          }
+
+          if (viewfinder) viewfinder.classList.add('active');
+          if (defaultControls) defaultControls.style.display = 'none';
+          if (previewDisplay) previewDisplay.classList.remove('visible');
+          if (photoArea) photoArea.classList.remove('has-photo');
+        } catch (err) {
+          console.warn('Camera access error:', err);
+          let message = 'Unable to access camera. Please allow camera permissions in your browser or select a photo file.';
+          if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+            message = 'Camera permission was denied. Please allow camera access in your browser settings or select a photo from files.';
+          } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+            message = 'No camera device found on this system. Please select a photo from your files.';
+          }
+          if (statusMsg) {
+            statusMsg.textContent = message;
+            statusMsg.style.display = 'block';
+          }
+          triggerPhotoFileInput();
+        }
+      }
+
+      function stopLiveCamera() {
+        if (cameraStream) {
+          cameraStream.getTracks().forEach(track => {
+            try { track.stop(); } catch(e){}
+          });
+          cameraStream = null;
+        }
+        const video = document.getElementById('cameraVideo');
+        if (video) video.srcObject = null;
+        const viewfinder = document.getElementById('cameraViewfinder');
+        if (viewfinder) viewfinder.classList.remove('active');
+        const defaultControls = document.getElementById('photoDefaultControls');
+        if (!currentStoryPhotoDataUrl && defaultControls) {
+          defaultControls.style.display = 'block';
+        }
+      }
+
+      function switchLiveCameraFacing() {
+        currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
+        startLiveCamera();
+      }
+
+      function captureLiveSnapshot() {
+        const video = document.getElementById('cameraVideo');
+        const canvas = document.getElementById('cameraCanvas');
+        if (!video || !canvas || !cameraStream) return;
+
+        const videoW = video.videoWidth || 400;
+        const videoH = video.videoHeight || 400;
+        const size = Math.min(videoW, videoH);
+
+        canvas.width = 320;
+        canvas.height = 320;
+        const ctx = canvas.getContext('2d');
+
+        const sx = (videoW - size) / 2;
+        const sy = (videoH - size) / 2;
+
+        if (currentFacingMode === 'user') {
+          ctx.translate(canvas.width, 0);
+          ctx.scale(-1, 1);
+        }
+
+        ctx.drawImage(video, sx, sy, size, size, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+        setStoryPhotoPreview(dataUrl, 'Captured with Camera');
+        stopLiveCamera();
+      }
+
+      function triggerPhotoFileInput() {
+        const fileInput = document.getElementById('storyPhotoFileInput');
+        if (fileInput) fileInput.click();
+      }
+
+      function handlePhotoFileSelected(e) {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+
+        if (!file.type.startsWith('image/')) {
+          alert('Please choose a valid image file (JPG, PNG, WebP).');
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const img = new Image();
+          img.onload = function() {
+            const canvas = document.getElementById('cameraCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 320;
+            canvas.height = 320;
+
+            const size = Math.min(img.width, img.height);
+            const sx = (img.width - size) / 2;
+            const sy = (img.height - size) / 2;
+
+            ctx.drawImage(img, sx, sy, size, size, 0, 0, canvas.width, canvas.height);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+            setStoryPhotoPreview(dataUrl, 'Photo Uploaded');
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function setStoryPhotoPreview(dataUrl, sourceLabel) {
+        currentStoryPhotoDataUrl = dataUrl;
+        const previewDisplay = document.getElementById('photoPreviewDisplay');
+        const defaultControls = document.getElementById('photoDefaultControls');
+        const viewfinder = document.getElementById('cameraViewfinder');
+        const previewImg = document.getElementById('photoPreviewImg');
+        const photoArea = document.getElementById('photoSelectionArea');
+        const sourceTag = document.getElementById('photoSourceTag');
+
+        if (previewImg) previewImg.src = dataUrl;
+        if (sourceTag) sourceTag.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>${sourceLabel}</span>`;
+        if (viewfinder) viewfinder.classList.remove('active');
+        if (defaultControls) defaultControls.style.display = 'none';
+        if (previewDisplay) previewDisplay.classList.add('visible');
+        if (photoArea) photoArea.classList.add('has-photo');
+      }
+
+      function removeCapturedPhoto() {
+        currentStoryPhotoDataUrl = null;
+        const fileInput = document.getElementById('storyPhotoFileInput');
+        if (fileInput) fileInput.value = '';
+
+        const previewDisplay = document.getElementById('photoPreviewDisplay');
+        const defaultControls = document.getElementById('photoDefaultControls');
+        const photoArea = document.getElementById('photoSelectionArea');
+
+        if (previewDisplay) previewDisplay.classList.remove('visible');
+        if (defaultControls) defaultControls.style.display = 'block';
+        if (photoArea) photoArea.classList.remove('has-photo');
+      }
+
+      /**
+       * Review Persistence, Storage & Dynamic DOM Injection
+       */
+      const STORAGE_KEY_STORIES = 'smilecare_patient_stories';
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      function generateInitialAvatar(name) {
+        const initials = (name || 'Patient')
+          .trim()
+          .split(' ')
+          .filter(Boolean)
+          .map(w => w[0])
+          .slice(0, 2)
+          .join('')
+          .toUpperCase() || 'P';
+
+        const palette = [
+          ['#0280c7', '#0369a1'],
+          ['#059669', '#047857'],
+          ['#7c3aed', '#6d28d9'],
+          ['#ea580c', '#c2410c'],
+          ['#db2777', '#be185d'],
+          ['#0891b2', '#0e7490']
+        ];
+        let hash = 0;
+        for (let i = 0; i < (name || '').length; i++) {
+          hash = (name.charCodeAt(i) + ((hash << 5) - hash));
+        }
+        const colorPair = palette[Math.abs(hash) % palette.length];
+
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+          <defs>
+            <linearGradient id="g_${Math.abs(hash)}" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="${colorPair[0]}" />
+              <stop offset="100%" stop-color="${colorPair[1]}" />
+            </linearGradient>
+          </defs>
+          <rect width="96" height="96" rx="48" fill="url(#g_${Math.abs(hash)})" />
+          <text x="50%" y="54%" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="34" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">${initials}</text>
+        </svg>`;
+        return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+      }
+
+      function showStoryToast(message) {
+        let toast = document.getElementById('storyToastNotification');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = 'storyToastNotification';
+          toast.setAttribute('role', 'alert');
+          toast.style.cssText = `
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #0d2745;
+            color: #ffffff;
+            padding: 1rem 1.35rem;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            font-size: 0.875rem;
+            font-weight: 600;
+            z-index: 100000;
+            max-width: 380px;
+            border-left: 4px solid #10b981;
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+          `;
+          document.body.appendChild(toast);
+        }
+        toast.innerHTML = `<span style="font-size: 1.25rem;">✨</span><span>${escapeHtml(message)}</span>`;
+        requestAnimationFrame(() => {
+          toast.style.transform = 'translateY(0)';
+          toast.style.opacity = '1';
+        });
+        setTimeout(() => {
+          toast.style.transform = 'translateY(100px)';
+          toast.style.opacity = '0';
+        }, 5000);
+      }
+
+      function getStoredStories() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY_STORIES);
+          return raw ? JSON.parse(raw) : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveStoryToStorage(story) {
+        try {
+          const stories = getStoredStories();
+          stories.unshift(story);
+          localStorage.setItem(STORAGE_KEY_STORIES, JSON.stringify(stories));
+        } catch (e) {
+          console.warn('LocalStorage save failed:', e);
+        }
+      }
+
+      function renderStoryCard(story, isNew = false) {
+        const grid = document.getElementById('testimonialsGrid');
+        if (!grid) return;
+
+        const ratingNum = Math.max(1, Math.min(5, parseInt(story.rating, 10) || 5));
+        const starsStr = '★'.repeat(ratingNum) + '☆'.repeat(5 - ratingNum);
+        const photoSrc = story.photoUrl || generateInitialAvatar(story.name);
+
+        const card = document.createElement('div');
+        card.className = 'review-card' + (isNew ? ' just-added' : '');
+        card.id = story.id || ('story_' + Date.now());
+        card.innerHTML = `
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+              <span class="new-story-tag">✨ Verified Story</span>
+              <span style="font-size: 0.725rem; color: #64748b; font-weight: 600;">${escapeHtml(story.treatment || 'Dental Care')}</span>
+            </div>
+            <p class="review-quote">"${escapeHtml(story.quote)}"</p>
+          </div>
+          <div class="review-author">
+            <div class="author-profile">
+              <img src="${photoSrc}" alt="${escapeHtml(story.name)}" class="author-avatar" />
+              <div>
+                <span class="author-name">${escapeHtml(story.name)}</span>
+                <div style="font-size: 0.7rem; color: #64748b;">${escapeHtml(story.location || 'Verified Patient')}</div>
+              </div>
+            </div>
+            <div class="star-rating" title="${ratingNum} out of 5 stars">${starsStr}</div>
+          </div>
+        `;
+
+        const intro = grid.querySelector('.testimonials-intro');
+        if (intro && intro.nextSibling) {
+          grid.insertBefore(card, intro.nextSibling);
+        } else {
+          grid.appendChild(card);
+        }
+
+        if (isNew) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+
+      function loadSavedStories() {
+        const stories = getStoredStories();
+        stories.reverse().forEach(s => renderStoryCard(s, false));
+      }
+
+      function handleStorySubmit(event) {
+        event.preventDefault();
+
+        const nameInput = document.getElementById('storyPatientName');
+        const reviewInput = document.getElementById('storyReviewText');
+        const treatmentSelect = document.getElementById('storyTreatment');
+        const cityInput = document.getElementById('storyCity');
+        const ratingInput = document.getElementById('storyRatingValue');
+        const nameError = document.getElementById('storyNameError');
+        const reviewError = document.getElementById('storyReviewError');
+
+        const name = nameInput ? nameInput.value.trim() : '';
+        const review = reviewInput ? reviewInput.value.trim() : '';
+        const treatment = treatmentSelect ? treatmentSelect.value : 'General Dental Care';
+        const city = cityInput ? cityInput.value.trim() : '';
+        const rating = parseInt(ratingInput ? ratingInput.value : '5', 10) || 5;
+
+        let isValid = true;
+        if (!name || name.length < 2) {
+          if (nameError) nameError.style.display = 'block';
+          if (nameInput) nameInput.style.borderColor = '#e11d48';
+          isValid = false;
+        } else {
+          if (nameError) nameError.style.display = 'none';
+          if (nameInput) nameInput.style.borderColor = '#cbd5e1';
+        }
+
+        if (!review || review.length < 10) {
+          if (reviewError) reviewError.style.display = 'block';
+          if (reviewInput) reviewInput.style.borderColor = '#e11d48';
+          isValid = false;
+        } else {
+          if (reviewError) reviewError.style.display = 'none';
+          if (reviewInput) reviewInput.style.borderColor = '#cbd5e1';
+        }
+
+        if (!isValid) return;
+
+        const photoUrl = currentStoryPhotoDataUrl || generateInitialAvatar(name);
+
+        const newStory = {
+          id: 'story_' + Date.now(),
+          name: name,
+          location: city ? `${city} • Verified Patient` : 'Verified Patient',
+          treatment: treatment,
+          rating: rating,
+          quote: review,
+          photoUrl: photoUrl,
+          date: new Date().toLocaleDateString('en-IN', { month: 'short', year: 'numeric' }),
+          timestamp: Date.now()
+        };
+
+        saveStoryToStorage(newStory);
+        renderStoryCard(newStory, true);
+
+        showStoryToast(`Thank you, ${name}! Your patient story has been published.`);
+
+        closeStoryModal();
+        event.target.reset();
+        removeCapturedPhoto();
+        setStoryRating(5);
+        const charCount = document.getElementById('storyCharCount');
+        if (charCount) charCount.textContent = '0 / 500';
+      }
+
+      function initStoryFormListeners() {
+        const reviewText = document.getElementById('storyReviewText');
+        if (reviewText) {
+          reviewText.addEventListener('input', function(e) {
+            const count = document.getElementById('storyCharCount');
+            if (count) count.textContent = `${e.target.value.length} / 500`;
+          });
+        }
+      }
 
       /**
        * WhatsApp Redirection & Message Construction Handler
