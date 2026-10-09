@@ -12,9 +12,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Calendly Widget Assets -->
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <style>
       :root {
         --primary-blue: #0280c7;
@@ -221,6 +218,35 @@
         background: var(--primary-blue-hover);
         transform: translateY(-1px);
         box-shadow: 0 6px 16px rgba(2, 128, 199, 0.35);
+      }
+      .nav-my-bookings-btn {
+        display: none;
+        align-items: center;
+        gap: 0.45rem;
+        background: #f0f9ff;
+        border: 1.5px solid #bae6fd;
+        color: #0280c7;
+        padding: 0.5rem 0.95rem;
+        border-radius: 9999px;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+      }
+      .nav-my-bookings-btn:hover {
+        background: #e0f2fe;
+        border-color: #7dd3fc;
+        transform: translateY(-1px);
+      }
+      .nav-bookings-count {
+        background: #0280c7;
+        color: #ffffff;
+        font-size: 0.65rem;
+        font-weight: 800;
+        padding: 0.1rem 0.4rem;
+        border-radius: 9999px;
+        line-height: 1.2;
       }
       .mobile-menu-btn {
         display: none;
@@ -637,6 +663,383 @@
         font-size: 0.8125rem;
         color: var(--slate-body);
         line-height: 1.4;
+      }
+
+      /* 5B. Clinic Facilities & Environment Gallery */
+      .facilities-section {
+        background: linear-gradient(180deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+        padding: 5.5rem 1.5rem;
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+        position: relative;
+      }
+      .facilities-container {
+        max-width: 1240px;
+        margin: 0 auto;
+      }
+      .facilities-header {
+        text-align: center;
+        max-width: 760px;
+        margin: 0 auto 2.5rem;
+      }
+      .facilities-header .section-title {
+        margin-top: 0.5rem;
+      }
+      .facilities-header-lead {
+        font-size: 0.95rem;
+        color: var(--slate-body);
+        line-height: 1.65;
+        margin-top: 0.85rem;
+      }
+      .facilities-filter-bar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        background: #f1f5f9;
+        padding: 0.35rem;
+        border-radius: 12px;
+        max-width: fit-content;
+        margin: 0 auto 2.75rem;
+      }
+      .facility-filter-btn {
+        background: transparent;
+        border: none;
+        padding: 0.5rem 1.15rem;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        color: #64748b;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+      }
+      .facility-filter-btn:hover {
+        color: #0f172a;
+      }
+      .facility-filter-btn.active {
+        background: #ffffff;
+        color: #0280c7;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+      .facilities-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3.5rem;
+      }
+      .facility-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+      }
+      .facility-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.09);
+        border-color: #cbd5e1;
+      }
+      .facility-media-wrap {
+        position: relative;
+        aspect-ratio: 16 / 11;
+        overflow: hidden;
+        background: #0f172a;
+        cursor: pointer;
+      }
+      .facility-media-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.45s ease;
+      }
+      .facility-card:hover .facility-media-wrap img {
+        transform: scale(1.06);
+      }
+      .facility-media-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.1) 0%, rgba(15, 23, 42, 0.65) 100%);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .facility-media-wrap:hover .facility-media-overlay {
+        opacity: 1;
+      }
+      .facility-view-pill {
+        background: #ffffff;
+        color: #0f172a;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        padding: 0.55rem 1.15rem;
+        border-radius: 9999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        transform: translateY(8px);
+        transition: transform 0.2s ease;
+      }
+      .facility-media-wrap:hover .facility-view-pill {
+        transform: translateY(0);
+      }
+      .facility-category-tag {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: rgba(15, 23, 42, 0.78);
+        backdrop-filter: blur(6px);
+        color: #ffffff;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.75rem;
+        border-radius: 6px;
+        z-index: 2;
+      }
+      .facility-content {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .facility-title {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 0.4rem;
+        line-height: 1.35;
+      }
+      .facility-meta {
+        font-size: 0.75rem;
+        color: #0280c7;
+        font-weight: 600;
+        margin-bottom: 0.85rem;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+      }
+      .facility-meta span[aria-hidden="true"] {
+        color: #94a3b8;
+      }
+      .facility-desc {
+        font-size: 0.875rem;
+        color: var(--slate-body);
+        line-height: 1.6;
+        margin-bottom: 1.25rem;
+        flex: 1;
+      }
+      .facility-card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 1rem;
+        border-top: 1px solid #f1f5f9;
+        font-size: 0.78rem;
+      }
+      .facility-specs-highlight {
+        color: #059669;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .facility-zoom-btn {
+        background: transparent;
+        border: none;
+        color: var(--primary-blue);
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.3rem 0.5rem;
+        border-radius: 6px;
+        transition: background 0.15s ease;
+      }
+      .facility-zoom-btn:hover {
+        background: #f0f9ff;
+      }
+      /* Trust Highlights Strip */
+      .facility-trust-strip {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 2.25rem;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+      }
+      .facility-trust-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .facility-trust-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: #f0fdf4;
+        color: #059669;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .facility-trust-item:nth-child(2) .facility-trust-icon {
+        background: #f0f9ff;
+        color: #0280c7;
+      }
+      .facility-trust-item:nth-child(3) .facility-trust-icon {
+        background: #fdf4ff;
+        color: #a855f7;
+      }
+      .facility-trust-item:nth-child(4) .facility-trust-icon {
+        background: #fffbeb;
+        color: #d97706;
+      }
+      .facility-trust-text h4 {
+        font-size: 0.925rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 0.25rem;
+      }
+      .facility-trust-text p {
+        font-size: 0.8rem;
+        color: #64748b;
+        line-height: 1.45;
+      }
+
+      /* Lightbox Modal */
+      .facility-lightbox-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.9);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 1050;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+      .facility-lightbox-backdrop.open {
+        display: flex;
+        opacity: 1;
+      }
+      .facility-lightbox-box {
+        background: #ffffff;
+        border-radius: 20px;
+        max-width: 960px;
+        width: 100%;
+        max-height: 92vh;
+        overflow-y: auto;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+        position: relative;
+        animation: modalScaleUp 0.25s ease-out;
+      }
+      .facility-lightbox-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 1.75rem;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .facility-lightbox-body {
+        padding: 1.5rem 1.75rem;
+      }
+      .facility-lightbox-image-wrap {
+        position: relative;
+        border-radius: 14px;
+        overflow: hidden;
+        background: #0f172a;
+        aspect-ratio: 16 / 10;
+        max-height: 480px;
+        margin-bottom: 1.5rem;
+      }
+      .facility-lightbox-image-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+      }
+      .facility-nav-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        background: rgba(255, 255, 255, 0.92);
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #0f172a;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        z-index: 5;
+      }
+      .facility-nav-arrow:hover {
+        background: #ffffff;
+        transform: translateY(-50%) scale(1.08);
+      }
+      .facility-nav-arrow.prev { left: 1rem; }
+      .facility-nav-arrow.next { right: 1rem; }
+      .facility-lightbox-info-grid {
+        display: grid;
+        grid-template-columns: 1.35fr 1fr;
+        gap: 1.75rem;
+        align-items: start;
+      }
+      .facility-spec-card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 1.25rem;
+      }
+      .facility-spec-card h5 {
+        font-size: 0.85rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .facility-spec-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+      .facility-spec-list li {
+        font-size: 0.8rem;
+        color: #334155;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.45rem;
+        line-height: 1.4;
+      }
+      .facility-spec-list li strong {
+        color: #0f172a;
       }
 
       /* Testimonials Section */
@@ -2632,7 +3035,7 @@
         flex-direction: column;
       }
       .modal-box.wide {
-        max-width: 600px;
+        max-width: 680px;
       }
       .modal-backdrop.open .modal-box {
         transform: scale(1);
@@ -2889,12 +3292,103 @@
         align-items: center;
         gap: 0.65rem;
       }
-      .whatsapp-submit-btn {
+
+      /* Professional Booking Modal Styling */
+      .booking-datetime-card {
+        background: var(--section-bg, #f8fafc);
+        border: 1px solid var(--border-color, #e2e8f0);
+        border-radius: 12px;
+        padding: 1rem 1.15rem;
+        margin-bottom: 1.15rem;
+      }
+      .date-badge {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--primary-blue, #0280c7);
+        background: #e0f2fe;
+        padding: 0.2rem 0.6rem;
+        border-radius: 6px;
+      }
+      .slot-badge {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--primary-blue, #0280c7);
+        background: #e0f2fe;
+        padding: 0.2rem 0.6rem;
+        border-radius: 6px;
+      }
+      .slot-group-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--slate-body, #64748b);
+        margin-bottom: 0.35rem;
+      }
+      .slot-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.45rem;
+      }
+      .slot-pill-btn {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 0.5rem 0.35rem;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--dark-text, #334155);
+        cursor: pointer;
+        transition: all 0.15s ease;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        user-select: none;
+        font-family: var(--font-main);
+      }
+      .slot-pill-btn:hover {
+        border-color: var(--primary-blue, #0280c7);
+        background: #f0f9ff;
+        color: var(--primary-blue, #0280c7);
+      }
+      .slot-pill-btn.active {
+        background: var(--primary-blue, #0280c7) !important;
+        border-color: var(--primary-blue, #0280c7) !important;
+        color: #ffffff !important;
+        box-shadow: 0 2px 8px rgba(2, 128, 199, 0.3) !important;
+        font-weight: 700;
+      }
+      .quick-date-btn {
+        flex: 1;
+        min-width: 85px;
+        padding: 0.45rem 0.65rem;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        background: #ffffff;
+        color: var(--dark-text, #334155);
+        cursor: pointer;
+        transition: all 0.15s ease;
+        font-family: var(--font-main);
+      }
+      .quick-date-btn:hover {
+        border-color: var(--primary-blue, #0280c7);
+        background: #f0f9ff;
+        color: var(--primary-blue, #0280c7);
+      }
+      .quick-date-btn.active {
+        background: var(--primary-blue, #0280c7) !important;
+        color: #ffffff !important;
+        border-color: var(--primary-blue, #0280c7) !important;
+        box-shadow: 0 2px 8px rgba(2, 128, 199, 0.25) !important;
+      }
+      .booking-submit-btn {
         width: 100%;
-        background: #25d366;
+        background: var(--primary-blue, #0280c7);
         color: #ffffff;
         border: none;
-        border-radius: 12px;
+        border-radius: 10px;
         padding: 0.85rem 1.25rem;
         font-size: 0.95rem;
         font-weight: 700;
@@ -2902,136 +3396,392 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 0.65rem;
-        transition: background 0.15s ease, transform 0.15s ease;
+        gap: 0.6rem;
+        transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+        font-family: var(--font-main);
       }
-      .whatsapp-submit-btn:hover {
-        background: #20bd5a;
+      .booking-submit-btn:hover {
+        background: var(--primary-blue-hover, #0369a1);
+        box-shadow: 0 4px 14px rgba(2, 128, 199, 0.35);
         transform: translateY(-1px);
       }
+      .booking-submit-btn:active {
+        transform: translateY(1px);
+      }
+      .required-star {
+        color: #dc2626;
+      }
+      .optional-text {
+        font-weight: 400;
+        color: #94a3b8;
+        font-size: 0.8rem;
+      }
 
-      /* Calendly Prompt in WhatsApp Tab */
-      .calendly-prompt-card {
-        background: linear-gradient(135deg, #f0f7fd 0%, #e0f2fe 100%);
-        border: 1.5px dashed #7dd3fc;
-        border-radius: 14px;
-        padding: 0.85rem 1rem;
-        margin-top: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.85rem;
-      }
-      .calendly-prompt-content {
-        display: flex;
-        align-items: center;
-        gap: 0.65rem;
-      }
-      .calendly-prompt-icon {
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-        background: #ffffff;
-        color: var(--primary-blue);
-        display: flex;
+      /* Modern Native Slot Booking & Appointment Management CSS */
+      .tab-badge {
+        display: inline-flex;
         align-items: center;
         justify-content: center;
-        flex-shrink: 0;
-        box-shadow: 0 2px 6px rgba(2, 128, 199, 0.15);
-      }
-      .calendly-prompt-text {
-        font-size: 0.75rem;
-        color: #0369a1;
-        line-height: 1.35;
-      }
-      .calendly-prompt-text strong {
-        display: block;
-        color: #0c4a6e;
-        font-size: 0.8rem;
-        font-weight: 800;
-      }
-      .calendly-switch-btn {
-        background: var(--primary-blue);
+        background: #0280c7;
         color: #ffffff;
-        border: none;
-        border-radius: 8px;
-        padding: 0.45rem 0.85rem;
-        font-size: 0.75rem;
-        font-weight: 700;
-        cursor: pointer;
-        white-space: nowrap;
-        transition: background 0.15s ease, transform 0.15s ease;
-      }
-      .calendly-switch-btn:hover {
-        background: var(--primary-blue-hover);
-        transform: translateY(-1px);
+        font-size: 0.65rem;
+        font-weight: 800;
+        min-width: 18px;
+        height: 18px;
+        padding: 0 5px;
+        border-radius: 9999px;
+        margin-left: 0.35rem;
+        line-height: 1;
       }
 
-      /* Calendly Tab Elements */
-      .calendly-info-card {
+      .booking-section-card {
         background: #f8fafc;
         border: 1px solid #e2e8f0;
         border-radius: 16px;
-        padding: 1.1rem 1.25rem;
-        margin-bottom: 1.25rem;
+        padding: 1.1rem;
+        margin-bottom: 1.15rem;
       }
-      .calendly-info-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 0.75rem;
-        margin-bottom: 0.85rem;
-      }
-      .calendly-info-title h4 {
-        font-size: 1rem;
-        font-weight: 800;
-        color: #0f172a;
-        margin-bottom: 0.2rem;
-      }
-      .calendly-info-title p {
-        font-size: 0.8rem;
-        color: var(--slate-body);
-      }
-      .calendly-duration-badge {
-        background: #e0f2fe;
-        color: var(--primary-blue);
-        font-weight: 800;
-        font-size: 0.75rem;
-        padding: 0.35rem 0.75rem;
-        border-radius: 9999px;
-        white-space: nowrap;
-      }
-      .calendly-perks-list {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        border-top: 1px solid #e2e8f0;
-        padding-top: 0.85rem;
-      }
-      .calendly-perk-item {
+      .booking-section-header {
         display: flex;
         align-items: center;
-        gap: 0.6rem;
-        font-size: 0.775rem;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .booking-section-title {
+        font-size: 0.85rem;
+        font-weight: 800;
+        color: #0f172a;
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+      }
+      .booking-section-sub {
+        font-size: 0.75rem;
+        color: #64748b;
+        font-weight: 500;
+      }
+
+      /* Date Strip Horizontal Carousel */
+      .date-nav-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.65rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .date-nav-title {
+        font-size: 0.8125rem;
+        font-weight: 700;
+        color: #334155;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .date-nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .date-nav-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        background: #ffffff;
+        color: #334155;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .date-nav-btn:hover {
+        background: #e0f2fe;
+        color: var(--primary-blue);
+        border-color: #7dd3fc;
+      }
+      .custom-date-picker-wrap {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
         color: #475569;
+      }
+      .custom-date-input {
+        border: none;
+        background: transparent;
+        font-family: inherit;
+        font-size: 0.775rem;
         font-weight: 600;
+        color: #0f172a;
+        outline: none;
+        cursor: pointer;
       }
-      .calendly-perk-item svg {
-        color: #10b981;
-        width: 16px;
-        height: 16px;
-        flex-shrink: 0;
+
+      .date-strip-scroll {
+        display: flex;
+        gap: 0.6rem;
+        overflow-x: auto;
+        padding: 0.3rem 0.2rem 0.6rem;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
       }
-      .calendly-primary-btn {
+      .date-strip-scroll::-webkit-scrollbar {
+        height: 5px;
+      }
+      .date-strip-scroll::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 9999px;
+      }
+      .date-chip {
+        flex: 0 0 78px;
+        scroll-snap-align: start;
+        background: #ffffff;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 0.65rem 0.35rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.2rem;
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        user-select: none;
+        position: relative;
+      }
+      .date-chip:hover {
+        border-color: #7dd3fc;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(2, 128, 199, 0.12);
+      }
+      .date-chip.active {
+        background: linear-gradient(135deg, #0280c7 0%, #0369a1 100%);
+        border-color: #0280c7;
+        color: #ffffff;
+        box-shadow: 0 6px 16px rgba(2, 128, 199, 0.35);
+        transform: translateY(-2px);
+      }
+      .date-chip-day {
+        font-size: 0.6875rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #64748b;
+      }
+      .date-chip.active .date-chip-day {
+        color: #bae6fd;
+      }
+      .date-chip-num {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.1;
+      }
+      .date-chip.active .date-chip-num {
+        color: #ffffff;
+      }
+      .date-chip-month {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        color: #64748b;
+      }
+      .date-chip.active .date-chip-month {
+        color: #e0f2fe;
+      }
+      .date-chip-slots {
+        font-size: 0.625rem;
+        font-weight: 700;
+        background: #ecfdf5;
+        color: #059669;
+        padding: 0.15rem 0.4rem;
+        border-radius: 9999px;
+        margin-top: 0.2rem;
+        white-space: nowrap;
+      }
+      .date-chip.active .date-chip-slots {
+        background: rgba(255, 255, 255, 0.22);
+        color: #ffffff;
+      }
+      .date-chip-tag {
+        position: absolute;
+        top: -6px;
+        background: #f59e0b;
+        color: #ffffff;
+        font-size: 0.5625rem;
+        font-weight: 800;
+        padding: 0.1rem 0.35rem;
+        border-radius: 9999px;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+
+      .selected-date-banner {
+        background: #f0f9ff;
+        border: 1px solid #bae6fd;
+        border-radius: 10px;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.775rem;
+        color: #0369a1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0.65rem;
+      }
+
+      /* Time Slots Layout */
+      .slot-period-group {
+        margin-bottom: 0.85rem;
+      }
+      .slot-period-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.45rem;
+      }
+      .slot-period-label {
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #475569;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .slot-period-sub {
+        font-size: 0.7rem;
+        color: #94a3b8;
+      }
+      .slots-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: 0.55rem;
+      }
+      .time-slot-btn {
+        background: #ffffff;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 12px;
+        padding: 0.6rem 0.45rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 54px;
+      }
+      .time-slot-btn:hover:not(.booked) {
+        border-color: var(--primary-blue);
+        background: #f0f9ff;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 8px rgba(2, 128, 199, 0.15);
+      }
+      .time-slot-btn.selected {
+        background: linear-gradient(135deg, #0280c7 0%, #0369a1 100%);
+        border-color: #0280c7;
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(2, 128, 199, 0.35);
+        transform: translateY(-1px);
+      }
+      .time-slot-btn .slot-time {
+        font-size: 0.825rem;
+        font-weight: 800;
+        color: #0f172a;
+      }
+      .time-slot-btn.selected .slot-time {
+        color: #ffffff;
+      }
+      .time-slot-btn .slot-status {
+        font-size: 0.625rem;
+        font-weight: 600;
+        color: #059669;
+        margin-top: 0.15rem;
+      }
+      .time-slot-btn.selected .slot-status {
+        color: #bae6fd;
+      }
+      .time-slot-btn.booked {
+        background: #f1f5f9;
+        border-color: #e2e8f0;
+        cursor: not-allowed;
+        opacity: 0.65;
+      }
+      .time-slot-btn.booked .slot-time {
+        color: #94a3b8;
+        text-decoration: line-through;
+      }
+      .time-slot-btn.booked .slot-status {
+        color: #94a3b8;
+      }
+      .slot-badge-filling {
+        position: absolute;
+        top: -6px;
+        right: -4px;
+        background: #f59e0b;
+        color: #ffffff;
+        font-size: 0.5rem;
+        font-weight: 800;
+        padding: 0.1rem 0.35rem;
+        border-radius: 9999px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Live Booking Summary Card */
+      .live-booking-summary {
+        background: linear-gradient(135deg, #f8fafc 0%, #f0f7fd 100%);
+        border: 1.5px solid #bae6fd;
+        border-radius: 14px;
+        padding: 0.95rem 1.15rem;
+        margin-bottom: 1.15rem;
+      }
+      .summary-header {
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #0369a1;
+        margin-bottom: 0.6rem;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .summary-details-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 0.6rem;
+      }
+      .summary-item-label {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        color: #64748b;
+        margin-bottom: 0.1rem;
+      }
+      .summary-item-value {
+        font-size: 0.8125rem;
+        font-weight: 800;
+        color: #0f172a;
+      }
+
+      .slot-confirm-btn {
         width: 100%;
-        background: #0280c7;
+        background: linear-gradient(135deg, #0280c7 0%, #0369a1 100%);
         color: #ffffff;
         border: none;
         border-radius: 12px;
-        padding: 0.9rem 1.25rem;
+        padding: 0.95rem 1.25rem;
         font-size: 0.95rem;
-        font-weight: 700;
+        font-weight: 800;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -3040,36 +3790,195 @@
         transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
         box-shadow: 0 4px 14px rgba(2, 128, 199, 0.28);
       }
-      .calendly-primary-btn:hover {
-        background: #0369a1;
+      .slot-confirm-btn:hover {
+        background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
         transform: translateY(-1px);
         box-shadow: 0 6px 18px rgba(2, 128, 199, 0.38);
       }
-      .calendly-alt-bar {
-        text-align: center;
-        margin-top: 0.9rem;
-        font-size: 0.775rem;
-        color: #64748b;
-      }
-      .calendly-alt-bar a {
-        color: var(--primary-blue);
-        font-weight: 700;
-        text-decoration: none;
-      }
-      .calendly-alt-bar a:hover {
-        text-decoration: underline;
-      }
-      .calendly-inline-embed {
-        border: 1px solid #e2e8f0;
-        border-radius: 14px;
-        overflow: hidden;
-        margin-top: 1rem;
+
+      /* Confirmation Screen */
+      .confirmation-screen {
         display: none;
-        height: 480px;
-        background: #ffffff;
+        text-align: center;
+        padding: 0.75rem 0.25rem;
       }
-      .calendly-inline-embed.visible {
+      .confirmation-screen.visible {
         display: block;
+      }
+      .conf-icon-wrap {
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 0.85rem;
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+        animation: confScalePop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      @keyframes confScalePop {
+        0% { transform: scale(0.6); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      .conf-title {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 0.25rem;
+      }
+      .conf-subtitle {
+        font-size: 0.825rem;
+        color: #64748b;
+        margin-bottom: 1rem;
+      }
+      .conf-ref-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: #e0f2fe;
+        color: var(--primary-blue);
+        font-weight: 800;
+        font-size: 0.825rem;
+        padding: 0.4rem 1rem;
+        border-radius: 9999px;
+        margin-bottom: 1.15rem;
+      }
+      .conf-itinerary-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 1.15rem;
+        text-align: left;
+        margin-bottom: 1.25rem;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      }
+      .conf-actions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 0.65rem;
+        margin-bottom: 1rem;
+      }
+      .conf-action-btn {
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+        font-size: 0.825rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.15s ease;
+        text-decoration: none;
+        border: none;
+      }
+      .conf-action-btn.google {
+        background: #ffffff;
+        border: 1.5px solid #cbd5e1;
+        color: #0f172a;
+      }
+      .conf-action-btn.google:hover {
+        background: #f8fafc;
+        border-color: #94a3b8;
+      }
+      .conf-action-btn.ics {
+        background: #0280c7;
+        color: #ffffff;
+      }
+      .conf-action-btn.ics:hover {
+        background: #0369a1;
+      }
+      .conf-action-btn.whatsapp {
+        background: #25d366;
+        color: #ffffff;
+      }
+      .conf-action-btn.whatsapp:hover {
+        background: #20bd5a;
+      }
+
+      /* My Bookings Tab UI */
+      .my-bookings-container {
+        padding: 0.25rem 0;
+      }
+      .my-booking-card {
+        background: #ffffff;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 1rem;
+        margin-bottom: 0.85rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        position: relative;
+      }
+      .my-booking-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+      .my-booking-ref {
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: var(--primary-blue);
+      }
+      .my-booking-status {
+        font-size: 0.6875rem;
+        font-weight: 700;
+        background: #ecfdf5;
+        color: #059669;
+        padding: 0.2rem 0.55rem;
+        border-radius: 9999px;
+      }
+      .my-booking-title {
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 0.25rem;
+      }
+      .my-booking-meta {
+        font-size: 0.8rem;
+        color: #475569;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        margin-bottom: 0.75rem;
+      }
+      .my-booking-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      .my-booking-btn {
+        padding: 0.45rem 0.8rem;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        cursor: pointer;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        transition: all 0.15s ease;
+      }
+      .my-booking-btn.cal {
+        background: #e0f2fe;
+        color: var(--primary-blue);
+      }
+      .my-booking-btn.cal:hover {
+        background: #bae6fd;
+      }
+      .my-booking-btn.cancel {
+        background: #fee2e2;
+        color: #dc2626;
+      }
+      .my-booking-btn.cancel:hover {
+        background: #fecaca;
+      }
+      .my-booking-empty {
+        text-align: center;
+        padding: 2.5rem 1rem;
+        color: #64748b;
       }
 
       /* Video Modal */
@@ -3172,9 +4081,43 @@
         .google-map-iframe {
           min-height: 400px;
         }
+        .facilities-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
+        }
+        .facility-trust-strip {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
+          padding: 1.75rem;
+        }
+        .facility-lightbox-info-grid {
+          grid-template-columns: 1fr;
+        }
       }
 
       @media (max-width: 640px) {
+        .facilities-section {
+          padding: 3.5rem 1rem;
+        }
+        .facilities-grid {
+          grid-template-columns: 1fr;
+          gap: 1.25rem;
+        }
+        .facility-trust-strip {
+          grid-template-columns: 1fr;
+          gap: 1.25rem;
+          padding: 1.25rem;
+        }
+        .facility-lightbox-box {
+          max-height: 95vh;
+        }
+        .facility-lightbox-header,
+        .facility-lightbox-body {
+          padding: 1rem 1.15rem;
+        }
+        .facility-lightbox-image-wrap {
+          max-height: 280px;
+        }
         .nav-container {
           padding: 0.75rem 1rem;
         }
@@ -3479,6 +4422,7 @@
           <li><a href="#" class="nav-link active">Home</a></li>
           <li><a href="#about" class="nav-link">About</a></li>
           <li><a href="#services" class="nav-link">Services</a></li>
+          <li><a href="#facilities" class="nav-link">Facilities</a></li>
           <li><a href="#team" class="nav-link">Our Team</a></li>
           <li><a href="#testimonials" class="nav-link">Patient Stories</a></li>
           <li><a href="#blog" class="nav-link">Blog</a></li>
@@ -3520,6 +4464,7 @@
           <li><a href="#" onclick="toggleMobileDrawer(true)">Home</a></li>
           <li><a href="#about" onclick="toggleMobileDrawer(true)">About</a></li>
           <li><a href="#services" onclick="toggleMobileDrawer(true)">Services</a></li>
+          <li><a href="#facilities" onclick="toggleMobileDrawer(true)">Facilities</a></li>
           <li><a href="#team" onclick="toggleMobileDrawer(true)">Our Team</a></li>
           <li><a href="#testimonials" onclick="toggleMobileDrawer(true)">Patient Stories</a></li>
           <li><a href="#blog" onclick="toggleMobileDrawer(true)">Blog</a></li>
@@ -3862,7 +4807,114 @@
       </div>
     </section>
 
-    <!-- 5B. Our Team Section -->
+    <!-- 5B. Clinic Facilities & Environment Gallery Section -->
+    <section class="facilities-section reveal-on-scroll" id="facilities">
+      <div class="facilities-container">
+        <!-- Section Header -->
+        <div class="facilities-header">
+          <span class="section-kicker">OUR CLINIC ENVIRONMENT</span>
+          <h2 class="section-title">World-Class Facilities &amp; Hospital-Grade Hygiene</h2>
+          <p class="facilities-header-lead">
+            Tour our clinic before you visit. From certified Class-B vacuum autoclave sterilization and low-radiation 3D CBCT imaging to our peaceful, zero-anxiety patient lounge, every detail is crafted for your safety, comfort, and clinical precision.
+          </p>
+        </div>
+
+        <!-- Filter Bar (Segmented Controls) -->
+        <div class="facilities-filter-bar" role="tablist" aria-label="Facility categories">
+          <button type="button" class="facility-filter-btn active" data-filter="all" onclick="filterFacilities('all', this)" role="tab" aria-selected="true">
+            <span>All Facilities (6)</span>
+          </button>
+          <button type="button" class="facility-filter-btn" data-filter="sterilization" onclick="filterFacilities('sterilization', this)" role="tab" aria-selected="false">
+            <span>🛡️ Sterilization Suite</span>
+          </button>
+          <button type="button" class="facility-filter-btn" data-filter="lounge" onclick="filterFacilities('lounge', this)" role="tab" aria-selected="false">
+            <span>🛋️ Waiting Lounge &amp; Desk</span>
+          </button>
+          <button type="button" class="facility-filter-btn" data-filter="operatory" onclick="filterFacilities('operatory', this)" role="tab" aria-selected="false">
+            <span>🩺 Treatment Operatories</span>
+          </button>
+          <button type="button" class="facility-filter-btn" data-filter="imaging" onclick="filterFacilities('imaging', this)" role="tab" aria-selected="false">
+            <span>🔬 3D CBCT &amp; Diagnostics</span>
+          </button>
+        </div>
+
+        <!-- Responsive Facilities Grid -->
+        <div class="facilities-grid" id="facilitiesGrid">
+          <!-- Populated dynamically / pre-rendered via JavaScript -->
+        </div>
+
+        <!-- Trust Highlights Strip -->
+        <div class="facility-trust-strip">
+          <div class="facility-trust-item">
+            <div class="facility-trust-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <path d="M9 12l2 2 4-4"></path>
+              </svg>
+            </div>
+            <div class="facility-trust-text">
+              <h4>100% Sterile Protocol</h4>
+              <p>Class-B vacuum autoclaves &amp; sealed single-use pouches opened in front of you.</p>
+            </div>
+          </div>
+
+          <div class="facility-trust-item">
+            <div class="facility-trust-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <div class="facility-trust-text">
+              <h4>Zero-Anxiety Lounge</h4>
+              <p>Plush armchairs, calming biophilic plants, and soothing ambient lighting.</p>
+            </div>
+          </div>
+
+          <div class="facility-trust-item">
+            <div class="facility-trust-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="2" x2="12" y2="6"></line>
+                <line x1="12" y1="18" x2="12" y2="22"></line>
+                <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+                <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+                <line x1="2" y1="12" x2="6" y2="12"></line>
+                <line x1="18" y1="12" x2="22" y2="12"></line>
+              </svg>
+            </div>
+            <div class="facility-trust-text">
+              <h4>Low-Radiation 3D CBCT</h4>
+              <p>Sub-millimeter 3D imaging for pinpoint guided implants with 80% lower dose.</p>
+            </div>
+          </div>
+
+          <div class="facility-trust-item">
+            <div class="facility-trust-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"></path>
+              </svg>
+            </div>
+            <div class="facility-trust-text">
+              <h4>Medical HEPA Air Clean</h4>
+              <p>Continuous clinical air filtration and aerosol suction for pure, fresh air.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section Bottom CTA -->
+        <div style="text-align: center; margin-top: 3rem;">
+          <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 0.85rem;">
+            Would you like a personal walkthrough before starting your treatment?
+          </p>
+          <button type="button" class="btn-primary" onclick="openAppointmentModal('Clinic Tour & Consultation')">
+            <span>Schedule a Clinic Visit &amp; Consultation &rarr;</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5C. Our Team Section -->
     <section class="team-section reveal-on-scroll" id="team">
       <div class="section-container" style="padding-top: 0; padding-bottom: 0;">
         <div class="team-header">
@@ -4771,6 +5823,7 @@
               <li><a href="#">Home</a></li>
               <li><a href="#about">About</a></li>
               <li><a href="#services">Services</a></li>
+              <li><a href="#facilities">Clinic Facilities</a></li>
               <li><a href="#team">Our Team</a></li>
               <li><a href="#testimonials">Patient Stories</a></li>
               <li><a href="#blog">Blog</a></li>
@@ -4835,13 +5888,12 @@
       </div>
     </footer>
 
-    <!-- Interactive Quick Appointment Modal (WhatsApp Automation & Calendly Integration) -->
+    <!-- Simple & Easy WhatsApp Appointment Booking Modal -->
     <div class="modal-backdrop" id="appointmentModal">
-      <div class="modal-box" id="modalBox">
+      <div class="modal-box simple-booking-box" id="modalBox" style="max-width: 580px;">
         <div class="modal-header">
           <div class="modal-header-text">
             <h3 id="modalHeading">Book an Appointment</h3>
-            <p id="modalSubheading">Instant WhatsApp confirmation or live calendar scheduling</p>
           </div>
           <button class="modal-close-btn" onclick="closeAppointmentModal()" aria-label="Close modal" title="Close modal">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -4850,192 +5902,259 @@
             </svg>
           </button>
         </div>
-        <div class="modal-body">
-          <!-- Prominent Selected Doctor Callout Banner -->
-          <div class="doctor-badge-callout neutral" id="doctorCallout">
-            <img class="doctor-callout-avatar" id="doctorCalloutImg" src="/images/team_dr_rohit.jpg" alt="Doctor photo" style="display: none;" />
-            <div class="doctor-callout-icon" id="doctorCalloutIcon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path d="M12 2C7 2 4 5 4 10C4 16 6 21 8 22C9.5 22.5 10.5 20 12 20C13.5 20 14.5 22.5 16 22C18 21 20 16 20 10C20 5 17 2 12 2Z"/>
-              </svg>
-            </div>
-            <div class="doctor-callout-info">
-              <div class="doctor-callout-label" id="doctorCalloutLabel">
-                <span id="doctorCalloutTag">Doctor Assignment</span>
-              </div>
-              <div class="doctor-callout-name" id="doctorCalloutName">Any Available Specialist</div>
-              <div class="doctor-callout-sub" id="doctorCalloutSub">First available clinic slot based on reception schedule</div>
-              <div class="doctor-callout-guarantee" id="doctorCalloutGuarantee">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span id="doctorCalloutGuaranteeText">Receptionist will check schedule &amp; prevent conflicting bookings</span>
-              </div>
-            </div>
-          </div>
 
-          <!-- Booking Mode Switcher Tabs -->
-          <div class="booking-mode-tabs">
-            <button type="button" class="booking-tab-btn active" id="tabBtnWhatsapp" onclick="switchBookingTab('whatsapp')">
-              <svg viewBox="0 0 24 24" fill="#25d366"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.04 20.15C10.56 20.15 9.11 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.07 16.3C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.68 12.04 3.68C14.24 3.68 16.31 4.54 17.86 6.09C19.42 7.65 20.27 9.71 20.27 11.91C20.27 16.46 16.58 20.15 12.04 20.15ZM16.57 14.39C16.32 14.27 15.1 13.67 14.87 13.58C14.64 13.5 14.48 13.46 14.31 13.71C14.15 13.96 13.67 14.52 13.53 14.69C13.38 14.85 13.24 14.87 12.99 14.75C12.74 14.62 11.94 14.36 10.99 13.51C10.25 12.85 9.75 12.04 9.61 11.79C9.46 11.54 9.59 11.41 9.72 11.28C9.83 11.17 9.97 10.99 10.09 10.84C10.22 10.7 10.26 10.59 10.34 10.43C10.43 10.26 10.39 10.12 10.32 9.99C10.26 9.87 9.77 8.66 9.57 8.16C9.37 7.68 9.17 7.74 9.02 7.73C8.88 7.73 8.71 7.73 8.55 7.73C8.38 7.79 7.89 8.04C7.66 8.29 7.02 8.89 7.02 10.11C7.02 11.33 7.91 12.51 8.03 12.67C8.16 12.84 9.78 15.34 12.27 16.41C12.86 16.67 13.32 16.82 13.68 16.94C14.27 17.13 14.81 17.1 15.24 17.04C15.72 16.97 16.71 16.44 16.92 15.86C17.12 15.28 17.12 14.79 17.06 14.69C17 14.58 16.83 14.52 16.57 14.39Z"/></svg>
-              <span>WhatsApp Booking</span>
-            </button>
-            <button type="button" class="booking-tab-btn" id="tabBtnCalendly" onclick="switchBookingTab('calendly')">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              <span>Live Calendly Slot</span>
-            </button>
-          </div>
-
-          <!-- TAB 1: WhatsApp Quick Booking -->
-          <div class="tab-pane active" id="tabPaneWhatsapp">
-            <form id="appointmentForm" onsubmit="handleAppointmentSubmit(event)">
-              <div class="form-group">
-                <label class="form-label" for="patientName">Patient's Full Name *</label>
-                <input type="text" id="patientName" class="form-input" placeholder="e.g. John Doe" required />
-                <div class="form-error" id="nameError">Please enter your full name.</div>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="patientPhone">Patient Mobile Number *</label>
-                <input type="tel" id="patientPhone" class="form-input" placeholder="e.g. +91 99014 63886" required />
-                <div class="form-error" id="phoneError">Please enter a valid phone number.</div>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="serviceSelect">Requested Dental Service *</label>
-                <select id="serviceSelect" class="form-select" onchange="syncServiceSelection(this.value)" required>
-                  <option value="General Dentistry">General Dentistry (Checkup &amp; Cleaning)</option>
-                  <option value="Orthodontics">Orthodontics (Braces &amp; Clear Aligners)</option>
-                  <option value="Dental Implants">Dental Implants</option>
-                  <option value="Teeth Whitening">Teeth Whitening</option>
-                  <option value="Kids Dentistry">Kids Dentistry</option>
-                  <option value="Cosmetic Dentistry">Cosmetic Dentistry</option>
-                  <option value="Emergency Care">Emergency Dental Care</option>
-                  <option value="General Consultation">General Consultation</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="doctorSelect">Preferred Doctor / Specialist *</label>
-                <select id="doctorSelect" class="form-select" onchange="syncDoctorSelection(this.value)">
-                  <option value="Any Available Specialist">Any Available Specialist (Receptionist Match - Fastest Slot)</option>
-                  <option value="Dr. Rohit Sharma, MDS">Dr. Rohit Sharma, MDS (Chief Surgeon &amp; Implants)</option>
-                  <option value="Dr. Ananya Patil, MDS">Dr. Ananya Patil, MDS (Senior Orthodontist &amp; Aligners)</option>
-                  <option value="Dr. Vikram Deshmukh, MDS">Dr. Vikram Deshmukh, MDS (Pediatric &amp; Kids Specialist)</option>
-                  <option value="Dr. Priya Kulkarni, BDS">Dr. Priya Kulkarni, BDS (Cosmetic &amp; Aesthetic Specialist)</option>
-                </select>
-                <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.35rem; line-height: 1.4;">
-                  ✨ <strong>Schedule Conflict Protection:</strong> Reception will verify doctor availability and confirm the slot without common schedule conflicts.
-                </div>
-              </div>
-
-              <div class="whatsapp-preview-box">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="#25d366"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.04 20.15C10.56 20.15 9.11 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.07 16.3C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.68 12.04 3.68C14.24 3.68 16.31 4.54 17.86 6.09C19.42 7.65 20.27 9.71 20.27 11.91C20.27 16.46 16.58 20.15 12.04 20.15ZM16.57 14.39C16.32 14.27 15.1 13.67 14.87 13.58C14.64 13.5 14.48 13.46 14.31 13.71C14.15 13.96 13.67 14.52 13.53 14.69C13.38 14.85 13.24 14.87 12.99 14.75C12.74 14.62 11.94 14.36 10.99 13.51C10.25 12.85 9.75 12.04 9.61 11.79C9.46 11.54 9.59 11.41 9.72 11.28C9.83 11.17 9.97 10.99 10.09 10.84C10.22 10.7 10.26 10.59 10.34 10.43C10.43 10.26 10.39 10.12 10.32 9.99C10.26 9.87 9.77 8.66 9.57 8.16C9.37 7.68 9.17 7.74 9.02 7.73C8.88 7.73 8.71 7.73 8.55 7.73C8.38 7.73 8.12 7.79 7.89 8.04C7.66 8.29 7.02 8.89 7.02 10.11C7.02 11.33 7.91 12.51 8.03 12.67C8.16 12.84 9.78 15.34 12.27 16.41C12.86 16.67 13.32 16.82 13.68 16.94C14.27 17.13 14.81 17.1 15.24 17.04C15.72 16.97 16.71 16.44 16.92 15.86C17.12 15.28 17.12 14.79 17.06 14.69C17 14.58 16.83 14.52 16.57 14.39Z"/></svg>
-                <span>Submitting will open your official WhatsApp chat with doctor name and receptionist scheduling instructions.</span>
-              </div>
-
-              <button type="submit" class="whatsapp-submit-btn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.04 20.15C10.56 20.15 9.11 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.07 16.3C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.68 12.04 3.68C14.24 3.68 16.31 4.54 17.86 6.09C19.42 7.65 20.27 9.71 20.27 11.91C20.27 16.46 16.58 20.15 12.04 20.15ZM16.57 14.39C16.32 14.27 15.1 13.67 14.87 13.58C14.64 13.5 14.48 13.46 14.31 13.71C14.15 13.96 13.67 14.52 13.53 14.69C13.38 14.85 13.24 14.87 12.99 14.75C12.74 14.62 11.94 14.36 10.99 13.51C10.25 12.85 9.75 12.04 9.61 11.79C9.46 11.54 9.59 11.41 9.72 11.28C9.83 11.17 9.97 10.99 10.09 10.84C10.22 10.7 10.26 10.59 10.34 10.43C10.43 10.26 10.39 10.12 10.32 9.99C10.26 9.87 9.77 8.66 9.57 8.16C9.37 7.68 9.17 7.74 9.02 7.73C8.88 7.73 8.71 7.73 8.55 7.73C8.38 7.73 8.12 7.79 7.89 8.04C7.66 8.29 7.02 8.89 7.02 10.11C7.02 11.33 7.91 12.51 8.03 12.67C8.16 12.84 9.78 15.34 12.27 16.41C12.86 16.67 13.32 16.82 13.68 16.94C14.27 17.13 14.81 17.1 15.24 17.04C15.72 16.97 16.71 16.44 16.92 15.86C17.12 15.28 17.12 14.79 17.06 14.69C17 14.58 16.83 14.52 16.57 14.39Z"/></svg>
-                Confirm on WhatsApp &rarr;
-              </button>
-
-              <!-- Calendly Prompt inside WhatsApp Form -->
-              <div class="calendly-prompt-card">
-                <div class="calendly-prompt-content">
-                  <div class="calendly-prompt-icon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                  </div>
-                  <div class="calendly-prompt-text">
-                    <strong>Prefer picking an exact date &amp; time?</strong>
-                    <span>Schedule directly on our live Calendly calendar.</span>
-                  </div>
-                </div>
-                <button type="button" class="calendly-switch-btn" onclick="switchBookingTab('calendly')">
-                  Open Calendly &rarr;
-                </button>
-              </div>
-
-              <!-- Extra Close Button for Seamless Mobile UX -->
-              <button type="button" class="modal-footer-close-btn" onclick="closeAppointmentModal()">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-                <span>Close Window</span>
-              </button>
-            </form>
-          </div>
-
-          <!-- TAB 2: Calendly Live Booking -->
-          <div class="tab-pane" id="tabPaneCalendly">
-            <div class="calendly-info-card">
-              <div class="calendly-info-header">
-                <div class="calendly-info-title">
-                  <h4>SmileCare Dental Clinic</h4>
-                  <p>In-Person Consultation &amp; Dental Checkup</p>
-                </div>
-                <span class="calendly-duration-badge">⏱ 30 Mins</span>
-              </div>
-              <ul class="calendly-perks-list">
-                <li class="calendly-perk-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                  <span>Select any convenient date &amp; available time slot</span>
-                </li>
-                <li class="calendly-perk-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                  <span>Instant Google/Outlook calendar invite &amp; SMS reminders</span>
-                </li>
-                <li class="calendly-perk-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                  <span>Reserved appointment slot with zero clinic waiting time</span>
-                </li>
-              </ul>
-            </div>
-
-            <div class="form-group" style="margin-bottom: 0.9rem;">
-              <label class="form-label" for="calendlyServiceSelect">Selected Dental Service</label>
-              <select id="calendlyServiceSelect" class="form-select" onchange="syncServiceSelection(this.value)">
-                <option value="General Dentistry">General Dentistry</option>
-                <option value="Orthodontics">Orthodontics (Aligners &amp; Braces)</option>
-                <option value="Dental Implants">Dental Implants</option>
+        <div class="modal-body" style="padding: 1.35rem 1.6rem;">
+          <!-- Simple Form View -->
+          <form id="simpleBookingForm" onsubmit="handleSimpleBookingSubmit(event)">
+            
+            <!-- Service Selection -->
+            <div class="form-group" style="margin-bottom: 0.95rem;">
+              <label class="form-label" for="bookingService" style="font-weight: 600; color: #0f172a; margin-bottom: 0.35rem; display: block; font-size: 0.875rem;">
+                Service / Treatment <span class="required-star">*</span>
+              </label>
+              <select id="bookingService" class="form-select" required style="width: 100%; padding: 0.65rem 0.85rem; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 0.875rem; color: #0f172a; background-color: #ffffff;">
+                <option value="General Consultation &amp; Dental Checkup">General Consultation &amp; Dental Checkup</option>
+                <option value="Tooth Pain &amp; Root Canal (RCT)">Tooth Pain &amp; Root Canal (RCT)</option>
+                <option value="Teeth Cleaning &amp; Polishing (Scaling)">Teeth Cleaning &amp; Polishing (Scaling)</option>
                 <option value="Teeth Whitening">Teeth Whitening</option>
-                <option value="Kids Dentistry">Kids Dentistry</option>
-                <option value="Cosmetic Dentistry">Cosmetic Dentistry</option>
-                <option value="Emergency Care">Emergency Care</option>
-                <option value="General Consultation">General Consultation</option>
+                <option value="Braces &amp; Clear Aligners">Braces &amp; Clear Aligners</option>
+                <option value="Dental Implants &amp; Tooth Replacement">Dental Implants &amp; Tooth Replacement</option>
+                <option value="Tooth Extraction &amp; Wisdom Tooth">Tooth Extraction &amp; Wisdom Tooth</option>
+                <option value="Pediatric &amp; Kids Dental Care">Pediatric &amp; Kids Dental Care</option>
+                <option value="Emergency Dental Care">Emergency Dental Care</option>
+                <option value="Clinic Tour &amp; Consultation">Clinic Tour &amp; Consultation</option>
               </select>
             </div>
 
-            <div class="form-group" style="margin-bottom: 1.1rem;">
-              <label class="form-label" for="calendlyDoctorSelect">Preferred Doctor / Specialist *</label>
-              <select id="calendlyDoctorSelect" class="form-select" onchange="syncDoctorSelection(this.value)">
-                <option value="Any Available Specialist">Any Available Specialist (Receptionist Match - Fastest Slot)</option>
+            <!-- Doctor Selection -->
+            <div class="form-group" style="margin-bottom: 0.95rem;">
+              <label class="form-label" for="bookingDoctor" style="font-weight: 600; color: #0f172a; margin-bottom: 0.35rem; display: block; font-size: 0.875rem;">
+                Doctor <span class="required-star">*</span>
+              </label>
+              <select id="bookingDoctor" class="form-select" style="width: 100%; padding: 0.65rem 0.85rem; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 0.875rem; color: #0f172a; background-color: #ffffff;">
+                <option value="Any Available Doctor">Any Available Doctor (Earliest Appointment)</option>
                 <option value="Dr. Rohit Sharma, MDS">Dr. Rohit Sharma, MDS (Chief Surgeon &amp; Implants)</option>
-                <option value="Dr. Ananya Patil, MDS">Dr. Ananya Patil, MDS (Senior Orthodontist &amp; Aligners)</option>
-                <option value="Dr. Vikram Deshmukh, MDS">Dr. Vikram Deshmukh, MDS (Pediatric &amp; Kids Specialist)</option>
-                <option value="Dr. Priya Kulkarni, BDS">Dr. Priya Kulkarni, BDS (Cosmetic &amp; Aesthetic Specialist)</option>
+                <option value="Dr. Ananya Patil, MDS">Dr. Ananya Patil, MDS (Braces &amp; Clear Aligners)</option>
+                <option value="Dr. Vikram Deshmukh, MDS">Dr. Vikram Deshmukh, MDS (Pediatric Dental Specialist)</option>
+                <option value="Dr. Priya Kulkarni, BDS">Dr. Priya Kulkarni, BDS (Cosmetic &amp; General Dentistry)</option>
               </select>
             </div>
 
-            <button type="button" class="calendly-primary-btn" onclick="launchCalendlyScheduling()">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              Select Time Slot on Calendly &rarr;
-            </button>
+            <!-- Date & Time Slot Card -->
+            <div class="booking-datetime-card">
+              
+              <!-- Date Header & Quick Day Buttons -->
+              <div style="margin-bottom: 0.85rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem; flex-wrap: wrap; gap: 0.35rem;">
+                  <label class="form-label" style="margin-bottom: 0; font-weight: 600; color: #0f172a; font-size: 0.85rem;">
+                    Appointment Date <span class="required-star">*</span>
+                  </label>
+                  <span id="selectedDateBadge" class="date-badge">
+                    Today
+                  </span>
+                </div>
 
-            <!-- Inline Embed Container (Optional toggle) -->
-            <div id="calendlyEmbedContainer" class="calendly-inline-embed"></div>
+                <!-- Quick Date Selector Chips -->
+                <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                  <button type="button" id="quickDateTodayBtn" class="quick-date-btn active" onclick="setQuickDate('today')">
+                    Today
+                  </button>
+                  <button type="button" id="quickDateTomorrowBtn" class="quick-date-btn" onclick="setQuickDate('tomorrow')">
+                    Tomorrow
+                  </button>
+                  <div style="flex: 1.2; min-width: 135px;">
+                    <input 
+                      type="date" 
+                      id="bookingDate" 
+                      class="form-input" 
+                      required 
+                      onchange="handleDateInputChange(this.value)"
+                      style="width: 100%; padding: 0.45rem 0.65rem; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 0.8125rem; font-weight: 500; color: #0f172a; background: #ffffff; cursor: pointer;"
+                    />
+                  </div>
+                </div>
+              </div>
 
-            <div class="calendly-alt-bar">
-              <span>Have an urgent question right now? </span>
-              <a href="javascript:void(0)" onclick="switchBookingTab('whatsapp')">Chat on WhatsApp instead &rarr;</a>
+              <!-- Time Slot Selection Section -->
+              <div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.35rem;">
+                  <label class="form-label" style="margin-bottom: 0; font-weight: 600; color: #0f172a; font-size: 0.85rem;">
+                    Preferred Time Slot <span class="required-star">*</span>
+                  </label>
+                  <span id="selectedSlotIndicator" class="slot-badge">
+                    10:30 AM (Morning)
+                  </span>
+                </div>
+
+                <!-- Hidden Input storing selected slot value -->
+                <input type="hidden" id="bookingTime" name="bookingTime" value="Morning: 10:30 AM – 11:30 AM" required />
+
+                <!-- Slot Buttons by Period -->
+                <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                  
+                  <!-- Morning Slots -->
+                  <div>
+                    <div class="slot-group-label">Morning (9:30 AM – 12:30 PM)</div>
+                    <div class="slot-grid">
+                      <button type="button" class="slot-pill-btn" onclick="selectSlotPill(this, 'Morning: 09:30 AM – 10:30 AM', '09:30 AM (Morning)')">
+                        09:30 AM
+                      </button>
+                      <button type="button" class="slot-pill-btn active default-slot" onclick="selectSlotPill(this, 'Morning: 10:30 AM – 11:30 AM', '10:30 AM (Morning)')">
+                        10:30 AM
+                      </button>
+                      <button type="button" class="slot-pill-btn" onclick="selectSlotPill(this, 'Morning: 11:30 AM – 12:30 PM', '11:30 AM (Morning)')">
+                        11:30 AM
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Afternoon Slots -->
+                  <div>
+                    <div class="slot-group-label">Afternoon (1:30 PM – 4:30 PM)</div>
+                    <div class="slot-grid">
+                      <button type="button" class="slot-pill-btn" onclick="selectSlotPill(this, 'Afternoon: 01:30 PM – 02:30 PM', '01:30 PM (Afternoon)')">
+                        01:30 PM
+                      </button>
+                      <button type="button" class="slot-pill-btn" onclick="selectSlotPill(this, 'Afternoon: 02:30 PM – 03:30 PM', '02:30 PM (Afternoon)')">
+                        02:30 PM
+                      </button>
+                      <button type="button" class="slot-pill-btn" onclick="selectSlotPill(this, 'Afternoon: 03:30 PM – 04:30 PM', '03:30 PM (Afternoon)')">
+                        03:30 PM
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Evening Slots -->
+                  <div>
+                    <div class="slot-group-label">Evening (5:00 PM – 8:00 PM)</div>
+                    <div class="slot-grid">
+                      <button type="button" class="slot-pill-btn" onclick="selectSlotPill(this, 'Evening: 05:00 PM – 06:00 PM', '05:00 PM (Evening)')">
+                        05:00 PM
+                      </button>
+                      <button type="button" class="slot-pill-btn" onclick="selectSlotPill(this, 'Evening: 06:00 PM – 07:00 PM', '06:00 PM (Evening)')">
+                        06:00 PM
+                      </button>
+                      <button type="button" class="slot-pill-btn" onclick="selectSlotPill(this, 'Evening: 07:15 PM – 08:15 PM', '07:15 PM (Evening)')">
+                        07:15 PM
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
             </div>
 
-            <!-- Extra Close Button for Seamless UX -->
-            <button type="button" class="modal-footer-close-btn" onclick="closeAppointmentModal()">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
+            <!-- Patient Name & Contact Number Row -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.85rem; margin-bottom: 0.95rem;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="bookingName" style="font-weight: 600; color: #0f172a; margin-bottom: 0.35rem; display: block; font-size: 0.875rem;">
+                  Patient Full Name <span class="required-star">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="bookingName" 
+                  class="form-input" 
+                  placeholder="e.g. Ramesh Kulkarni" 
+                  required 
+                  minlength="2"
+                  autocomplete="name"
+                  style="width: 100%; padding: 0.65rem 0.85rem; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 0.875rem;"
+                />
+                <div class="form-error" id="bookingNameError" style="display:none; color:#dc2626; font-size:0.75rem; margin-top:0.25rem;">Please enter patient name.</div>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="bookingPhone" style="font-weight: 600; color: #0f172a; margin-bottom: 0.35rem; display: block; font-size: 0.875rem;">
+                  Contact Number <span class="required-star">*</span>
+                </label>
+                <input 
+                  type="tel" 
+                  id="bookingPhone" 
+                  class="form-input" 
+                  placeholder="e.g. 99014 63886" 
+                  required 
+                  autocomplete="tel"
+                  style="width: 100%; padding: 0.65rem 0.85rem; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 0.875rem;"
+                />
+                <div class="form-error" id="bookingPhoneError" style="display:none; color:#dc2626; font-size:0.75rem; margin-top:0.25rem;">Please enter a valid 10-digit contact number.</div>
+              </div>
+            </div>
+
+            <!-- Email & Message (Optional) -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.85rem; margin-bottom: 1.25rem;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="bookingEmail" style="font-weight: 600; color: #0f172a; margin-bottom: 0.35rem; display: block; font-size: 0.875rem;">
+                  Email Address <span class="optional-text">(Optional)</span>
+                </label>
+                <input 
+                  type="email" 
+                  id="bookingEmail" 
+                  class="form-input" 
+                  placeholder="e.g. name@example.com" 
+                  autocomplete="email"
+                  style="width: 100%; padding: 0.65rem 0.85rem; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 0.875rem;"
+                />
+              </div>
+
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="bookingNotes" style="font-weight: 600; color: #0f172a; margin-bottom: 0.35rem; display: block; font-size: 0.875rem;">
+                  Symptoms / Message <span class="optional-text">(Optional)</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="bookingNotes" 
+                  class="form-input" 
+                  placeholder="e.g. Tooth pain or checkup notes" 
+                  style="width: 100%; padding: 0.65rem 0.85rem; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 0.875rem;"
+                />
+              </div>
+            </div>
+
+            <!-- Professional Submit Button -->
+            <button type="submit" class="booking-submit-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.04 20.15C10.56 20.15 9.11 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.07 16.3C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.68 12.04 3.68C14.24 3.68 16.31 4.54 17.86 6.09C19.42 7.65 20.27 9.71 20.27 11.91C20.27 16.46 16.58 20.15 12.04 20.15ZM16.57 14.39C16.32 14.27 15.1 13.67 14.87 13.58C14.64 13.5 14.48 13.46 14.31 13.71C14.15 13.96 13.67 14.52 13.53 14.69C13.38 14.85 13.24 14.87 12.99 14.75C12.74 14.62 11.94 14.36 10.99 13.51C10.25 12.85 9.75 12.04 9.61 11.79C9.46 11.54 9.59 11.41 9.72 11.28C9.83 11.17 9.97 10.99 10.09 10.84C10.22 10.7 10.26 10.59 10.34 10.43C10.43 10.26 10.39 10.12 10.32 9.99C10.26 9.87 9.77 8.66 9.57 8.16C9.37 7.68 9.17 7.74 9.02 7.73C8.88 7.73 8.71 7.73 8.55 7.73C8.38 7.73 8.12 7.79 7.89 8.04C7.66 8.29 7.02 8.89 7.02 10.11C7.02 11.33 7.91 12.51 8.03 12.67C8.16 12.84 9.78 15.34 12.27 16.41C12.86 16.67 13.32 16.82 13.68 16.94C14.27 17.13 14.81 17.1 15.24 17.04C15.72 16.97 16.71 16.44 16.92 15.86C17.12 15.28 17.12 14.79 17.06 14.69C17 14.58 16.83 14.52 16.57 14.39Z"/>
               </svg>
-              <span>Close Window</span>
+              <span>Book Appointment via WhatsApp</span>
             </button>
+          </form>
+
+          <!-- Confirmation Card (Shown after sending) -->
+          <div id="simpleBookingConfirmation" style="display: none; text-align: center; padding: 1rem 0.5rem;">
+            <div style="width: 52px; height: 52px; border-radius: 50%; background: #e0f2fe; color: #0280c7; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.85rem;">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-bottom: 0.35rem;">
+              Appointment Request Sent
+            </h3>
+            <p style="font-size: 0.875rem; color: #64748b; line-height: 1.5; max-width: 440px; margin: 0 auto 1.25rem;">
+              Your appointment details have been forwarded to <strong>SmileCare Dental Clinic</strong> (+91 99014 63886). The receptionist will confirm your booking.
+            </p>
+
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1rem 1.15rem; text-align: left; max-width: 420px; margin: 0 auto 1.25rem; font-size: 0.825rem; color: #334155;">
+              <div style="margin-bottom: 0.35rem;"><strong>Patient Name:</strong> <span id="confSummaryName">-</span></div>
+              <div style="margin-bottom: 0.35rem;"><strong>Contact Number:</strong> <span id="confSummaryPhone">-</span></div>
+              <div id="confSummaryEmailRow" style="margin-bottom: 0.35rem; display:none;"><strong>Email:</strong> <span id="confSummaryEmail">-</span></div>
+              <div style="margin-bottom: 0.35rem;"><strong>Service:</strong> <span id="confSummaryService">-</span></div>
+              <div style="margin-bottom: 0.35rem;"><strong>Doctor:</strong> <span id="confSummaryDoctor">-</span></div>
+              <div style="margin-bottom: 0.35rem;"><strong>Date:</strong> <span id="confSummaryDate">-</span></div>
+              <div style="margin-bottom: 0.35rem;"><strong>Time Slot:</strong> <span id="confSummaryTime">-</span></div>
+              <div id="confSummaryNotesRow" style="display:none;"><strong>Message:</strong> <span id="confSummaryNotes">-</span></div>
+            </div>
+
+            <div style="display: flex; gap: 0.65rem; justify-content: center; flex-wrap: wrap;">
+              <a href="#" id="reopenWhatsappBtn" target="_blank" rel="noopener noreferrer" class="btn-primary" style="background: #25d366; color: #ffffff; padding: 0.65rem 1.25rem; font-size: 0.85rem; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.45rem;">
+                <span>Open WhatsApp Chat Again</span>
+              </a>
+              <button type="button" class="btn-primary" style="padding: 0.65rem 1.15rem; font-size: 0.85rem; border-radius: 8px;" onclick="resetSimpleBookingForm()">
+                Book Another Appointment
+              </button>
+              <button type="button" class="modal-footer-close-btn" style="width: auto; margin-top: 0; padding: 0.65rem 1.15rem; border-radius: 8px;" onclick="closeAppointmentModal()">
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -5208,17 +6327,26 @@
               </label>
 
               <div class="photo-selection-area" id="photoSelectionArea">
-                <!-- Idle State: Camera / Upload Buttons -->
+                <!-- Idle State: Gallery / Camera Buttons -->
                 <div id="photoDefaultControls">
                   <div style="font-size: 0.85rem; color: #475569; font-weight: 600; margin-bottom: 0.35rem;">
-                    Upload a profile photo using your camera
+                    Upload a profile photo
                   </div>
                   <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 0.65rem;">
-                    Snap a live selfie with your camera or select an existing photo
+                    Select a photo from your device gallery or snap a live selfie with your camera
                   </p>
 
                   <div class="camera-action-buttons">
-                    <button type="button" class="camera-action-btn primary-cam" onclick="startLiveCamera()" id="openCameraBtn" title="Take a selfie using camera">
+                    <button type="button" class="camera-action-btn primary-cam" onclick="triggerPhotoFileInput()" id="uploadGalleryBtn" title="Choose photo from device gallery">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                      </svg>
+                      <span>Choose from Gallery</span>
+                    </button>
+
+                    <button type="button" class="camera-action-btn" onclick="startLiveCamera()" id="openCameraBtn" title="Take a selfie using camera">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
                         <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
                         <circle cx="12" cy="13" r="4"></circle>
@@ -5226,21 +6354,11 @@
                       <span>Take Photo with Camera</span>
                     </button>
 
-                    <button type="button" class="camera-action-btn" onclick="triggerPhotoFileInput()" title="Choose photo or take camera photo">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="17 8 12 3 7 8"></polyline>
-                        <line x1="12" y1="3" x2="12" y2="15"></line>
-                      </svg>
-                      <span>Upload Photo File</span>
-                    </button>
-
-                    <!-- Hidden file input with camera capture support -->
+                    <!-- Hidden file input without capture attribute so mobile opens device gallery/photos app -->
                     <input 
                       type="file" 
                       id="storyPhotoFileInput" 
                       accept="image/*" 
-                      capture="user" 
                       style="display: none;" 
                       onchange="handlePhotoFileSelected(event)" 
                     />
@@ -5277,7 +6395,10 @@
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                     <span>Photo Ready</span>
                   </div>
-                  <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem;">
+                  <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem; flex-wrap: wrap; justify-content: center;">
+                    <button type="button" class="camera-action-btn" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;" onclick="triggerPhotoFileInput()">
+                      🖼️ Choose from Gallery
+                    </button>
                     <button type="button" class="camera-action-btn" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;" onclick="startLiveCamera()">
                       📷 Retake Camera
                     </button>
@@ -5322,7 +6443,69 @@
       </div>
     </div>
 
-    <!-- Floating Action Hub -->
+    <!-- Facility Photo Lightbox & Specs Modal -->
+    <div class="facility-lightbox-backdrop" id="facilityLightboxModal" role="dialog" aria-modal="true" aria-labelledby="facilityModalTitle">
+      <div class="facility-lightbox-box">
+        <div class="facility-lightbox-header">
+          <div>
+            <span class="facility-category-tag" style="position:static; margin-bottom:0.35rem; display:inline-block;" id="facilityModalCategoryBadge">Sterilization Suite</span>
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0;" id="facilityModalTitle">Facility Title</h3>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span style="font-size: 0.8rem; color: #64748b; font-weight: 600;" id="facilityModalCounter">1 / 6</span>
+            <button type="button" class="modal-close-btn" style="position: static;" onclick="closeFacilityLightbox()" aria-label="Close photo viewer" title="Close">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="facility-lightbox-body">
+          <div class="facility-lightbox-image-wrap">
+            <button type="button" class="facility-nav-arrow prev" onclick="navigateFacilityLightbox(-1)" aria-label="Previous photo" title="Previous photo (&larr;)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <img id="facilityLightboxImg" src="/images/facility_sterilization.jpg" alt="Clinic Facility" />
+            <button type="button" class="facility-nav-arrow next" onclick="navigateFacilityLightbox(1)" aria-label="Next photo" title="Next photo (&rarr;)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+
+          <div class="facility-lightbox-info-grid">
+            <div>
+              <div class="facility-meta" id="facilityModalMeta">
+                <!-- Meta tags populated dynamically -->
+              </div>
+              <h4 style="font-size: 1rem; font-weight: 800; color: #0f172a; margin-bottom: 0.5rem;">Environment &amp; Safety Standard</h4>
+              <p style="font-size: 0.9rem; color: #475569; line-height: 1.7; margin-bottom: 1.25rem;" id="facilityModalFullDesc">
+                Detailed description here...
+              </p>
+              <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <button type="button" class="btn-primary" style="padding: 0.65rem 1.25rem; font-size: 0.85rem;" onclick="closeFacilityLightbox(); openAppointmentModal('Clinic Tour & Consultation');">
+                  <span>Schedule Consultation Here &rarr;</span>
+                </button>
+                <button type="button" class="modal-footer-close-btn" style="width: auto; margin-top: 0; padding: 0.65rem 1.15rem;" onclick="closeFacilityLightbox()">
+                  Back to Gallery
+                </button>
+              </div>
+            </div>
+
+            <div class="facility-spec-card">
+              <h5>🛡️ Clinical Equipment &amp; Specs</h5>
+              <ul class="facility-spec-list" id="facilityModalSpecsList">
+                <!-- Specs populated dynamically -->
+              </ul>
+              <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.75rem; font-size: 0.75rem; color: #059669; font-weight: 600; display: flex; align-items: center; gap: 0.45rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Inspected &amp; compliant with NABH/CDC protocols</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="floating-hub">
       <a href="https://wa.me/919901463886?text=Hello%20Doctor%2C%20I%20have%20an%20urgent%20dental%20query." target="_blank" rel="noopener noreferrer" class="floating-whatsapp-btn" title="Chat with SmileCare on WhatsApp" aria-label="Chat with SmileCare on WhatsApp">
         <span class="whatsapp-pulse-ring"></span>
@@ -5342,7 +6525,9 @@
        * SmileCare Dental Clinic - Controller & Modern Interactions
        */
       const DOCTOR_WHATSAPP_NUMBER = '919901463886';
-      const CALENDLY_URL = 'https://calendly.com/rajumh4172/30min';
+      const CLINIC_NAME = 'SmileCare Dental Clinic';
+      const CLINIC_ADDRESS = 'Smile Street, Near Station Road, Vijayapur, Karnataka 586101';
+      const CLINIC_MAPS_URL = 'https://maps.google.com/maps?q=Vijayapur,+Karnataka';
 
       // Article database for interactive in-modal reading
       const ARTICLE_DATABASE = {
@@ -5406,7 +6591,254 @@
         }
       };
 
-      // Clinic Doctors database with profiles, specialties, and photos
+      // =========================================================================
+      // Clinic Facilities, Sterilization Suite & Environment Gallery Database
+      // =========================================================================
+      const CLINIC_FACILITIES = [
+        {
+          id: 'sterilization-suite',
+          title: 'Hospital-Grade Sterilization Center',
+          category: 'sterilization',
+          categoryLabel: 'Sterilization & Safety',
+          image: '/images/facility_sterilization.jpg',
+          meta: ['Class-B Autoclave', 'Zero Cross-Contamination', 'ISO 11140 Compliant'],
+          shortDesc: 'Multi-stage sterile processing suite featuring medical-grade Class-B vacuum autoclaves, ultrasonic cleaning baths, and hermetically sealed pouches opened fresh chairside for each patient.',
+          fullDesc: 'Patient safety is non-negotiable at SmileCare. Our dedicated sterilization room adheres to strict CDC and WHO infection prevention protocols. Every non-disposable dental instrument undergoes a 4-step decontamination chain: ultrasonic enzyme bath, high-pressure rinsing, medical heat-sealing in sterile barrier pouches with chemical indicators, and hospital-grade Class-B vacuum autoclaving at 134°C. Biological spore tests are logged every week to guarantee 100% sterility.',
+          highlight: '134°C Vacuum Autoclave',
+          specs: [
+            { label: 'Autoclave Type', value: 'European Class-B Fractional Vacuum Autoclaves' },
+            { label: 'Decontamination', value: 'Multi-frequency ultrasonic enzymatic bath' },
+            { label: 'Packaging', value: 'Hermetically heat-sealed medical indicator pouches' },
+            { label: 'Verification', value: 'Weekly biological spore incubation logging' },
+            { label: 'Safety Standard', value: '100% single-use disposable barriers & patient bibs' }
+          ]
+        },
+        {
+          id: 'patient-lounge',
+          title: 'Comfortable, Zero-Anxiety Patient Waiting Lounge',
+          category: 'lounge',
+          categoryLabel: 'Patient Comfort',
+          image: '/images/facility_waiting_lounge.jpg',
+          meta: ['Ergonomic Armchairs', 'Acoustic Soundproofing', 'Complimentary Refreshments'],
+          shortDesc: 'Designed to eliminate traditional dental anxiety with plush ergonomic armchairs, warm biophilic greenery, calming ambient lighting, and dedicated refreshment station.',
+          fullDesc: 'We engineered our patient lounge as a sanctuary of calm. Instead of cold clinical waiting rooms, SmileCare welcomes you into a tranquil, living-room inspired setting with custom ergonomic armchairs, natural wood elements, air-purifying indoor greenery, gentle acoustic design, and a complimentary refreshment counter offering premium herbal teas and infused water. Free high-speed Wi-Fi and curated magazines ensure you and your family feel immediately at home.',
+          highlight: 'Zero-Anxiety Environment',
+          specs: [
+            { label: 'Seating Design', value: 'Plush high-back ergonomic lumbar support armchairs' },
+            { label: 'Lighting Ambience', value: 'Warm 2700K indirect LED & acoustic dampening panels' },
+            { label: 'Refreshment Bar', value: 'Complimentary herbal teas & mineral water station' },
+            { label: 'Connectivity', value: 'High-speed patient Wi-Fi & device charging stations' },
+            { label: 'Air Quality', value: 'Continuous medical HEPA H13 filtration with negative ions' }
+          ]
+        },
+        {
+          id: 'operatory-suite',
+          title: 'High-Tech Ergonomic Treatment Operatory',
+          category: 'operatory',
+          categoryLabel: 'Treatment Operatories',
+          image: '/images/facility_dental_operatory.jpg',
+          meta: ['Memory Foam Chair', 'Dual HD Screens', 'Shadowless Surgical LED'],
+          shortDesc: 'Modern dental suite featuring contoured memory-foam patient chairs, dual chairside HD monitors for transparent treatment review, and gentle rotary instrumentation.',
+          fullDesc: 'Our clinical operatories combine patient comfort with surgical excellence. The whisper-quiet dental chair contours to your body with multi-density memory foam to prevent back strain during treatments. Overhead shadowless LED surgical lighting delivers daylight-accurate illumination for cosmetic color matching. Dual chairside monitors let you view your 3D digital scans, intraoral photographs, and before-after treatment plans side-by-side with your doctor.',
+          highlight: 'Dual HD Chairside Displays',
+          specs: [
+            { label: 'Chair Type', value: 'Electromechanical with multi-point memory foam lumbar support' },
+            { label: 'Imaging Display', value: 'Dual 4K ultra-sharp intraoral chairside monitors' },
+            { label: 'Surgical Lighting', value: 'Color-corrected 5500K shadowless surgical LED' },
+            { label: 'Instrumentation', value: 'Painless rotary endodontics & Piezo ultrasonic tips' },
+            { label: 'Water Lines', value: 'Independent distilled water filtration line per chair' }
+          ]
+        },
+        {
+          id: 'cbct-imaging',
+          title: 'Low-Radiation 3D CBCT & Digital X-Ray Suite',
+          category: 'imaging',
+          categoryLabel: '3D Diagnostics',
+          image: '/images/facility_cbct_imaging.jpg',
+          meta: ['0.075mm Precision', '80% Lower Radiation', 'Instant 3D Reconstruction'],
+          shortDesc: 'High-resolution Cone Beam Computed Tomography (CBCT) diagnostic suite delivering 3D views of jaw anatomy, bone density, and nerves for pinpoint guided implants.',
+          fullDesc: 'Precision diagnosis is the foundation of long-lasting dental treatments. Our digital radiology room houses advanced Cone Beam 3D CT imaging technology that captures sub-millimeter dental and maxillofacial scans in under 15 seconds. This enables exact guided implant placement, nerve mapping for wisdom teeth removal, and 3D root canal anatomy visualization—while exposing patients to up to 80% less radiation than conventional medical CT scanners.',
+          highlight: 'Sub-Millimeter 3D Scans',
+          specs: [
+            { label: 'Scan Resolution', value: 'High-definition 75-micron (0.075mm) voxel clarity' },
+            { label: 'Radiation Safety', value: 'ALARA protocol with ultra-low dose pulsed radiation' },
+            { label: 'Shielding', value: 'BARC-certified radiation-safe imaging enclosure' },
+            { label: 'Scan Duration', value: 'Fast 14-second full 3D panoramic rotation' },
+            { label: 'Software Suite', value: 'Instant chairside software for virtual implant planning' }
+          ]
+        },
+        {
+          id: 'welcome-reception',
+          title: 'Concierge Reception & Patient Care Desk',
+          category: 'lounge',
+          categoryLabel: 'Reception & Hospitality',
+          image: '/images/clinic_reception_interior.jpg',
+          meta: ['Digital Check-In', 'Zero-Wait Protocol', 'Private Consultation'],
+          shortDesc: 'Warm, efficient reception foyer offering touchless check-in, transparent treatment estimate reviews, and dedicated appointment coordination.',
+          fullDesc: 'From the moment you arrive, our reception team prioritizes your peace of mind. We run on a strict zero-waiting-time scheduling policy, so your appointment starts right on time. Our front desk features easy touchless check-in, quiet private consultation nooks to discuss treatment options and payment plans with complete financial transparency, and dedicated receptionists ready to assist with insurance queries.',
+          highlight: 'Zero-Wait Protocol',
+          specs: [
+            { label: 'Check-In System', value: 'Paperless digital registration on sanitized tablets' },
+            { label: 'Consultation Nook', value: 'Sound-dampened private treatment planning room' },
+            { label: 'Accessibility', value: 'Ground-floor wheelchair friendly entrance & wide corridors' },
+            { label: 'Reminders', value: 'Direct WhatsApp and SMS automated visit reminders' },
+            { label: 'Payment Options', value: 'All digital UPI, cards, and 0% interest EMI options' }
+          ]
+        },
+        {
+          id: 'preventive-suite',
+          title: 'Gentle Family & Preventive Care Operatory',
+          category: 'operatory',
+          categoryLabel: 'Preventive Care',
+          image: '/images/hero_dental_care.jpg',
+          meta: ['Child Friendly', 'Cold Laser Whitening', 'Noise-Cancelling Audio'],
+          shortDesc: 'A bright, welcoming suite customized for routine cleanings, gentle pediatric care, and professional laser teeth whitening in total comfort.',
+          fullDesc: 'This suite is tailored for stress-free preventive dentistry, children’s dental visits, and aesthetic whitening. Clinicians use gentle water-cooled Piezo ultrasonic scalers that remove plaque without scraping or enamel sensitivity. Patients are offered noise-cancelling Bluetooth headphones to listen to calming music during treatment, and children receive gentle, playful care with positive reinforcement.',
+          highlight: 'Gentle Ultrasonic Care',
+          specs: [
+            { label: 'Ultrasonic Scaler', value: 'Piezoelectric scaler with warm water temperature control' },
+            { label: 'Laser Unit', value: 'Cold-blue LED whitening lamp with zero thermal sensitivity' },
+            { label: 'Audio Relaxation', value: 'Optional Bose noise-cancelling patient headphones' },
+            { label: 'Pediatric Care', value: 'Child-sized dental accessories & gentle flavored gels' },
+            { label: 'Surface Hygiene', value: 'Medical surface barrier films replaced before every patient' }
+          ]
+        }
+      ];
+
+      let currentFacilityFilter = 'all';
+      let activeLightboxFacilityIndex = 0;
+
+      // Render facilities cards into responsive grid
+      function renderFacilitiesGrid() {
+        const container = document.getElementById('facilitiesGrid');
+        if (!container) return;
+
+        const filtered = currentFacilityFilter === 'all'
+          ? CLINIC_FACILITIES
+          : CLINIC_FACILITIES.filter(item => item.category === currentFacilityFilter);
+
+        let html = '';
+        filtered.forEach(item => {
+          const metaHtml = item.meta
+            .map((m, idx) => `<span>${m}</span>${idx < item.meta.length - 1 ? '<span aria-hidden="true">&bull;</span>' : ''}`)
+            .join(' ');
+
+          html += `
+            <div class="facility-card" data-facility-id="${item.id}">
+              <div class="facility-media-wrap" onclick="openFacilityLightbox('${item.id}')" title="Click to view full photo &amp; clinical specs">
+                <span class="facility-category-tag">${item.categoryLabel}</span>
+                <img src="${item.image}" alt="${item.title}" loading="lazy" />
+                <div class="facility-media-overlay">
+                  <span class="facility-view-pill">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                    <span>View Photo &amp; Specs</span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="facility-content">
+                <h3 class="facility-title">${item.title}</h3>
+                <div class="facility-meta">
+                  ${metaHtml}
+                </div>
+                <p class="facility-desc">${item.shortDesc}</p>
+                <div class="facility-card-footer">
+                  <span class="facility-specs-highlight">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>${item.highlight}</span>
+                  </span>
+                  <button type="button" class="facility-zoom-btn" onclick="openFacilityLightbox('${item.id}')">
+                    <span>Inspect &rarr;</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+      }
+
+      // Filter facilities by category
+      function filterFacilities(category, buttonEl) {
+        currentFacilityFilter = category;
+        const buttons = document.querySelectorAll('.facility-filter-btn');
+        buttons.forEach(btn => {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-selected', 'false');
+        });
+        if (buttonEl) {
+          buttonEl.classList.add('active');
+          buttonEl.setAttribute('aria-selected', 'true');
+        }
+        renderFacilitiesGrid();
+      }
+
+      // Open Lightbox with selected facility
+      function openFacilityLightbox(facilityId) {
+        const index = CLINIC_FACILITIES.findIndex(item => item.id === facilityId);
+        if (index === -1) return;
+
+        activeLightboxFacilityIndex = index;
+        updateFacilityLightboxContent();
+
+        const modal = document.getElementById('facilityLightboxModal');
+        if (modal) {
+          modal.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      // Update Lightbox modal view with current active item
+      function updateFacilityLightboxContent() {
+        const item = CLINIC_FACILITIES[activeLightboxFacilityIndex];
+        if (!item) return;
+
+        const img = document.getElementById('facilityLightboxImg');
+        const title = document.getElementById('facilityModalTitle');
+        const badge = document.getElementById('facilityModalCategoryBadge');
+        const counter = document.getElementById('facilityModalCounter');
+        const fullDesc = document.getElementById('facilityModalFullDesc');
+        const metaContainer = document.getElementById('facilityModalMeta');
+        const specsList = document.getElementById('facilityModalSpecsList');
+
+        if (img) {
+          img.src = item.image;
+          img.alt = item.title;
+        }
+        if (title) title.textContent = item.title;
+        if (badge) badge.textContent = item.categoryLabel;
+        if (counter) counter.textContent = `${activeLightboxFacilityIndex + 1} / ${CLINIC_FACILITIES.length}`;
+        if (fullDesc) fullDesc.textContent = item.fullDesc;
+
+        if (metaContainer) {
+          metaContainer.innerHTML = item.meta
+            .map((m, idx) => `<span>${m}</span>${idx < item.meta.length - 1 ? '<span aria-hidden="true">&bull;</span>' : ''}`)
+            .join(' ');
+        }
+
+        if (specsList) {
+          specsList.innerHTML = item.specs
+            .map(s => `<li><strong>${s.label}:</strong> <span>${s.value}</span></li>`)
+            .join('');
+        }
+      }
+
+      // Navigate Lightbox
+      function navigateFacilityLightbox(direction) {
+        const total = CLINIC_FACILITIES.length;
+        activeLightboxFacilityIndex = (activeLightboxFacilityIndex + direction + total) % total;
+        updateFacilityLightboxContent();
+      }
+
+      // Close Lightbox
+      function closeFacilityLightbox() {
+        const modal = document.getElementById('facilityLightboxModal');
+        if (modal) {
+          modal.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
       const DOCTORS_DATA = {
         'Dr. Rohit Sharma, MDS': {
           name: 'Dr. Rohit Sharma, MDS',
@@ -5442,228 +6874,387 @@
         }
       };
 
-      // Updates prominent doctor profile card inside booking modal
-      function updateDoctorCallout(selectedDoctorValue) {
-        const callout = document.getElementById('doctorCallout');
-        const img = document.getElementById('doctorCalloutImg');
-        const icon = document.getElementById('doctorCalloutIcon');
-        const tag = document.getElementById('doctorCalloutTag');
-        const name = document.getElementById('doctorCalloutName');
-        const sub = document.getElementById('doctorCalloutSub');
-        const guaranteeText = document.getElementById('doctorCalloutGuaranteeText');
+      // =========================================================================
+      // Simple & Easy WhatsApp Appointment Booking System
+      // Designed for students & patients from Tier-2 / Tier-3 & rural areas.
+      // 1. Select Service
+      // 2. Select Doctor
+      // 3. Select Date & Preferred Time
+      // 4. Enter Name & Mobile Number (Required)
+      // 5. Email & Symptoms/Message (Optional)
+      // -> Sends formatted message directly to clinic/doctor WhatsApp (+91 99014 63886)
+      // -> Receptionist confirms slot manually without confusing tech.
+      // =========================================================================
 
-        if (!callout) return;
+      const CLINIC_WHATSAPP_NUMBER = '919901463886';
+      const CLINIC_PHONE_DISPLAY = '+91 99014 63886';
+      const CLINIC_ADDRESS_DISPLAY = 'Station Road, Opp. Govt College, Vijayapur';
 
-        const doc = DOCTORS_DATA[selectedDoctorValue];
-        if (doc) {
-          callout.classList.remove('neutral');
-          if (img) {
-            img.src = doc.image;
-            img.alt = doc.name;
-            img.style.display = 'block';
-          }
-          if (icon) icon.style.display = 'none';
-          if (tag) tag.innerHTML = `👨‍⚕️ Requested Specialist &bull; ${doc.experience} Experience`;
-          if (name) name.textContent = doc.name;
-          if (sub) sub.textContent = `${doc.role} &bull; ${doc.specialty}`;
-          if (guaranteeText) {
-            guaranteeText.textContent = `Reception will check ${doc.shortName}'s schedule availability & confirm conflict-free slot`;
-          }
-        } else {
-          callout.classList.add('neutral');
-          if (img) img.style.display = 'none';
-          if (icon) icon.style.display = 'flex';
-          if (tag) tag.textContent = 'Clinic Assignment &bull; Fast Track';
-          if (name) name.textContent = 'Any Available Specialist';
-          if (sub) sub.textContent = 'Our receptionist assigns the best suitable doctor matching your service';
-          if (guaranteeText) {
-            guaranteeText.textContent = 'Receptionist will check schedule & prevent conflicting bookings';
-          }
-        }
+      // Helper: get today's date formatted as YYYY-MM-DD
+      function getTodayDateYMD() {
+        const d = new Date();
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
       }
 
-      // Switch booking tabs (WhatsApp vs Calendly)
-      function switchBookingTab(tab) {
-        const tabWhatsapp = document.getElementById('tabPaneWhatsapp');
-        const tabCalendly = document.getElementById('tabPaneCalendly');
-        const btnWhatsapp = document.getElementById('tabBtnWhatsapp');
-        const btnCalendly = document.getElementById('tabBtnCalendly');
-        const modalBox = document.getElementById('modalBox');
-        const heading = document.getElementById('modalHeading');
-        const subheading = document.getElementById('modalSubheading');
-        const doctorSelect = document.getElementById('doctorSelect');
-        const currentDoc = doctorSelect ? doctorSelect.value : '';
-        const doc = DOCTORS_DATA[currentDoc];
+      // Helper: format YYYY-MM-DD
+      function formatDateYMD(d) {
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }
 
-        if (tab === 'calendly') {
-          tabWhatsapp.classList.remove('active');
-          tabCalendly.classList.add('active');
-          btnWhatsapp.classList.remove('active');
-          btnCalendly.classList.add('active');
-          modalBox.classList.add('wide');
+      // Helper: format YYYY-MM-DD to friendly human readable date
+      function formatSimpleDisplayDate(dateStr) {
+        if (!dateStr) return '';
+        const parts = dateStr.split('-');
+        if (parts.length !== 3) return dateStr;
+        const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+        return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+      }
 
-          if (doc) {
-            heading.textContent = `Schedule with ${doc.shortName}`;
-            subheading.textContent = `Reserve a 30-min time slot on our live calendar for ${doc.specialty}`;
+      // Quick Date selection handler
+      function setQuickDate(type) {
+        const dateInput = document.getElementById('bookingDate');
+        const todayBtn = document.getElementById('quickDateTodayBtn');
+        const tomorrowBtn = document.getElementById('quickDateTomorrowBtn');
+        const dateBadge = document.getElementById('selectedDateBadge');
+        const slotDateLabel = document.getElementById('slotSummaryDate');
+
+        const now = new Date();
+        let targetDate = new Date();
+        let labelText = 'Today';
+
+        if (type === 'tomorrow') {
+          targetDate.setDate(now.getDate() + 1);
+          labelText = 'Tomorrow';
+          if (todayBtn) todayBtn.classList.remove('active');
+          if (tomorrowBtn) tomorrowBtn.classList.add('active');
+        } else {
+          // today
+          if (todayBtn) todayBtn.classList.add('active');
+          if (tomorrowBtn) tomorrowBtn.classList.remove('active');
+        }
+
+        const ymd = formatDateYMD(targetDate);
+        if (dateInput) {
+          dateInput.value = ymd;
+          dateInput.min = getTodayDateYMD();
+        }
+
+        const dateFormatted = targetDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        const displayLabel = `${labelText}, ${dateFormatted}`;
+        if (dateBadge) dateBadge.textContent = displayLabel;
+        if (slotDateLabel) slotDateLabel.textContent = displayLabel;
+      }
+
+      // Date input manual change
+      function handleDateInputChange(val) {
+        if (!val) return;
+        const todayYmd = getTodayDateYMD();
+        const todayBtn = document.getElementById('quickDateTodayBtn');
+        const tomorrowBtn = document.getElementById('quickDateTomorrowBtn');
+        const dateBadge = document.getElementById('selectedDateBadge');
+        const slotDateLabel = document.getElementById('slotSummaryDate');
+
+        const tomorrowObj = new Date();
+        tomorrowObj.setDate(tomorrowObj.getDate() + 1);
+        const tomorrowYmd = formatDateYMD(tomorrowObj);
+
+        let prefix = '';
+        if (val === todayYmd) {
+          prefix = 'Today, ';
+          if (todayBtn) todayBtn.classList.add('active');
+          if (tomorrowBtn) tomorrowBtn.classList.remove('active');
+        } else if (val === tomorrowYmd) {
+          prefix = 'Tomorrow, ';
+          if (todayBtn) todayBtn.classList.remove('active');
+          if (tomorrowBtn) tomorrowBtn.classList.add('active');
+        } else {
+          if (todayBtn) todayBtn.classList.remove('active');
+          if (tomorrowBtn) tomorrowBtn.classList.remove('active');
+        }
+
+        const readable = prefix + formatSimpleDisplayDate(val);
+        if (dateBadge) dateBadge.textContent = readable;
+        if (slotDateLabel) slotDateLabel.textContent = readable;
+      }
+
+      // Select Slot Pill
+      function selectSlotPill(btnEl, fullSlotValue, displayShortValue) {
+        const allPills = document.querySelectorAll('.slot-pill-btn');
+        allPills.forEach(p => p.classList.remove('active'));
+        if (btnEl) btnEl.classList.add('active');
+
+        const hiddenTimeInput = document.getElementById('bookingTime');
+        if (hiddenTimeInput) hiddenTimeInput.value = fullSlotValue;
+
+        const indicator = document.getElementById('selectedSlotIndicator');
+        if (indicator) indicator.textContent = displayShortValue;
+
+        const slotTimeLabel = document.getElementById('slotSummaryTime');
+        if (slotTimeLabel) slotTimeLabel.textContent = displayShortValue;
+      }
+
+      // Doctor dropdown change listener
+      function handleDoctorSelectChange(doctorValue) {
+        // Reserved for doctor specific rules if needed
+      }
+
+      // Complete Form Reset & Clear (Prevents stale data when reopening booking!)
+      function clearBookingForm(serviceName = null, doctorName = null) {
+        const form = document.getElementById('simpleBookingForm');
+        if (form) form.reset();
+
+        const nameInput = document.getElementById('bookingName');
+        const phoneInput = document.getElementById('bookingPhone');
+        const emailInput = document.getElementById('bookingEmail');
+        const notesInput = document.getElementById('bookingNotes');
+
+        if (nameInput) nameInput.value = '';
+        if (phoneInput) phoneInput.value = '';
+        if (emailInput) emailInput.value = '';
+        if (notesInput) notesInput.value = '';
+
+        const nameErr = document.getElementById('bookingNameError');
+        const phoneErr = document.getElementById('bookingPhoneError');
+        if (nameErr) nameErr.style.display = 'none';
+        if (phoneErr) phoneErr.style.display = 'none';
+
+        // Reset to today's date
+        setQuickDate('today');
+
+        // Reset slot to 10:30 AM default
+        const defaultSlotBtn = document.querySelector('.slot-pill-btn.default-slot') || document.querySelectorAll('.slot-pill-btn')[1];
+        if (defaultSlotBtn) {
+          selectSlotPill(defaultSlotBtn, 'Morning: 10:30 AM – 11:30 AM', '10:30 AM (Morning)');
+        }
+
+        // Service pre-selection
+        const serviceSelect = document.getElementById('bookingService');
+        if (serviceSelect) {
+          if (serviceName) {
+            const target = serviceName.toLowerCase();
+            let matched = false;
+            for (let i = 0; i < serviceSelect.options.length; i++) {
+              const opt = serviceSelect.options[i];
+              const optText = opt.text.toLowerCase();
+              const optVal = opt.value.toLowerCase();
+              if (optVal.includes(target) || optText.includes(target) || target.includes(optVal)) {
+                serviceSelect.selectedIndex = i;
+                matched = true;
+                break;
+              }
+            }
+            if (!matched) serviceSelect.selectedIndex = 0;
           } else {
-            heading.textContent = 'Schedule with Calendly';
-            subheading.textContent = 'Pick an exact date & time slot on our live clinic calendar';
+            serviceSelect.selectedIndex = 0;
           }
+        }
 
-          // Sync service selection
-          const serviceSelect = document.getElementById('serviceSelect');
-          const calendlyService = document.getElementById('calendlyServiceSelect');
-          if (serviceSelect && calendlyService) {
-            calendlyService.value = serviceSelect.value;
-          }
-
-          // Sync doctor selection
-          const calendlyDoctor = document.getElementById('calendlyDoctorSelect');
-          if (doctorSelect && calendlyDoctor) {
-            calendlyDoctor.value = doctorSelect.value;
-          }
-        } else {
-          tabWhatsapp.classList.add('active');
-          tabCalendly.classList.remove('active');
-          btnWhatsapp.classList.add('active');
-          btnCalendly.classList.remove('active');
-          modalBox.classList.remove('wide');
-
-          if (doc) {
-            heading.textContent = `Consultation with ${doc.shortName}`;
-            subheading.textContent = `Receptionist will check ${doc.shortName}'s schedule availability without conflicts`;
+        // Doctor pre-selection
+        const doctorSelect = document.getElementById('bookingDoctor');
+        if (doctorSelect) {
+          if (doctorName) {
+            const target = doctorName.toLowerCase();
+            let matched = false;
+            for (let i = 0; i < doctorSelect.options.length; i++) {
+              const opt = doctorSelect.options[i];
+              const optText = opt.text.toLowerCase();
+              const optVal = opt.value.toLowerCase();
+              if (optVal.includes(target) || optText.includes(target) || target.includes(optVal)) {
+                doctorSelect.selectedIndex = i;
+                matched = true;
+                break;
+              }
+            }
+            if (!matched) doctorSelect.selectedIndex = 0;
           } else {
-            heading.textContent = 'Book an Appointment';
-            subheading.textContent = 'Instant WhatsApp confirmation directly with SmileCare reception';
+            doctorSelect.selectedIndex = 0;
           }
+          handleDoctorSelectChange(doctorSelect.value);
         }
+
+        // Ensure Form view is visible and Confirmation view is hidden
+        const formView = document.getElementById('simpleBookingForm');
+        const confView = document.getElementById('simpleBookingConfirmation');
+        if (formView) formView.style.display = 'block';
+        if (confView) confView.style.display = 'none';
       }
 
-      function syncServiceSelection(serviceVal) {
-        const serviceSelect = document.getElementById('serviceSelect');
-        const calendlyService = document.getElementById('calendlyServiceSelect');
-        if (serviceSelect && serviceSelect.value !== serviceVal) {
-          serviceSelect.value = serviceVal;
-        }
-        if (calendlyService && calendlyService.value !== serviceVal) {
-          calendlyService.value = serviceVal;
-        }
-      }
-
-      function syncDoctorSelection(doctorVal) {
-        const doctorSelect = document.getElementById('doctorSelect');
-        const calendlyDoctor = document.getElementById('calendlyDoctorSelect');
-        if (doctorSelect && doctorSelect.value !== doctorVal) {
-          doctorSelect.value = doctorVal;
-        }
-        if (calendlyDoctor && calendlyDoctor.value !== doctorVal) {
-          calendlyDoctor.value = doctorVal;
-        }
-        updateDoctorCallout(doctorVal);
-
-        const heading = document.getElementById('modalHeading');
-        const subheading = document.getElementById('modalSubheading');
-        const doc = DOCTORS_DATA[doctorVal];
-        if (doc) {
-          if (heading) heading.textContent = `Consultation with ${doc.shortName}`;
-          if (subheading) subheading.textContent = `Receptionist will check ${doc.shortName}'s availability without schedule conflicts`;
-        } else {
-          if (heading) heading.textContent = 'Book an Appointment';
-          if (subheading) subheading.textContent = 'Instant WhatsApp confirmation or live calendar scheduling';
-        }
-      }
-
-      function launchCalendlyScheduling() {
-        const name = (document.getElementById('patientName')?.value || '').trim();
-        const phone = (document.getElementById('patientPhone')?.value || '').trim();
-        const service = document.getElementById('calendlyServiceSelect')?.value || '';
-        const doctor = document.getElementById('calendlyDoctorSelect')?.value || '';
-
-        const params = new URLSearchParams();
-        if (name) params.append('name', name);
-        if (phone) params.append('a1', phone);
-        if (service) {
-          const detail = (doctor && doctor !== 'Any Available Specialist') 
-            ? `${service} (Preferred Doctor: ${doctor} - Receptionist confirmation based on schedule availability)` 
-            : service;
-          params.append('a2', detail);
-        }
-
-        const paramString = params.toString();
-        const fullUrl = paramString ? `${CALENDLY_URL}?${paramString}` : CALENDLY_URL;
-
-        if (window.Calendly && typeof window.Calendly.initPopupWidget === 'function') {
-          window.Calendly.initPopupWidget({ url: fullUrl });
-        } else {
-          window.open(fullUrl, '_blank', 'noopener,noreferrer');
-        }
-      }
-
-      // Modal management
-      function openAppointmentModal(serviceName, defaultTab = 'whatsapp', doctorName = null) {
+      // Open Simple Appointment Modal (Clears previous patient data!)
+      function openAppointmentModal(serviceName = null, defaultTab = null, doctorName = null) {
         const modal = document.getElementById('appointmentModal');
-        const serviceSelect = document.getElementById('serviceSelect');
-        const calendlyService = document.getElementById('calendlyServiceSelect');
-        const doctorSelect = document.getElementById('doctorSelect');
-        const calendlyDoctor = document.getElementById('calendlyDoctorSelect');
-        const heading = document.getElementById('modalHeading');
-        const subheading = document.getElementById('modalSubheading');
+        if (!modal) return;
 
-        if (serviceName) {
-          if (serviceSelect) {
-            const matchingOption = Array.from(serviceSelect.options).find(opt => opt.value === serviceName || opt.text.includes(serviceName));
-            if (matchingOption) serviceSelect.value = matchingOption.value;
-          }
-          if (calendlyService) {
-            const matchingOption = Array.from(calendlyService.options).find(opt => opt.value === serviceName || opt.text.includes(serviceName));
-            if (matchingOption) calendlyService.value = matchingOption.value;
-          }
-        }
-
-        let selectedDocKey = null;
-        if (doctorName && doctorSelect) {
-          const matchingDoc = Array.from(doctorSelect.options).find(opt => 
-            opt.value.toLowerCase().includes(doctorName.toLowerCase()) || 
-            opt.text.toLowerCase().includes(doctorName.toLowerCase())
-          );
-          if (matchingDoc) {
-            selectedDocKey = matchingDoc.value;
-            doctorSelect.value = matchingDoc.value;
-            if (calendlyDoctor) calendlyDoctor.value = matchingDoc.value;
-          }
-        } else if (doctorSelect && !doctorName) {
-          // If no specific doctor passed, keep or reset
-          selectedDocKey = doctorSelect.value;
-        }
-
-        updateDoctorCallout(selectedDocKey || (doctorSelect ? doctorSelect.value : ''));
-
-        switchBookingTab(defaultTab);
-
-        if (selectedDocKey && DOCTORS_DATA[selectedDocKey]) {
-          const docObj = DOCTORS_DATA[selectedDocKey];
-          if (heading) heading.textContent = `Consultation with ${docObj.shortName}`;
-          if (subheading) subheading.textContent = `Receptionist will check ${docObj.shortName}'s availability without schedule conflicts`;
-        }
+        // Reset and clear any previous booking details cleanly
+        clearBookingForm(serviceName, doctorName);
 
         modal.classList.add('open');
         document.body.style.overflow = 'hidden';
-      }
 
-      function closeAppointmentModal() {
-        const modal = document.getElementById('appointmentModal');
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
-      }
+        const modalBody = modal.querySelector('.modal-body');
+        if (modalBody) modalBody.scrollTop = 0;
 
-      // Direct booking with specific doctor
-      function bookDoctorConsultation(doctorName, specialty) {
-        openAppointmentModal(specialty, 'whatsapp', doctorName);
-        const nameInput = document.getElementById('patientName');
+        // Auto-focus name field for quick entry
+        const nameInput = document.getElementById('bookingName');
         if (nameInput) {
           setTimeout(() => nameInput.focus(), 150);
         }
       }
+
+      // Close Appointment Modal
+      function closeAppointmentModal() {
+        const modal = document.getElementById('appointmentModal');
+        if (modal) {
+          modal.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+
+      // Direct booking with doctor button
+      function bookDoctorConsultation(doctorName, specialty) {
+        openAppointmentModal(specialty, null, doctorName);
+      }
+
+      // Handle Simple Booking Submission
+      function handleSimpleBookingSubmit(e) {
+        e.preventDefault();
+
+        const serviceEl = document.getElementById('bookingService');
+        const doctorEl = document.getElementById('bookingDoctor');
+        const dateEl = document.getElementById('bookingDate');
+        const timeEl = document.getElementById('bookingTime');
+        const nameEl = document.getElementById('bookingName');
+        const phoneEl = document.getElementById('bookingPhone');
+        const emailEl = document.getElementById('bookingEmail');
+        const notesEl = document.getElementById('bookingNotes');
+
+        const name = (nameEl?.value || '').trim();
+        const phone = (phoneEl?.value || '').trim();
+        const service = serviceEl?.value || 'General Consultation & Dental Checkup';
+        const doctor = doctorEl?.value || 'Any Available Doctor';
+        const dateVal = dateEl?.value || getTodayDateYMD();
+        const timeVal = timeEl?.value || 'Morning: 10:30 AM – 11:30 AM';
+        const email = (emailEl?.value || '').trim();
+        const notes = (notesEl?.value || '').trim();
+
+        let isValid = true;
+
+        // Name validation (min 2 chars)
+        const nameErr = document.getElementById('bookingNameError');
+        if (!name || name.length < 2) {
+          if (nameErr) nameErr.style.display = 'block';
+          if (nameEl) nameEl.focus();
+          isValid = false;
+        } else {
+          if (nameErr) nameErr.style.display = 'none';
+        }
+
+        // Phone validation (at least 10 digits for Indian contact numbers)
+        const digits = phone.replace(/[^0-9]/g, '');
+        const phoneErr = document.getElementById('bookingPhoneError');
+        if (!digits || digits.length < 10) {
+          if (phoneErr) phoneErr.style.display = 'block';
+          if (isValid && phoneEl) phoneEl.focus();
+          isValid = false;
+        } else {
+          if (phoneErr) phoneErr.style.display = 'none';
+        }
+
+        if (!isValid) return;
+
+        const readableDate = formatSimpleDisplayDate(dateVal);
+
+        // Construct clean WhatsApp message for clinic & doctor
+        const messageParts = [
+          '*SMILECARE DENTAL CLINIC - APPOINTMENT REQUEST*',
+          '────────────────────────────────────────',
+          `*Patient Name:* ${name}`,
+          `*Contact Number:* ${phone}`,
+          email ? `*Email:* ${email}` : null,
+          `*Service:* ${service}`,
+          `*Doctor:* ${doctor}`,
+          `*Appointment Date:* ${readableDate}`,
+          `*Time Slot:* ${timeVal}`,
+          notes ? `*Symptoms / Message:* ${notes}` : null,
+          '────────────────────────────────────────',
+          'Hello SmileCare Clinic, I would like to request this appointment. Please check availability and confirm. Thank you!'
+        ].filter(p => p !== null);
+
+        const waMessageText = messageParts.join('\n');
+        const waUrl = `https://wa.me/${CLINIC_WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessageText)}`;
+
+        // Open WhatsApp in new tab / application
+        window.open(waUrl, '_blank');
+
+        // Populate confirmation card
+        const confName = document.getElementById('confSummaryName');
+        const confPhone = document.getElementById('confSummaryPhone');
+        const confService = document.getElementById('confSummaryService');
+        const confDoctor = document.getElementById('confSummaryDoctor');
+        const confDate = document.getElementById('confSummaryDate');
+        const confTime = document.getElementById('confSummaryTime');
+        const confEmailRow = document.getElementById('confSummaryEmailRow');
+        const confEmail = document.getElementById('confSummaryEmail');
+        const confNotesRow = document.getElementById('confSummaryNotesRow');
+        const confNotes = document.getElementById('confSummaryNotes');
+        const reopenBtn = document.getElementById('reopenWhatsappBtn');
+
+        if (confName) confName.textContent = name;
+        if (confPhone) confPhone.textContent = phone;
+        if (confService) confService.textContent = service;
+        if (confDoctor) confDoctor.textContent = doctor;
+        if (confDate) confDate.textContent = readableDate;
+        if (confTime) confTime.textContent = timeVal;
+
+        if (confEmailRow && confEmail) {
+          if (email) {
+            confEmail.textContent = email;
+            confEmailRow.style.display = 'block';
+          } else {
+            confEmailRow.style.display = 'none';
+          }
+        }
+
+        if (confNotesRow && confNotes) {
+          if (notes) {
+            confNotes.textContent = notes;
+            confNotesRow.style.display = 'block';
+          } else {
+            confNotesRow.style.display = 'none';
+          }
+        }
+
+        if (reopenBtn) reopenBtn.href = waUrl;
+
+        // Switch to Confirmation view
+        const formView = document.getElementById('simpleBookingForm');
+        const confView = document.getElementById('simpleBookingConfirmation');
+        if (formView) formView.style.display = 'none';
+        if (confView) confView.style.display = 'block';
+
+        const modalBody = document.querySelector('#appointmentModal .modal-body');
+        if (modalBody) modalBody.scrollTop = 0;
+
+        // Notification toast
+        if (typeof showStoryToast === 'function') {
+          showStoryToast('Opening WhatsApp with your appointment request...', 'success');
+        }
+      }
+
+      // Reset form to book another appointment
+      function resetSimpleBookingForm() {
+        clearBookingForm();
+      }
+
+      // Compatibility stubs in case any cached script calls them
+      function updateMyBookingsBadge() {}
+      function switchBookingTab() {}
+      function updateDoctorCallout() {}
 
       // Blog Article modal
       function openArticleModal(articleId) {
@@ -5895,6 +7486,24 @@
         // Initialize stored stories and listeners
         loadSavedStories();
         initStoryFormListeners();
+        // Initialize booking date input and quick buttons
+        setQuickDate('today');
+        // Initialize clinic facilities gallery
+        renderFacilitiesGrid();
+
+        // Keyboard navigation for facility lightbox modal
+        document.addEventListener('keydown', function(e) {
+          const lightbox = document.getElementById('facilityLightboxModal');
+          if (lightbox && lightbox.classList.contains('open')) {
+            if (e.key === 'Escape') {
+              closeFacilityLightbox();
+            } else if (e.key === 'ArrowLeft') {
+              navigateFacilityLightbox(-1);
+            } else if (e.key === 'ArrowRight') {
+              navigateFacilityLightbox(1);
+            }
+          }
+        });
       });
 
       /**
@@ -6101,7 +7710,9 @@
         if (!file) return;
 
         if (!file.type.startsWith('image/')) {
-          alert('Please choose a valid image file (JPG, PNG, WebP).');
+          if (typeof showStoryToast === 'function') {
+            showStoryToast('Please select a valid image file (JPG, PNG, WebP).');
+          }
           return;
         }
 
@@ -6120,7 +7731,7 @@
 
             ctx.drawImage(img, sx, sy, size, size, 0, 0, canvas.width, canvas.height);
             const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
-            setStoryPhotoPreview(dataUrl, 'Photo Uploaded');
+            setStoryPhotoPreview(dataUrl, 'Gallery Photo');
           };
           img.src = event.target.result;
         };
@@ -6444,35 +8055,35 @@
         if (isSpecificDoctor) {
           rawMessage = 
             divider + '\n' +
-            '🦷 *SMILECARE CLINIC - APPOINTMENT BOOKING*' + '\n' +
+            '*SMILECARE CLINIC - APPOINTMENT BOOKING*' + '\n' +
             divider + '\n' +
-            '👤 *Patient Name:* ' + patientName + '\n' +
-            '📱 *Patient Mobile:* ' + patientPhone + '\n' +
-            '🩺 *Requested Service:* ' + requestedService + '\n' +
-            '👨‍⚕️ *Book with Doctor:* ' + doctorDisplayName + '\n' +
+            '*Patient Name:* ' + patientName + '\n' +
+            '*Patient Mobile:* ' + patientPhone + '\n' +
+            '*Requested Service:* ' + requestedService + '\n' +
+            '*Book with Doctor:* ' + doctorDisplayName + '\n' +
             divider + '\n' +
-            '📋 *RECEPTIONIST CONFIRMATION INSTRUCTIONS:*\n' +
-            '• Patient explicitly requested an appointment with *' + doctorShortName + '*.\n' +
+            '*RECEPTIONIST CONFIRMATION INSTRUCTIONS:*\n' +
+            '• Patient requested an appointment with *' + doctorShortName + '*.\n' +
             '• Receptionist: Please confirm booking based on *' + doctorShortName + '\'s availability* in the common schedule.\n' +
-            '• If there is any schedule conflict with ' + doctorShortName + ', please inform the patient and suggest the best suitable alternate time slot or specialist to avoid any conflict.\n' +
+            '• If there is any schedule conflict with ' + doctorShortName + ', please inform the patient and suggest the best suitable alternate time slot.\n' +
             divider + '\n' +
-            'Hello SmileCare Team, I submitted my appointment request from your website for ' + doctorShortName + '. Please verify doctor availability and confirm the best suitable slot. Thank you!\n' +
+            'Hello SmileCare Team, I submitted an appointment request from your website for ' + doctorShortName + '. Please verify doctor availability and confirm the best suitable slot. Thank you!\n' +
             divider;
         } else {
           rawMessage = 
             divider + '\n' +
-            '🦷 *SMILECARE CLINIC - APPOINTMENT BOOKING*' + '\n' +
+            '*SMILECARE CLINIC - APPOINTMENT BOOKING*' + '\n' +
             divider + '\n' +
-            '👤 *Patient Name:* ' + patientName + '\n' +
-            '📱 *Patient Mobile:* ' + patientPhone + '\n' +
-            '🩺 *Requested Service:* ' + requestedService + '\n' +
-            '👨‍⚕️ *Doctor Preference:* Any Available Specialist (Receptionist Match)\n' +
+            '*Patient Name:* ' + patientName + '\n' +
+            '*Patient Mobile:* ' + patientPhone + '\n' +
+            '*Requested Service:* ' + requestedService + '\n' +
+            '*Doctor Preference:* Any Available Specialist (Receptionist Match)\n' +
             divider + '\n' +
-            '📋 *RECEPTIONIST CONFIRMATION INSTRUCTIONS:*\n' +
-            '• Receptionist: Please check clinic schedule availability and assign the *best suitable doctor* for ' + requestedService + ' without common schedule conflicts.\n' +
+            '*RECEPTIONIST CONFIRMATION INSTRUCTIONS:*\n' +
+            '• Receptionist: Please check clinic schedule availability and assign the *best suitable doctor* for ' + requestedService + '.\n' +
             '• Confirm the earliest available appointment slot with the patient.\n' +
             divider + '\n' +
-            'Hello SmileCare Team, I submitted my appointment request from your website. Please check doctor availability and confirm the best suitable slot for today. Thank you!\n' +
+            'Hello SmileCare Team, I submitted an appointment request from your website. Please check doctor availability and confirm the best suitable slot. Thank you!\n' +
             divider;
         }
 
